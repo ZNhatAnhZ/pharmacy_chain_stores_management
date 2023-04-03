@@ -1,0 +1,46 @@
+employee:
+  VALID_EMAIL_REGEX: !ruby/regexp /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  email:
+    email_min_length: 6
+  name_validates:
+    name_max_length: 50
+  password_validates:
+    password_min_length: 6
+  password_reset_expired:
+    password_reset_time: 2
+
+footer:
+  rails_link: https://www.railstutorial.org
+  michale_link: https://www.michaelhartl.com/
+  rails_news_link: https://news.railstutorial.org/
+
+rails:
+  help: https://www.railstutorial.org/help
+  book: https://www.railstutorial.org/book
+  contact: https://www.railstutorial.org/contact
+
+learnenough:
+  https://www.learnenough.com/
+
+screencasts:
+  https://screencasts.railstutorial.org/
+
+helpers:
+  users:
+    size: 80
+
+views:
+  users:
+    user:
+      gavatar_size: 50
+      gavatar_size_30: 30
+    edit:
+      gavatar_link: https://gravatar.com/emails
+
+micropost:
+  content:
+    content_max_length: 140
+  image_path: ["image/jpeg", "image/gif", "image/png"]
+  image_size: 5
+  resize_to_limit: [500, 500]
+  image_accept: "image/jpeg,image/gif,image/png"

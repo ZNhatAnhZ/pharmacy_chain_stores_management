@@ -1,0 +1,182 @@
+vi:
+  title:
+    about: "Về "
+    home: "Trang Chủ"
+    help: "Trợ Giúp"
+    contact: "Liên Hệ"
+    sign_up: "Đăng Ký"
+
+  page_title: "Ruby on Rails Tutorial Sample App"
+
+  layouts:
+    header:
+      home: "Trang chủ"
+      help: "Trợ giúp"
+      login: "Đăng nhập"
+      user: "User"
+      account: "Tài khoản"
+      profile: "Hồ sơ"
+      settings: "Cài đặt"
+      logout: "Đăng xuất"
+      sample_app: "SAMPLE APP"
+    footer:
+      the: "các"
+      by: "bởi"
+      about: "Về"
+      contact: "Liên hệ"
+      news: "Mới"
+  static_pages:
+    about:
+    contact:
+      contact: "Liên hệ"
+      contact_page: "trang liên hệ"
+      contact_the: "Liên hệ với Hướng dẫn về Ruby on Rails về ứng dụng mẫu tại"
+    help:
+      help: "Trợ giúp"
+      get_help: "Nhận trợ giúp về Hướng dẫn Ruby on Rails tại"
+      to_get_help: "Để nhận trợ giúp về ứng dụng mẫu này, hãy xem phần"
+      rail_turtorial_help_page: "Rail turtorial help page"
+      ruby_on_rails_turtorial_book: "Ruby on rails turtorial book"
+    home:
+      welcome: "Chào mừng đến với Sample App"
+      this_is: "Đây là trang chủ của"
+      sample: "ứng dụng mẫu"
+      signup: "Đăng ký ngay!"
+      rails_href: "Ruby on Rails Tutorial"
+      micropost_feed: "Micropost Feed"
+
+  users:
+    form:
+      name: "Tên"
+      email: "Email"
+      password: "Mật khẩu"
+      confirmation: "Xác nhận mật khẩu"
+    new:
+      btn_create: "Tạo tài khoản"
+      please_login: "Vui lòng đăng nhập."
+    edit:
+      btn_save: "Lưu thay đổi"
+      title: "Chỉnh sửa người dùng"
+      update_your: "Cập nhật hồ sơ của bạn"
+      change: "Thay đổi"
+    update:
+      profile_updated: "Hồ sơ đã được cập nhật"
+      update_fail: "Cập nhật thất bại"
+    create:
+      welcome_to: "Chào mừng đến với Sample App!"
+      danger: "Tạo thất bại"
+      check_email: "Vui lòng vào email để kích hoạt tài khoản"
+    destroy:
+      user_deleted: "Người dùng đã được xóa"
+      destroy_fail: "Xóa thất bại"
+    before_action:
+      please_login: "Vui lòng đăng nhập."
+      not_found: "Không tìm thấy user"
+      not_correct: "Không đúng user"
+      not_admin: "Bạn không có thẩm quyền"
+    index:
+      title: "Tất cả người dùng"
+      not_found: "Không tìm thấy người dùng"
+    user:
+      delete: "Xóa"
+      you_sure: "Bạn chắc chứ?"
+    show:
+      micropost: "micropost"
+    following:
+      following: "Following"
+    followers:
+      followers: "Followers"
+    follow:
+      follow: "Follow"
+    unfollow:
+      unfollow: "Unfollow"
+    show_follow:
+      view_my: "Xem trang cá nhân của tôi"
+      micropost: "Micropost"
+  shared:
+    error_messages:
+      the_form: "Biểu mẫu chứa"
+      error: "lỗi"
+    micropost_form:
+      compose_new: "Soạn bài viết mới"
+      post: "Đăng"
+    user_info:
+      view_my: "Xem trang cá nhân của tôi"
+      micropost: "bài đăng"
+    stats:
+      following: "following"
+      followers: "followers"
+  sessions:
+    create:
+      invalid: "Email/mật khẩu không hợp lệ"
+      account_not: "Tài khoản chưa được kích hoạt. Truy cập email để kích hoạt"
+    new:
+      login: "Đăng nhập"
+      email: "Email"
+      password: "Mật khẩu"
+      btn_login: "Đăng nhập"
+      new_user: "Người dùng mới?"
+      sign_up_now: "Đăng ký ngay!"
+      remember_me : "Ghi nhớ đăng nhập"
+      forgot_password: "(Quên mật khẩu)"
+  account_activations:
+    edit:
+      account_activated: "Tài khoản đã được kích hoạt"
+      invalid_activation: "Liên kết kích hoạt không hợp lệ"
+  user_mailer:
+    account_activation:
+      sample_app: "Sample App"
+      welcome_to: "Chào mừng bạn đến với Sample App, click vào link bên dưới để kích hoạt tài khoản"
+      activate: "Kích hoạt"
+      account: "Kích hoạt tài khoản"
+    password_reset:
+      password_r: "Đặt lại mật khẩu"
+      to_reset: "Để đặt lại mật khẩu của bạn, hãy nhấp vào liên kết bên dưới:"
+      reset_password: "Đặt lại mật khẩu"
+      this_link: "Liên kết này sẽ hết hạn sau hai giờ."
+      if_you_did: "Nếu bạn không yêu cầu đặt lại mật khẩu của mình, vui lòng bỏ qua email này và
+mật khẩu của bạn sẽ vẫn như cũ."
+  password_resets:
+    create:
+      email_sent: "Email được gửi kèm theo hướng dẫn đặt lại mật khẩu"
+      email_address: "Không tìm thấy địa chỉ email"
+    update:
+      not_empty: "Không được để trống"
+      password_reset: "Mật khẩu đã được đặt lại"
+      update_fail: "Cập nhật thất bại"
+    check_expiration:
+      password_exprired: "Đặt lại mật khẩu đã hết hạn"
+    edit:
+      reset_password: "Đặt lại mật khẩu"
+      confirmation: "Xác nhận"
+      update_btn: "Cập nhật mật khẩu"
+    new:
+      forgot_password: "Quên mật khẩu"
+      submit_btn: "Nộp"
+
+  microposts:
+    create:
+      micropost_created: "Bài viết đã được tạo"
+    destroy:
+      micropost_deleted: "Bài viết đã xóa"
+      micropost_deleted_fail: "Xóa bài viết thất bại"
+    find_micropost:
+      find_micropost_fail: "Cannot find micropost"
+    micropost:
+      posted: "Đăng"
+      ago: "trước."
+      delete: "Xóa"
+      you_sure: "Bạn chắc chứ?"
+
+  activerecord:
+    errors:
+      models:
+        micropost:
+          attributes:
+            image:
+              wrong_format: "Phải là định dạng hình ảnh hợp lệ"
+              too_big: "Kích thước hình ảnh quá lớn"
+
+  relationships:
+    follow_fail: "Follow fail"
+    unfollow_fail: "Unfollow fail"

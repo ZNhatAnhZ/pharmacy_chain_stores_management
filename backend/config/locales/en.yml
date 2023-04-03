@@ -1,0 +1,182 @@
+en:
+  title:
+    about: "About"
+    home: "Home"
+    help: "Help"
+    contact: "Contact"
+    sign_up: "Sign Up"
+
+  page_title: "Ruby on Rails Tutorial Sample App"
+
+  layouts:
+    header:
+      home: "Home"
+      help: "Help"
+      login: "Login"
+      user: "User"
+      account: "Account"
+      profile: "Profile"
+      settings: "Settings"
+      logout: "Log out"
+      sample_app: "SAMPLE APP"
+    footer:
+      the: "the"
+      by: "by"
+      about: "About"
+      contact: "Contact"
+      news: "News"
+  static_pages:
+    about:
+    contact:
+      contact: "Contact"
+      contact_page: "contact page"
+      contact_the: "Contact the Ruby on Rails Tutorial about the sample app at the"
+    help:
+      help: "Help"
+      get_help: "Get help on the Ruby on Rails Tutorial at the"
+      to_get_help: "To get help on this sample app, see the"
+      rail_turtorial_help_page: "Rail turtorial help page"
+      ruby_on_rails_turtorial_book: "Ruby on rails turtorial book"
+    home:
+      welcome: "Welcome to the Sample App"
+      this_is: "This is the home page for the"
+      sample: "sample application"
+      signup: "Sign up now!"
+      rails_href: "Ruby on Rails Tutorial"
+      micropost_feed: "Micropost Feed"
+
+  users:
+    form:
+      name: "Name"
+      email: "Email"
+      password: "Password"
+      confirmation: "Confirmation"
+    new:
+      btn_create: "Create my account"
+      please_login: "Please log in."
+    edit:
+      btn_save: "Save changes"
+      title: "Edit user"
+      update_your: "Update your profile"
+      change: "change"
+    update:
+      profile_updated: "Profile updated"
+      update_fail: "Update fail"
+    create:
+      welcome_to: "Welcome to the Sample App!"
+      danger: "Create fail"
+      check_email: "Please check your email to activate your account."
+    destroy:
+      user_deleted: "User deleted"
+      destroy_fail: "Destroy fail"
+    before_action:
+      please_login: "Please log in."
+      not_found: "Not found user"
+      not_correct: "Not correct user"
+      not_admin: "You don't have Authorization"
+    show:
+      micropost: "micropost"
+    index:
+      title: "All users"
+      not_found: "Could not found user"
+    user:
+      delete: "delete"
+      you_sure: "You sure?"
+    following:
+      following: "Following"
+    followers:
+      followers: "Followers"
+    follow:
+      follow: "Follow"
+    unfollow:
+      unfollow: "Unfollow"
+    show_follow:
+      view_my: "view my profile"
+      micropost: "Micropost:"
+  shared:
+    error_messages:
+    the_form: "The form contains"
+    error: "error"
+    micropost_form:
+      compose_new: "Compose new micropost..."
+      post: "Post"
+    user_info:
+      view_my: "view my profile"
+      micropost: "micropost"
+    stats:
+      following: "following"
+      followers: "followers"
+  sessions:
+    create:
+      invalid: "Invalid email password combination"
+      account_not: "Account not activated. Check your email for the activation link."
+    new:
+      login: "Log in"
+      email: "Email"
+      password: "Password"
+      btn_login: "Log in"
+      new_user: "New user?"
+      sign_up_now: "Sign up now!"
+      remember_me : "Remember me on this computer"
+      forgot_password: "(forgot password)"
+  account_activations:
+    edit:
+      account_activated: "Account activated!"
+      invalid_activation: "Invalid activation link"
+  user_mailer:
+    account_activation:
+      sample_app: "Sample App"
+      welcome_to: "Welcome to the Sample App! Click on the link below to activate your account:"
+      activate: "Activate"
+      account: "Account activation"
+    password_reset:
+      password_r: "Password reset"
+      to_reset: "To reset your password click the link below:"
+      reset_password: "Reset password"
+      this_link: "This link will expire in two hours."
+      if_you_did: "If you did not request your password to be reset, please ignore this email and
+your password will stay as it is."
+  password_resets:
+    create:
+      email_sent: "Email sent with password reset instructions"
+      email_address: "Email address not found"
+    update:
+      not_empty: "Can't be empty"
+      password_reset: "Password has been reset"
+      update_fail: "Update fail"
+    check_expiration:
+      password_exprired: "Password reset has exprired"
+    edit:
+      reset_password: "Reset password"
+      confirmation: "Confirmation"
+      update_btn: "Update password"
+    new:
+      forgot_password: "Forgot password"
+      submit_btn: "Submit"
+
+  microposts:
+    create:
+      micropost_created: "Micropost created!"
+    destroy:
+      micropost_deleted: "Micropost deleted"
+      micropost_deleted_fail: "Micropost deleted fail"
+    find_micropost:
+      find_micropost_fail: "Cannot find micropost"
+    micropost:
+      posted: "Posted"
+      ago: "Ago."
+      delete: "Delete"
+      you_sure: "You sure?"
+
+  activerecord:
+    errors:
+      models:
+        micropost:
+          attributes:
+            image:
+              wrong_format: "Must be a valid image format"
+              too_big: "Image size is too big"
+
+  relationships:
+    follow_fail: "Follow fail"
+    unfollow_fail: "Unfollow fail"
