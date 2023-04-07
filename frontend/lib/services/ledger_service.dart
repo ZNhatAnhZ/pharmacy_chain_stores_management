@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:html';
 
 import 'package:medical_chain_manangement/config.dart';
-import 'package:medical_chain_manangement/models/Ledger.dart';
+import 'package:medical_chain_manangement/models/ledger.dart';
 import 'package:http/http.dart' as http;
 
 class LedgerService {

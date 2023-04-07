@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:medical_chain_manangement/blocks/auth_block.dart';
 import 'package:medical_chain_manangement/models/branch.dart';
-import 'package:medical_chain_manangement/models/inventory.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:medical_chain_manangement/services/branch_service.dart';
 import 'package:medical_chain_manangement/services/employee_service.dart';

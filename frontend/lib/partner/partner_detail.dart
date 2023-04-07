@@ -43,7 +43,7 @@ class _PartnerDetail extends State<PartnerDetail> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Tất cả các nhà cung cấp"),
+        title: Text("Tất cả sản phẩm của nhà cung cấp"),
       ),
       body: Row(
         children: <Widget>[

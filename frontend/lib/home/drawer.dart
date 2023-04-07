@@ -129,16 +129,6 @@ class _AppDrawerState extends State<AppDrawer> {
                     Navigator.pushNamed(context, '/employee_page');
                   },
                 ),
-              if (auth.isLoggedIn)
-                ListTile(
-                  leading: Icon(Icons.show_chart,
-                      color: Theme.of(context).colorScheme.secondary),
-                  title: Text('Báo cáo'),
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.pushNamed(context, '/report');
-                  },
-                ),
               Divider(),
               if (!auth.isLoggedIn)
                 ListTile(
