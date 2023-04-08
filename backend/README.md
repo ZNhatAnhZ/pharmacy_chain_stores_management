@@ -1,24 +1,17 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Deployment
 
-Things you may want to cover:
+* cd backend
 
-* Ruby version
+* cp config/database.yml.example config/database.yml
 
-* System dependencies
+* docker compose build
 
-* Configuration
+* docker compose up -d
 
-* Database creation
+Database initialization
 
-* Database initialization
+* docker compose exec app rails db:create
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* docker compose exec app rails db:migrate
