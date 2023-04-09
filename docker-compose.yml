@@ -1,0 +1,46 @@
+version: '3.4'
+
+services:
+  app:
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    volumes:
+      - ./backend:/app
+      - gem_cache:/usr/local/bundle/gems
+    env_file: ./backend/.env
+    environment:
+      RAILS_ENV: development
+    stdin_open: true
+    tty: true
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: newpassword
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+  web:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    ports:
+      - "9000:5000"
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:5.2
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: newpassword
+      PMA_PORT: 3306
+    ports:
+      - "8090:80"
+    depends_on:
+      - db
+volumes:
+  mysql-data:
+  gem_cache:
