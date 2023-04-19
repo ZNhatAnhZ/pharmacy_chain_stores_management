@@ -41,7 +41,7 @@ Branch.create!(
     password: password,
     password_confirmation: password,
     role: "employee",
-    branch_id: [1, 2, 3].sample
+    branch_id: Branch.all.pluck(:id).sample
   )
 end
 
@@ -116,15 +116,18 @@ end
   price = Faker::Commerce.price(range: 1..100)
   quantity = Faker::Number.between(from: 50, to: 100)
   import_inventory_code = Faker::Code.nric
+  branch_id = Branch.all.pluck(:id).sample
+  employee_id = Employee.where(branch_id: branch_id).pluck(:id).sample
   ImportInventory.create!(
               price: price,
               import_inventory_code: import_inventory_code,
               quantity: quantity,
               batch_inventory_id: BatchInventory.all.pluck(:id).sample,
               supplier_id: Supplier.all.pluck(:id).sample,
-              branch_id: Branch.all.pluck(:id).sample,
+              branch_id: branch_id,
               inventory_id: Inventory.all.pluck(:id).sample,
               created_at: (rand*30).days.ago,
+              employee_id: employee_id
   )
 end
 
@@ -133,13 +136,16 @@ end
   total_quantity = Faker::Number.between(from: 10, to: 50)
   order_code = Faker::Code.nric
   customer_name = Faker::Name.unique.name
+  branch_id = Branch.all.pluck(:id).sample
+  employee_id = Employee.where(branch_id: branch_id).pluck(:id).sample
   Order.create!(
     total_price: total_price,
     order_code: order_code,
     customer_name: customer_name,
               total_quantity: total_quantity,
-              branch_id: Branch.all.pluck(:id).sample,
+              branch_id: branch_id,
               inventory_id: Inventory.all.pluck(:id).sample,
               created_at: (rand*30).days.ago,
+              employee_id: employee_id
   )
 end
