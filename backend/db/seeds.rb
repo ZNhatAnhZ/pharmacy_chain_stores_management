@@ -1,32 +1,145 @@
-User.create!(name: "Example User",
-  email: "example@railstutorial.org",
-  password: "foobar",
-  password_confirmation: "foobar",
-  admin: true,
-  activated: true,
-  activated_at: Time.zone.now)
-  # Generate a bunch of additional users.
-99.times do |n|
-  name = "ABC"
-  email = "testexample-#{n+1}@railstutorial.org"
-  password = "password"
-  User.create(name: name,
+Employee.create!(
+  name: "Manager User",
+  email: "pharmacymanager@gmail.com",
+  password: "123456",
+  password_confirmation: "123456",
+  role: "admin",
+)
+
+Branch.create!(
+  name: "Hồ Chí Minh",
+  address: "Hồ Chí Minh - Việt Nam",
+  branch_code: "HCM",
+  email: "hochiminhbranch@gmail.com",
+  contact: Faker::PhoneNumber.unique.phone_number
+)
+
+Branch.create!(
+  name: "Đà Nẵng",
+  address: "Đà Nẵng - Việt Nam",
+  branch_code: "DN",
+  email: "danangbranch@gmail.com",
+  contact: Faker::PhoneNumber.unique.phone_number
+)
+
+Branch.create!(
+  name: "Hà Nội",
+  address: "Hà Nội - Việt Nam",
+  branch_code: "HN",
+  email: "hanoibranch@gmail.com",
+  contact: Faker::PhoneNumber.unique.phone_number
+)
+
+20.times do |n|
+  name = Faker::Name.unique.name
+  email = "employeetest-#{n+1}@gmail.com"
+  password = "123456"
+
+  Employee.create!(
+    name: name,
     email: email,
     password: password,
     password_confirmation: password,
-    activated: true,
-    activated_at: Time.zone.now)
+    role: "employee",
+    branch_id: [1, 2, 3].sample
+  )
 end
 
-users = User.order(:created_at).take(6)
+5.times do
+  name = Faker::Book.unique.genre
+  Category.create! name:name
+end
+
+10.times do |n|
+  name = Faker::Name.unique.name
+  phone_num = Faker::PhoneNumber.unique.phone_number
+  address = Faker::Address.full_address
+  email = "suppliertest-#{n+1}@gmail.com"
+  Supplier.create!(
+    name: name,
+    contact: phone_num,
+    address: address,
+    email: email,
+  )
+end
+
+10.times do |n|
+  name = Faker::Name.unique.name
+  phone_num = Faker::PhoneNumber.unique.phone_number
+  address = Faker::Address.full_address
+  email = "suppliertest-#{n+1}@gmail.com"
+  Supplier.create!(
+    name: name,
+    contact: phone_num,
+    address: address,
+    email: email,
+  )
+end
+
+10.times do |n|
+  batch_code = Faker::Code.nric
+  expired_date = Faker::Date.between(from: 60.days.ago, to: Date.today)
+
+  BatchInventory.create!(
+    batch_code: batch_code,
+    expired_date: expired_date
+  )
+end
+
 50.times do
-  content = "hello"
-  users.each { |user| user.microposts.create!(content: content) }
+  name = Faker::Book.unique.title
+  price = Faker::Commerce.price(range: 1..100)
+  inventory_type = ["pill", "blister_packs", "pill_pack", "pill_bottle"].sample
+  quantity = Faker::Number.between(from: 50, to: 100)
+  inventory_code = Faker::Code.nric
+  main_ingredient = Faker::IndustrySegments.sector
+  producer = Faker::Nation.nationality
+  # image = Faker::Avatar.image
+  Inventory.create!(
+              name: name,
+              price: price,
+              #  image: image,
+               inventory_type: inventory_type,
+               inventory_code: inventory_code,
+               quantity: quantity,
+               main_ingredient: main_ingredient,
+               producer: producer,
+               category_id: Category.all.pluck(:id).sample,
+               batch_inventory_id: BatchInventory.all.pluck(:id).sample,
+               supplier_id: Supplier.all.pluck(:id).sample,
+               branch_id: Branch.all.pluck(:id).sample,
+               created_at: (rand*30).days.ago
+  )
 end
 
-users = User.all
-user = users.first
-following = users[2..50]
-followers = users[3..40]
-following.each {|followed| user.follow(followed)}
-followers.each {|follower| follower.follow(user)}
+50.times do
+  price = Faker::Commerce.price(range: 1..100)
+  quantity = Faker::Number.between(from: 50, to: 100)
+  import_inventory_code = Faker::Code.nric
+  ImportInventory.create!(
+              price: price,
+              import_inventory_code: import_inventory_code,
+              quantity: quantity,
+              batch_inventory_id: BatchInventory.all.pluck(:id).sample,
+              supplier_id: Supplier.all.pluck(:id).sample,
+              branch_id: Branch.all.pluck(:id).sample,
+              inventory_id: Inventory.all.pluck(:id).sample,
+              created_at: (rand*30).days.ago,
+  )
+end
+
+50.times do
+  total_price = Faker::Commerce.price(range: 1..100)
+  total_quantity = Faker::Number.between(from: 10, to: 50)
+  order_code = Faker::Code.nric
+  customer_name = Faker::Name.unique.name
+  Order.create!(
+    total_price: total_price,
+    order_code: order_code,
+    customer_name: customer_name,
+              total_quantity: total_quantity,
+              branch_id: Branch.all.pluck(:id).sample,
+              inventory_id: Inventory.all.pluck(:id).sample,
+              created_at: (rand*30).days.ago,
+  )
+end
