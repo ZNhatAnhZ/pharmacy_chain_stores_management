@@ -1,8 +1,8 @@
 module Api
   module V1
-    module Ad
+    module Manager
       class CategoriesController < Base
-        before_action :authenticate_admin!
+        before_action :authenticate_manager!
         before_action :find_category, except: %i(create index)
 
         def index

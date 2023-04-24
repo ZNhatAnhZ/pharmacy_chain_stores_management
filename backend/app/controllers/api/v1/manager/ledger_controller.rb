@@ -1,8 +1,8 @@
 module Api
   module V1
-    module Ad
+    module Manager
       class LedgerController < Base
-        before_action :authenticate_admin!
+        before_action :authenticate_manager!
 
         def index
           @orders = Order.search_by_branch(params["branch_id"]).time_between(params[:start_date]&.to_time, params[:end_date]&.to_time)

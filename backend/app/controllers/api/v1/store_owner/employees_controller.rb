@@ -6,11 +6,47 @@ module Api
       before_action :correct_employee, only: %i(update)
       before_action :admin_employee, only: %i(destroy)
 
+      def index
+        @employees = Employee.all
+        render json: {
+          data: ActiveModelSerializers::SerializableResource.new(@employees, each_serializer: EmployeeSerializer),
+          message: ["employee list fetched successfully"],
+          status: 200,
+          type: "Success",
+        }
+      end
+
       def show
         render json: @current_employee.as_json(
           except: :id,
           include: { branch: { except: %i[id] } }
         ), status: :ok
+      end
+
+      def update
+        if @employee.update! employee_params
+          render json: {
+            data: ActiveModelSerializers::SerializableResource.new(@employee, serializer: EmployeeSerializer),
+            message: ["employee update fetched successfully"],
+            status: 200,
+            type: "Success"
+          }
+        else
+          render json: @employee, status: :updated, location: @employee
+        end
+      end
+
+      def destroy
+        if @employee.destroy!
+          render json: {
+            data: ActiveModelSerializers::SerializableResource.new(@employee, serializer: EmployeeSerializer),
+            message: ["employee destroy fetched successfully"],
+            status: 200,
+            type: "Success"
+          }
+        else
+          render json: @employee, status: :deleted, location: @employee
+        end
       end
 
       def create
@@ -26,7 +62,7 @@ module Api
       private
 
       def employee_params
-        params.permit()
+        params.permit(Employee::EMPLOYEE_ATTRS)
       end
 
       def find_employee

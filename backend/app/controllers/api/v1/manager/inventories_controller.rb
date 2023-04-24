@@ -1,14 +1,14 @@
 module Api
   module V1
-    module Ad
+    module Manager
       class InventoriesController < Base
-        before_action :authenticate_admin!
+        before_action :authenticate_manager!
         before_action :find_inventory, only: %i(show update destroy)
 
         def index
           @inventories = Inventory.search_by_name(params["search_name"]).search_by_branch(params["branch_id"]).sort_price(params["sort_price"]).sort_created_time(params["created_time"])
           @inventories = @inventories.most_ordered if params["most_ordered"] == true
-          
+
           render json: @inventories.map {|inventory|
             if inventory.image.attached?
               inventory.as_json(except: %i[category_id batch_inventory_id supplier_id branch_id]).merge({image: url_for(inventory.image)})
