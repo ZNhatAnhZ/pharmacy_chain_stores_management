@@ -34,7 +34,7 @@ class AuthService {
   }
 
   Future<Map> employeeRegister(Employee employee) async {
-    final response = await http.post(Uri.parse('$BASE_URL/api/v1/employees'),
+    final response = await http.post(Uri.http(BASE_URL, '/api/v1/employees'),
         body: {
           'name': employee.name,
           'password': employee.password,

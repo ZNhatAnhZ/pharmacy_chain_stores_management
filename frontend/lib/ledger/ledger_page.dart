@@ -74,7 +74,7 @@ class _LedgerPage extends State<LedgerPage> {
               bottom: 10,
             ),
             child: Text(
-              "Drug inventory",
+              "Sổ quỹ",
               style: TextStyle(fontSize: 20),
             ),
           ),

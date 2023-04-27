@@ -342,136 +342,129 @@ class _InventoryPage extends State<InventoryPage> {
             width: 10,
           ),
           Column(
-            children: [
-              SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: Container(
-                    width: MediaQuery.of(context).size.width - 190,
-                    child: Scrollbar(
-                      controller: scrollController,
-                      child: SingleChildScrollView(
+            children: <Widget>[
+              Expanded(
+                child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Container(
+                      width: MediaQuery.of(context).size.width - 190,
+                      child: Scrollbar(
                         controller: scrollController,
-                        scrollDirection: Axis.horizontal,
-                        child: ConstrainedBox(
-                          constraints: BoxConstraints(
-                              minWidth:
-                                  MediaQuery.of(context).size.width - 190),
-                          child: DataTable(
-                            border: TableBorder(
-                                left: BorderSide(color: Colors.black)),
-                            showCheckboxColumn: false,
-                            columns: [
-                              DataColumn(
-                                label: Text("Id"),
-                                numeric: false,
-                              ),
-                              DataColumn(
-                                label: Text("Mã thuốc"),
-                                numeric: false,
-                              ),
-                              DataColumn(
-                                label: Text("Tên thuốc"),
-                                numeric: false,
-                              ),
-                              DataColumn(
-                                label: Text("Giá"),
-                                numeric: false,
-                              ),
-                              DataColumn(
-                                label: Text("Batch code"),
-                                numeric: false,
-                              ),
-                              DataColumn(
-                                label: Text("Thành phần chính"),
-                                numeric: false,
-                              ),
-                              DataColumn(
-                                label: Text("Tên nhà sản xuất"),
-                                numeric: false,
-                              ),
-                              DataColumn(
-                                label: Text("Loại thuốc"),
-                                numeric: false,
-                              ),
-                              DataColumn(
-                                label: Text("Số lần được đặt"),
-                                numeric: false,
-                              ),
-                              DataColumn(
-                                label: Text("Ngày tạo"),
-                                numeric: false,
-                              ),
-                            ],
-                            rows: inventorys
-                                .map(
-                                  (inventory) => DataRow(
-                                    onSelectChanged: (value) {
-                                      Navigator.pushNamed(
-                                          context, '/inventory_detail',
-                                          arguments: inventory);
-                                    },
-                                    cells: [
-                                      DataCell(
-                                        Text(
-                                          inventory.id!.toString(),
+                        child: SingleChildScrollView(
+                          controller: scrollController,
+                          scrollDirection: Axis.horizontal,
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(
+                                minWidth:
+                                    MediaQuery.of(context).size.width - 190),
+                            child: DataTable(
+                              border: TableBorder(
+                                  left: BorderSide(color: Colors.black)),
+                              showCheckboxColumn: false,
+                              columns: [
+                                DataColumn(
+                                  label: Text("Id"),
+                                  numeric: false,
+                                ),
+                                DataColumn(
+                                  label: Text("Mã thuốc"),
+                                  numeric: false,
+                                ),
+                                DataColumn(
+                                  label: Text("Tên thuốc"),
+                                  numeric: false,
+                                ),
+                                DataColumn(
+                                  label: Text("Giá"),
+                                  numeric: false,
+                                ),
+                                DataColumn(
+                                  label: Text("Batch code"),
+                                  numeric: false,
+                                ),
+                                DataColumn(
+                                  label: Text("Tên nhà sản xuất"),
+                                  numeric: false,
+                                ),
+                                DataColumn(
+                                  label: Text("Loại thuốc"),
+                                  numeric: false,
+                                ),
+                                DataColumn(
+                                  label: Text("Số lần được đặt"),
+                                  numeric: false,
+                                ),
+                                DataColumn(
+                                  label: Text("Ngày tạo"),
+                                  numeric: false,
+                                ),
+                              ],
+                              rows: inventorys
+                                  .map(
+                                    (inventory) => DataRow(
+                                      onSelectChanged: (value) {
+                                        Navigator.pushNamed(
+                                            context, '/inventory_detail',
+                                            arguments: inventory);
+                                      },
+                                      cells: [
+                                        DataCell(
+                                          Text(
+                                            inventory.id!.toString(),
+                                          ),
                                         ),
-                                      ),
-                                      DataCell(
-                                        Text(
-                                          inventory.inventory_code!,
+                                        DataCell(
+                                          Text(
+                                            inventory.inventory_code!,
+                                          ),
                                         ),
-                                      ),
-                                      DataCell(
-                                        Text(
-                                          inventory.name!,
+                                        DataCell(
+                                          Text(
+                                            inventory.name!,
+                                          ),
                                         ),
-                                      ),
-                                      DataCell(
-                                        Text(
-                                          inventory.price.toString(),
+                                        DataCell(
+                                          Text(
+                                            inventory.price.toString(),
+                                          ),
                                         ),
-                                      ),
-                                      DataCell(
-                                        Text(
-                                          inventory
-                                              .batch_inventory!.batch_code!,
+                                        DataCell(
+                                          Text(
+                                            inventory
+                                                .batch_inventory!.batch_code!,
+                                          ),
                                         ),
-                                      ),
-                                      DataCell(
-                                        Text(
-                                          inventory.main_ingredient!,
+                                        DataCell(
+                                          Text(
+                                            inventory.producer!,
+                                          ),
                                         ),
-                                      ),
-                                      DataCell(
-                                        Text(
-                                          inventory.producer!,
+                                        DataCell(
+                                          Text(
+                                            inventory.inventory_type!,
+                                          ),
                                         ),
-                                      ),
-                                      DataCell(
-                                        Text(
-                                          inventory.inventory_type!,
+                                        DataCell(
+                                          Text(
+                                            inventory.total_order_quantity
+                                                .toString(),
+                                          ),
                                         ),
-                                      ),
-                                      DataCell(
-                                        Text(
-                                          inventory.total_order_quantity
-                                              .toString(),
+                                        DataCell(
+                                          Text(
+                                            inventory.created_date!,
+                                          ),
                                         ),
-                                      ),
-                                      DataCell(
-                                        Text(
-                                          inventory.created_date!,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                                .toList(),
+                                      ],
+                                    ),
+                                  )
+                                  .toList(),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  )),
+                    )),
+              ),
             ],
           ),
         ],

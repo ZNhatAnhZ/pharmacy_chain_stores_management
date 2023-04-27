@@ -34,7 +34,8 @@ class BatchInventoryService {
   Future<BatchInventory> createBatchInventory(
       String token, String batch_code, String expired_date) async {
     final response = await http
-        .post(Uri.parse('$BASE_URL/api/v1/batch_inventories'), headers: {
+        .post(Uri.http(BASE_URL, '/api/v1/batch_inventories'), headers: {
+
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     }, body: {

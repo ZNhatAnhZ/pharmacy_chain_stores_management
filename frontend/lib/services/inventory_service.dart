@@ -96,12 +96,13 @@ class InventoryService {
   Future<Inventory> createInventory(
       String token, Map data, Uint8List image) async {
     var request = http.MultipartRequest(
-        'POST', Uri.parse('$BASE_URL/api/v1/inventories'));
+        'POST', Uri.http(BASE_URL, '/api/v1/inventories'));
 
     request.files.add(http.MultipartFile.fromBytes("image", image,
         filename: data['image_name'], contentType: MediaType('image', 'jpeg')));
 
     request.headers.addAll({
+      'Access-Control-Allow-Origin': '*',
       'Authorization': 'Bearer $token',
     });
 
@@ -332,7 +333,7 @@ class InventoryService {
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           fontSize: 16.0);
-          return true;
+      return true;
     } else {
       throw Exception(response.body);
     }

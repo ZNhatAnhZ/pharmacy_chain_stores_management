@@ -125,7 +125,9 @@ class _InventoryDetailModifyState extends State<InventoryDetailModify> {
         }
       });
 
-      txt.text = inventory.image!.split("/").elementAt(8);
+      if (inventory.image!.length > 3) {
+        txt.text = inventory.image!.split("/").elementAt(8);
+      }
 
       newInventory["id"] = inventory.id.toString();
       newInventory["name"] = inventory.name;

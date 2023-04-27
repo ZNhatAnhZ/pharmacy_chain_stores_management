@@ -44,7 +44,7 @@ class OrderService {
   Future<Order> createOrder(String token, Map data) async {
     inspect(data);
     final response =
-        await http.post(Uri.parse('$BASE_URL/api/v1/orders'), headers: {
+        await http.post(Uri.http(BASE_URL, '/api/v1/orders'), headers: {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     }, body: {

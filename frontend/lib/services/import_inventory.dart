@@ -43,7 +43,7 @@ class ImportInventoryService {
 
   Future<ImportInventory> createImportInventory(String token, Map data) async {
     final response = await http
-        .post(Uri.parse('$BASE_URL/api/v1/import_inventories'), headers: {
+        .post(Uri.http(BASE_URL, '/api/v1/import_inventories'), headers: {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     }, body: {

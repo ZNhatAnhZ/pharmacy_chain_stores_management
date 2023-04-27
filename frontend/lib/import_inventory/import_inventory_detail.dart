@@ -33,7 +33,7 @@ class _ImportInventoryDetailState extends State<ImportInventoryDetail> {
     if (isCalled == false && auth.isLoggedIn) {
       inventoryService
           .getAllInventory(
-              auth.employee['access_token'], auth.employee['access_token'], '')
+              auth.employee['access_token'], auth.employee['role'], '')
           .then((result) {
         setState(() {
           inventorys = List.from(result);

@@ -22,7 +22,8 @@ class _SellingDrugState extends State<SellingDrug> {
   void getAllInventory(AuthBlock auth) {
     if (isCalled == false && auth.isLoggedIn) {
       inventoryService
-          .getAllInventory(auth.employee['access_token'], auth.employee['role'], '')
+          .getAllInventory(
+              auth.employee['access_token'], auth.employee['role'], '')
           .then((result) {
         setState(() {
           inventorys = List.from(result);
