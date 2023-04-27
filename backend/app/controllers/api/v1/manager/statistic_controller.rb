@@ -1,8 +1,8 @@
 module Api
   module V1
-    module Ad
+    module Manager
       class StatisticController < Base
-        before_action :authenticate_admin!
+        before_action :authenticate_manager!
 
         def get_total_order_price
           @orders_all = Order.search_by_branch(params["branch_id"])

@@ -1,7 +1,7 @@
 class Employee < ApplicationRecord
   attr_accessor :remember_token, :activation_token, :reset_token
   belongs_to :branch, optional: true
-  enum role: {admin: 0, employee: 1}
+  enum role: {admin: 0, employee: 1, store_owner: 2}
   scope :latest_employee, ->{order(created_at: :desc)}
   scope :search_by_branch, lambda { |branch_id| where(branch_id: branch_id) if branch_id.present? }
   EMPLOYEE_ATTRS = %w(name email password password_confirmation branch_id).freeze
