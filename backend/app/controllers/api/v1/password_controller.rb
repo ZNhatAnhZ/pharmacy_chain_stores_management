@@ -3,7 +3,7 @@ module Api
     class PasswordController < Base
       def forgot
         if params[:email].blank?
-          return render json: {error: 'Email not present'}
+          return render json: {error: 'Email not present'}, status: :not_found
         end
 
         employee = Employee.find_by(email: params[:email].downcase)
@@ -21,7 +21,7 @@ module Api
         token = params[:token].to_s
 
         if params[:email].blank?
-          return render json: {error: 'Token not present'}
+          return render json: {error: 'Token not present'}, status: :not_found
         end
 
         employee = Employee.find_by(reset_password_token: token)
@@ -30,7 +30,7 @@ module Api
           if employee.reset_password!(params[:password])
             render json: {status: 'ok'}, status: :ok
           else
-            render json: {error: employee.errors.full_messages}, status: :unprocessable_entity
+            render json: {error: employee.errors.full_messages}, status: :bad_request
           end
         else
           render json: {error:  ['Link not valid or expired. Try generating a new link.']}, status: :not_found

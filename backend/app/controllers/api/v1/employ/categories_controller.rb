@@ -1,9 +1,7 @@
 module Api
   module V1
-    module StoreOwner
+    module Employ
       class CategoriesController < Base
-        before_action :authenticate_store_owner!
-
         def index
           @categories = Category.all
 

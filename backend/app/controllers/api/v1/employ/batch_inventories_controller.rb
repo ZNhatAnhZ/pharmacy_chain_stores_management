@@ -1,8 +1,8 @@
 module Api
   module V1
-    module StoreOwner
+    module Employ
       class BatchInventoriesController < Base
-        before_action :authenticate_store_owner!
+        before_action :authenticate_employee!
         before_action :find_batch_inventory, except: %i(create index get_all_expired)
 
         def index
