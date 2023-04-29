@@ -13,7 +13,7 @@ class HeaderStatisticService {
     if (role == 'employee') {
       url = '/api/v1/statistic/header_statistic';
     } else {
-      url = '/api/v1/ad/statistic/header_statistic';
+      url = '/api/v1/manager/statistic/header_statistic';
     }
     final response = await http.get(Uri.http(BASE_URL, url), headers: {
       'Content-Type': 'application/json',

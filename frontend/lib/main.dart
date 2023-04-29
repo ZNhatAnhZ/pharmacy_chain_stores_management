@@ -13,6 +13,7 @@ import 'package:medical_chain_manangement/inventory/inventory_page.dart';
 import 'package:medical_chain_manangement/import_inventory/import_inventory_detail.dart';
 import 'package:medical_chain_manangement/ledger/ledger_page.dart';
 import 'package:medical_chain_manangement/partner/partner_detail.dart';
+import 'package:medical_chain_manangement/resetPassword/reset_password.dart';
 import 'package:medical_chain_manangement/selling_drug/selling_drug.dart';
 import 'package:medical_chain_manangement/store/store.dart';
 import 'package:medical_chain_manangement/transaction/transaction_in.dart';
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: '/auth',
+      initialRoute: '/',
       routes: {
         '/': (context) => HomePage(),
         '/auth': (context) => EmployeeAuth(),
@@ -68,6 +69,7 @@ class MyApp extends StatelessWidget {
         '/employee_detail': (context) => EmployeeDetail(),
         '/employee_modify': (context) => EmployeeModify(),
         '/employee_add': (context) => AddEmployee(),
+        '/reset_password': (context) => ResetPassword(),
       },
     );
   }

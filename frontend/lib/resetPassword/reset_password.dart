@@ -1,42 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:medical_chain_manangement/blocks/auth_block.dart';
-import 'package:medical_chain_manangement/models/employee.dart';
-import 'package:dropdown_search/dropdown_search.dart';
+import 'package:medical_chain_manangement/services/forgot_password_service.dart';
 import 'package:provider/provider.dart';
 
-class Settings extends StatefulWidget {
+class ResetPassword extends StatefulWidget {
   @override
-  _SettingsState createState() => _SettingsState();
+  _ResetPasswordState createState() => _ResetPasswordState();
 }
 
-class _SettingsState extends State<Settings> {
-  // void initialize_employee_value(Employee employee) {
-  //   if (isCalled && isCalled1 == false) {
-  //     branches.forEach((branch) {
-  //       if (branch.id == employee.branch_id) {
-  //         selectedBranch = branch.id.toString() + ": " + branch.name!;
-  //       }
-  //     });
-
-  //     newEmployee['id'] = employee.id.toString();
-  //     newEmployee['name'] = employee.name!;
-  //     newEmployee['email'] = employee.email!;
-  //     newEmployee['branch_id'] = employee.branch_id.toString();
-
-  //     isCalled1 = true;
-  //   }
-  // }
-
-  Map newEmployee = {};
-  String selectedBranch = '';
+class _ResetPasswordState extends State<ResetPassword> {
+  String forgotPasswordToken = '';
+  String password = '';
+  ForgotPasswordService forgotPasswordService = ForgotPasswordService();
 
   @override
   Widget build(BuildContext context) {
     AuthBlock auth = Provider.of<AuthBlock>(context);
+    final String email = ModalRoute.of(context)!.settings.arguments as String;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Sửa thông tin tài khoản"),
+        title: const Text("Reset password"),
       ),
       body: Center(
         child: Form(
@@ -49,42 +33,40 @@ class _SettingsState extends State<Settings> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 12.0),
                     child: TextFormField(
-                      // initialValue: employee.name,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return 'Nhập tên tài khoản';
+                          return 'Nhập mã thay đổi mật khẩu đã gửi về email';
                         }
                         return null;
                       },
                       onChanged: (value) {
                         setState(() {
-                          newEmployee['name'] = value;
+                          forgotPasswordToken = value;
                         });
                       },
                       decoration: InputDecoration(
-                        hintText: 'Nhập tên tài khoản',
-                        labelText: 'Nhập tên tài khoản',
+                        hintText: 'Nhập mã thay đổi mật khẩu đã gửi về email',
+                        labelText: 'Nhập mã thay đổi mật khẩu đã gửi về email',
                       ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 12.0),
                     child: TextFormField(
-                      // initialValue: employee.email,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return 'Hãy nhập email';
+                          return 'Hãy nhập mật khẩu mới';
                         }
                         return null;
                       },
                       onChanged: (value) {
                         setState(() {
-                          newEmployee['email'] = value;
+                          password = value;
                         });
                       },
                       decoration: InputDecoration(
-                        hintText: 'Nhập email',
-                        labelText: 'Nhập email',
+                        hintText: 'Hãy nhập mật khẩu mới',
+                        labelText: 'Hãy nhập mật khẩu mới',
                       ),
                     ),
                   ),
@@ -99,7 +81,12 @@ class _SettingsState extends State<Settings> {
                           ),
                           child: Text('Submit',
                               style: TextStyle(color: Colors.white)),
-                          onPressed: () {},
+                          onPressed: () {
+                            forgotPasswordService
+                                .resetPassword(
+                                    email, forgotPasswordToken, password)
+                                .then((value) => {Navigator.pop(context)});
+                          },
                         )),
                   ),
                 ],

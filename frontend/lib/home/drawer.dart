@@ -134,7 +134,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 ListTile(
                   leading: Icon(Icons.lock,
                       color: Theme.of(context).colorScheme.secondary),
-                  title: Text('Login'),
+                  title: Text('Đăng nhập'),
                   onTap: () {
                     Navigator.pop(context);
                     Navigator.pushNamed(context, '/auth');
@@ -144,7 +144,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 ListTile(
                   leading: Icon(Icons.settings,
                       color: Theme.of(context).colorScheme.secondary),
-                  title: Text('Settings'),
+                  title: Text('Sửa thông tin tài khoản'),
                   onTap: () {
                     Navigator.pop(context);
                     Navigator.pushNamed(context, '/settings');
@@ -154,7 +154,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 ListTile(
                   leading: Icon(Icons.exit_to_app,
                       color: Theme.of(context).colorScheme.secondary),
-                  title: Text('Logout'),
+                  title: Text('Đăng xuất'),
                   onTap: () async {
                     await auth.logout();
                     Navigator.pop(context);

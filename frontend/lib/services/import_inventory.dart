@@ -14,7 +14,7 @@ class ImportInventoryService {
     if (role == 'employee') {
       url = '/api/v1/import_inventories';
     } else {
-      url = '/api/v1/ad/import_inventories';
+      url = '/api/v1/manager/import_inventories';
     }
     if (branch_id == '-1') {
       branch_id = '';
@@ -73,7 +73,7 @@ class ImportInventoryService {
     if (role == 'employee') {
       url = '/api/v1/export_csv/export_import_inventory';
     } else {
-      url = '/api/v1/ad/export_csv/export_import_inventory';
+      url = '/api/v1/manager/export_csv/export_import_inventory';
     }
     if (branch_id == '-1') {
       branch_id = '';

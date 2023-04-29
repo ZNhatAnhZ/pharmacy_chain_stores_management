@@ -12,7 +12,7 @@ class BranchService {
     if (role == 'employee') {
       url = '/api/v1/branches';
     } else {
-      url = '/api/v1/ad/branches';
+      url = '/api/v1/manager/branches';
     }
     final response = await http.get(Uri.http(BASE_URL, url), headers: {
       'Content-Type': 'application/json',

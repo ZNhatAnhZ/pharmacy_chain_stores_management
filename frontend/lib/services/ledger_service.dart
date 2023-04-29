@@ -15,7 +15,7 @@ class LedgerService {
     if (role == 'employee') {
       url = '/api/v1/ledger';
     } else {
-      url = '/api/v1/ad/ledger';
+      url = '/api/v1/manager/ledger';
     }
     final response = await http.get(
         Uri.http(BASE_URL, url, {
@@ -44,7 +44,7 @@ class LedgerService {
     if (role == 'employee') {
       url = '/api/v1/export_csv/export_ledger';
     } else {
-      url = '/api/v1/ad/export_csv/export_ledger';
+      url = '/api/v1/manager/export_csv/export_ledger';
     }
     if (branch_id == '-1') {
       branch_id = '';

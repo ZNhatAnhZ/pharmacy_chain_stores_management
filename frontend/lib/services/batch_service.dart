@@ -13,7 +13,7 @@ class BatchInventoryService {
     if (role == 'employee') {
       url = '/api/v1/batch_inventories';
     } else {
-      url = '/api/v1/ad/batch_inventories';
+      url = '/api/v1/manager/batch_inventories';
     }
     final response = await http.get(Uri.http(BASE_URL, url), headers: {
       'Content-Type': 'application/json',
@@ -35,7 +35,6 @@ class BatchInventoryService {
       String token, String batch_code, String expired_date) async {
     final response = await http
         .post(Uri.http(BASE_URL, '/api/v1/batch_inventories'), headers: {
-
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     }, body: {

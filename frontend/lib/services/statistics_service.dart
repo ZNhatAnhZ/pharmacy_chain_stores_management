@@ -12,7 +12,7 @@ class StatisticsService {
     if (role == 'employee') {
       url = '/api/v1/statistic/get_revenue_order';
     } else {
-      url = '/api/v1/ad/statistic/get_revenue_order';
+      url = '/api/v1/manager/statistic/get_revenue_order';
     }
 
     final response = await http.get(Uri.http(BASE_URL, url), headers: {
@@ -38,7 +38,7 @@ class StatisticsService {
     if (role == 'employee') {
       url = '/api/v1/statistic/get_revenue_import_inventory';
     } else {
-      url = '/api/v1/ad/statistic/get_revenue_import_inventory';
+      url = '/api/v1/manager/statistic/get_revenue_import_inventory';
     }
 
     final response = await http.get(Uri.http(BASE_URL, url), headers: {
@@ -59,12 +59,12 @@ class StatisticsService {
     }
   }
 
-    Future<List<BarModel>> getCountOrder(String token, String role) async {
+  Future<List<BarModel>> getCountOrder(String token, String role) async {
     String url;
     if (role == 'employee') {
       url = '/api/v1/statistic/get_order_count';
     } else {
-      url = '/api/v1/ad/statistic/get_order_count';
+      url = '/api/v1/manager/statistic/get_order_count';
     }
 
     final response = await http.get(Uri.http(BASE_URL, url), headers: {
@@ -85,12 +85,12 @@ class StatisticsService {
     }
   }
 
-      Future<List<BarModel>> getCountImport(String token, String role) async {
+  Future<List<BarModel>> getCountImport(String token, String role) async {
     String url;
     if (role == 'employee') {
       url = '/api/v1/statistic/get_import_inventory_count';
     } else {
-      url = '/api/v1/ad/statistic/get_import_inventory_count';
+      url = '/api/v1/manager/statistic/get_import_inventory_count';
     }
 
     final response = await http.get(Uri.http(BASE_URL, url), headers: {

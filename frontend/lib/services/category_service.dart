@@ -12,7 +12,7 @@ class CategoryService {
     if (role == 'employee') {
       url = '/api/v1/categories';
     } else {
-      url = '/api/v1/ad/categories';
+      url = '/api/v1/manager/categories';
     }
     final response = await http.get(Uri.http(BASE_URL, url), headers: {
       'Content-Type': 'application/json',

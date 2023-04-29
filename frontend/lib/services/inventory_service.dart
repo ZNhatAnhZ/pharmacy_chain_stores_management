@@ -20,7 +20,7 @@ class InventoryService {
     if (role == 'employee') {
       url = '/api/v1/inventories';
     } else {
-      url = '/api/v1/ad/inventories';
+      url = '/api/v1/manager/inventories';
     }
     final response = await http
         .get(Uri.http(BASE_URL, url, {'branch_id': branch_id}), headers: {
@@ -67,7 +67,7 @@ class InventoryService {
     if (role == 'employee') {
       url = '/api/v1/inventories';
     } else {
-      url = '/api/v1/ad/inventories';
+      url = '/api/v1/manager/inventories';
     }
     final response = await http.get(
         Uri.http(BASE_URL, url, {
@@ -144,7 +144,7 @@ class InventoryService {
     if (role == 'employee') {
       url = '/api/v1/inventories/';
     } else {
-      url = '/api/v1/ad/inventories/';
+      url = '/api/v1/manager/inventories/';
     }
     var request =
         http.MultipartRequest('PUT', Uri.http(BASE_URL, url + inventory_id));
@@ -193,7 +193,7 @@ class InventoryService {
     if (role == 'employee') {
       url = '/api/v1/inventories/';
     } else {
-      url = '/api/v1/ad/inventories/';
+      url = '/api/v1/manager/inventories/';
     }
     final response = await http.delete(Uri.http(BASE_URL, url + id), headers: {
       'Content-Type': 'application/json',
@@ -218,7 +218,7 @@ class InventoryService {
     if (role == 'employee') {
       url = '/api/v1/export_csv/export_inventory';
     } else {
-      url = '/api/v1/ad/export_csv/export_inventory';
+      url = '/api/v1/manager/export_csv/export_inventory';
     }
     if (branch_id == '-1') {
       branch_id = '';
@@ -237,7 +237,7 @@ class InventoryService {
     if (role == 'employee') {
       url = '/api/v1/inventories/get_expired';
     } else {
-      url = '/api/v1/ad/inventories/get_expired';
+      url = '/api/v1/manager/inventories/get_expired';
     }
     final response = await http.get(
         Uri.http(BASE_URL, url, {'day_left': '0', 'branch_id': branch_id}),
@@ -267,7 +267,7 @@ class InventoryService {
     if (role == 'employee') {
       url = '/api/v1/inventories/get_out_of_stock';
     } else {
-      url = '/api/v1/ad/inventories/get_out_of_stock';
+      url = '/api/v1/manager/inventories/get_out_of_stock';
     }
     final response = await http.get(
         Uri.http(BASE_URL, url, {'quantity_left': '0', 'branch_id': branch_id}),
@@ -293,7 +293,7 @@ class InventoryService {
     if (role == 'employee') {
       url = '/api/v1/inventories/destroy_all_expired';
     } else {
-      url = '/api/v1/ad/inventories/destroy_all_expired';
+      url = '/api/v1/manager/inventories/destroy_all_expired';
     }
     final response = await http.delete(Uri.http(BASE_URL, url), headers: {
       'Content-Type': 'application/json',
@@ -318,7 +318,7 @@ class InventoryService {
     if (role == 'employee') {
       url = '/api/v1/inventories/send_request_mail_to_supplier';
     } else {
-      url = '/api/v1/ad/inventories/send_request_mail_to_supplier';
+      url = '/api/v1/manager/inventories/send_request_mail_to_supplier';
     }
     final response = await http
         .get(Uri.http(BASE_URL, url, {'quantity_left': '0'}), headers: {

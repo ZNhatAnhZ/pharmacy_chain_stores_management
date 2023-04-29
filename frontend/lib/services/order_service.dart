@@ -14,7 +14,7 @@ class OrderService {
     if (role == 'employee') {
       url = '/api/v1/orders';
     } else {
-      url = '/api/v1/ad/orders';
+      url = '/api/v1/manager/orders';
     }
     if (branch_id == '-1') {
       branch_id = '';
@@ -72,7 +72,7 @@ class OrderService {
     if (role == 'employee') {
       url = '/api/v1/export_csv/export_order';
     } else {
-      url = '/api/v1/ad/export_csv/export_order';
+      url = '/api/v1/manager/export_csv/export_order';
     }
     if (branch_id == '-1') {
       branch_id = '';

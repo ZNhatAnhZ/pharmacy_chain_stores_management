@@ -17,7 +17,7 @@ class EmployeeService {
     if (role == 'employee') {
       url = '/api/v1/employees';
     } else {
-      url = '/api/v1/ad/employees';
+      url = '/api/v1/manager/employees';
     }
     final response = await http.get(
         Uri.http(BASE_URL, url, {
@@ -44,7 +44,7 @@ class EmployeeService {
     if (role == 'employee') {
       url = '/api/v1/export_csv/export_inventory';
     } else {
-      url = '/api/v1/ad/export_csv/export_inventory';
+      url = '/api/v1/manager/export_csv/export_inventory';
     }
     if (branch_id == '-1') {
       branch_id = '';
@@ -60,7 +60,7 @@ class EmployeeService {
     if (role == 'employee') {
       url = '/api/v1/employees/';
     } else {
-      url = '/api/v1/ad/employees/';
+      url = '/api/v1/manager/employees/';
     }
     final response = await http.put(
         Uri.http(BASE_URL, url + employee_id, {
@@ -92,7 +92,7 @@ class EmployeeService {
     if (role == 'employee') {
       url = '/api/v1/employees/';
     } else {
-      url = '/api/v1/ad/employees/';
+      url = '/api/v1/manager/employees/';
     }
     final response = await http.delete(Uri.http(BASE_URL, url + id), headers: {
       'Content-Type': 'application/json',
@@ -117,7 +117,7 @@ class EmployeeService {
     if (role == 'employee') {
       url = '/api/v1/employees';
     } else {
-      url = '/api/v1/ad/employees';
+      url = '/api/v1/manager/employees';
     }
     final response = await http.post(Uri.http(BASE_URL, url), headers: {
       'Accept': 'application/json',

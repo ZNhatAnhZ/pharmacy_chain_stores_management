@@ -14,7 +14,7 @@ class SupplierService {
     if (role == 'employee') {
       url = '/api/v1/suppliers';
     } else {
-      url = '/api/v1/ad/suppliers';
+      url = '/api/v1/manager/suppliers';
     }
     final response = await http.get(Uri.http(BASE_URL, url), headers: {
       'Content-Type': 'application/json',
@@ -32,14 +32,16 @@ class SupplierService {
     }
   }
 
-    Future<List<Inventory>> getAllInventoriesOfSupplier(String token, String role, int supplier_id) async {
+  Future<List<Inventory>> getAllInventoriesOfSupplier(
+      String token, String role, int supplier_id) async {
     String url;
     if (role == 'employee') {
       url = '/api/v1/suppliers/';
     } else {
-      url = '/api/v1/ad/suppliers/';
+      url = '/api/v1/manager/suppliers/';
     }
-    final response = await http.get(Uri.http(BASE_URL, url+supplier_id.toString()), headers: {
+    final response = await http
+        .get(Uri.http(BASE_URL, url + supplier_id.toString()), headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
@@ -47,8 +49,8 @@ class SupplierService {
     if (response.statusCode == 200) {
       Map<dynamic, dynamic> parsedListJson = jsonDecode(response.body);
       print(parsedListJson);
-      List<Inventory> result = List<Inventory>.from(
-          parsedListJson['inventory'].map<Inventory>((dynamic i) => Inventory.fromJson(i)));
+      List<Inventory> result = List<Inventory>.from(parsedListJson['inventory']
+          .map<Inventory>((dynamic i) => Inventory.fromJson(i)));
       return result;
     } else {
       throw Exception(response.body);
