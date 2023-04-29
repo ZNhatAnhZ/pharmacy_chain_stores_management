@@ -1,8 +1,8 @@
 module Api
   module V1
-    module Manager
+    module Ad
       class EmployeesController < Base
-        before_action :authenticate_manager!
+        before_action :authenticate_admin!
         before_action :find_employee, except: %i(create index)
 
         def index
@@ -50,7 +50,7 @@ module Api
         private
 
         def employee_params
-          params.permit()
+          params.permit(Employee::EMPLOYEE_ATTRS)
         end
 
         def find_employee

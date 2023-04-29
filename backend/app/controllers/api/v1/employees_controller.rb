@@ -6,6 +6,16 @@ module Api
       before_action :correct_employee, only: %i(update)
       before_action :admin_employee, only: %i(destroy)
 
+      def index
+        @employees = Employee.all
+        render json: {
+          data: ActiveModelSerializers::SerializableResource.new(@employees, each_serializer: EmployeeSerializer),
+          message: ["employee list fetched successfully"],
+          status: 200,
+          type: "Success",
+        }
+      end
+
       def show
         render json: @current_employee.as_json(
           except: :id,
@@ -13,20 +23,50 @@ module Api
         ), status: :ok
       end
 
+      def update
+        if @employee.update! employee_params
+          render json: {
+            data: ActiveModelSerializers::SerializableResource.new(@employee, serializer: EmployeeSerializer),
+            message: ["employee update fetched successfully"],
+            status: 200,
+            type: "Success"
+          }
+        else
+          render json: @employee, status: :updated, location: @employee
+        end
+      end
+
+      def destroy
+        if @employee.destroy!
+          render json: {
+            data: ActiveModelSerializers::SerializableResource.new(@employee, serializer: EmployeeSerializer),
+            message: ["employee destroy fetched successfully"],
+            status: 200,
+            type: "Success"
+          }
+        else
+          render json: @employee, status: :deleted, location: @employee
+        end
+      end
+
       def create
         @employee = Employee.new employee_params
-        if
-          @employee.save!
-          render json: @employee.as_json, status: :ok
+        if @employee.save!
+          render json: {
+            data: ActiveModelSerializers::SerializableResource.new(@employee, serializer: EmployeeSerializer),
+            message: ["employee create fetched successfully"],
+            status: 200,
+            type: "Success"
+          }
+        else
+          render json: @employee, status: :created, location: @employee
         end
-      rescue StandardError => e
-        render json: { error: e.message }, status: :bad_request
       end
 
       private
 
       def employee_params
-        params.permit()
+        params.permit(Employee::EMPLOYEE_ATTRS)
       end
 
       def find_employee

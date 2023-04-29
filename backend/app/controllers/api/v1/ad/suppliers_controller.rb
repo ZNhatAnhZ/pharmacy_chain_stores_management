@@ -1,8 +1,8 @@
 module Api
   module V1
-    module Manager
+    module Ad
       class SuppliersController < Base
-        before_action :authenticate_manager!
+        before_action :authenticate_admin!
         before_action :find_supplier, except: %i(create index)
 
         def index

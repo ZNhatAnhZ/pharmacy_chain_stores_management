@@ -2,7 +2,7 @@ require "csv"
 
 module Api
   module V1
-    module Manager
+    module Ad
       class ExportCsvController < Base
         def export_employee
           @employees = Employee.search_by_branch(params["branch_id"])

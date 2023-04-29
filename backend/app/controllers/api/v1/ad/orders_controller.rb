@@ -1,8 +1,8 @@
 module Api
   module V1
-    module Manager
+    module Ad
       class OrdersController < Base
-        before_action :authenticate_manager!
+        before_action :authenticate_admin!
         before_action :find_order, except: %i(create index)
         before_action :check_quantity, only: %i(create)
 

@@ -1,9 +1,9 @@
 module Api
   module V1
-    module Manager
+    module Ad
       class BranchesController < Base
         before_action :find_branch, except: %i(create index)
-        before_action :authenticate_manager!
+        before_action :authenticate_admin!
 
         def index
           @branches = Branch.all
