@@ -41,5 +41,19 @@ module Api
         type: "failure"
       }, status: :unauthorized
     end
+
+    def authenticate_store_owner!
+      token = request.headers['Authorization'].split(' ').last if request.headers['Authorization'].present?
+      employee_id = JsonWebToken.decode(token)["employee_id"] if token
+      @current_store_owner = Employee.find_by id: employee_id
+      @current_branch = @current_store_owner&.branch
+      return if @current_store_owner && @current_store_owner.store_owner?
+
+      render json: {
+        message: ["You need to log in to use the app"],
+        status: 401,
+        type: "failure"
+      }, status: :unauthorized
+    end
   end
 end

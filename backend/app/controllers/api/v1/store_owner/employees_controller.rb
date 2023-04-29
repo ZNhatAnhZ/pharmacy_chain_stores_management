@@ -1,94 +1,72 @@
 module Api
   module V1
-    class EmployeesController < Base
-      before_action :authenticate_employee!, except: %i(create)
-      before_action :find_employee, except: %i(create index)
-      before_action :correct_employee, only: %i(update)
-      before_action :admin_employee, only: %i(destroy)
+    module StoreOwner
+      class EmployeesController < Base
+        before_action :authenticate_store_owner!
+        before_action :find_employee, except: %i(create index)
 
-      def index
-        @employees = Employee.all
-        render json: {
-          data: ActiveModelSerializers::SerializableResource.new(@employees, each_serializer: EmployeeSerializer),
-          message: ["employee list fetched successfully"],
-          status: 200,
-          type: "Success",
-        }
-      end
-
-      def show
-        render json: @current_employee.as_json(
-          except: :id,
-          include: { branch: { except: %i[id] } }
-        ), status: :ok
-      end
-
-      def update
-        if @employee.update! employee_params
-          render json: {
-            data: ActiveModelSerializers::SerializableResource.new(@employee, serializer: EmployeeSerializer),
-            message: ["employee update fetched successfully"],
-            status: 200,
-            type: "Success"
-          }
-        else
-          render json: @employee, status: :updated, location: @employee
+        def index
+          @employees = Employee.employee.search_by_branch(@current_branch.id)
+          render json: @employees.as_json, status: :ok
         end
-      end
 
-      def destroy
-        if @employee.destroy!
-          render json: {
-            data: ActiveModelSerializers::SerializableResource.new(@employee, serializer: EmployeeSerializer),
-            message: ["employee destroy fetched successfully"],
-            status: 200,
-            type: "Success"
-          }
-        else
-          render json: @employee, status: :deleted, location: @employee
+        def show
+          render json: @current_employee.as_json(
+            except: :id,
+            include: { branch: { except: %i[id] } }
+          ), status: :ok
         end
-      end
 
-      def create
-        @employee = Employee.new employee_params
-        if
-          @employee.save!
-          render json: @employee.as_json, status: :ok
+        def update
+          return render json: { error: "Not permission" }, status: :bad_request unless (@employee.employee? && @employee.branch_id == @current_branch.id) || @employee == @current_store_owner
+
+          if @current_store_owner == @employee
+            if @current_store_owner.authenticate(params[:current_password])
+              if @current_store_owner.update(employee_params)
+                render json: @current_store_owner.as_json, status: :ok
+              else
+                render json: { error: @current_store_owner.errors }, status: :bad_request
+              end
+            else
+              render json: { error: "Current password is incorrect" }, status: :bad_request
+            end
+          else
+            if @employee.update(employee_params)
+              render json: @employee.as_json, status: :ok
+            else
+              render json: { error: @employee.errors }, status: :bad_request
+            end
+          end
         end
-      rescue StandardError => e
-        render json: { error: e.message }, status: :bad_request
-      end
 
-      private
+        def destroy
+          @employee.destroy!
+          head :ok
+        rescue StandardError => e
+          render json: { errors: e.message }, status: :bad_request
+        end
 
-      def employee_params
-        params.permit(Employee::EMPLOYEE_ATTRS)
-      end
+        def create
+          @employee = Employee.new employee_params.merge(branch_id: @current_branch.id)
+          if
+            @employee.save!
+            render json: @employee.as_json, status: :ok
+          end
+        rescue StandardError => e
+          render json: { error: e.message }, status: :bad_request
+        end
 
-      def find_employee
-        @employee = Employee.find_by! id: params[:id]
-      rescue StandardError => e
-        render json: { errors: e.message }, status: :bad_request
-      end
+        private
 
-      def correct_employee
-        return if @current_employee == @employee
+        def employee_params
+          params.permit(:name, :email, :password, :password_confirmation)
+        end
 
-        render json: {
-          message: ["Not correct employee"],
-          status: 400,
-          type: "Fail"
-        }, status: :bad_request
-      end
-
-      def admin_employee
-        return if @current_employee.admin?
-
-        render json: {
-          message: ["Not admin"],
-          status: 400,
-          type: "Fail"
-        }, status: :bad_request
+        def find_employee
+          @employee = Employee.find_by! id: params[:id]
+        rescue StandardError => e
+          render json: { errors: e.message }, status: :bad_request
+        end
       end
     end
   end

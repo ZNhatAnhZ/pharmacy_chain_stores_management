@@ -1,8 +1,8 @@
 module Api
   module V1
-    module StoreOwner
+    module Employ
       class StatisticController < Base
-        before_action :authenticate_store_owner!
+        before_action :authenticate_employee!
 
         def get_total_order_price
           @orders_all = @current_branch.order

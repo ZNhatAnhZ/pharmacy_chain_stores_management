@@ -1,8 +1,8 @@
 module Api
   module V1
-    module StoreOwner
+    module Employ
       class InventoriesController < Base
-        before_action :authenticate_store_owner!
+        before_action :authenticate_employee!
         before_action :find_inventory, only: %i(show update destroy)
 
         def index

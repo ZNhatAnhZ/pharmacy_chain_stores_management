@@ -1,8 +1,8 @@
 module Api
   module V1
-    module StoreOwner
-      class OrdersController < Base
-        before_action :authenticate_store_owner!
+    module Employ
+        class OrdersController < Base
+        before_action :authenticate_employee!
         before_action :find_order, except: %i(create index)
         before_action :check_quantity, only: %i(create)
 

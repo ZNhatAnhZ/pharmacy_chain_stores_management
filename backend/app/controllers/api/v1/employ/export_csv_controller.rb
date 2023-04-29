@@ -2,15 +2,16 @@ require "csv"
 
 module Api
   module V1
-    module StoreOwner
+    module Employ
       class ExportCsvController < Base
         def export_employee
           @employees = Employee.all
-          header = ["Full Name", "Email", "Branch"]
+          header = ["Tên", "Email", "Chi nhánh"]
+
           result = CSV.generate do |csv|
             csv << header
             @employees.each do |employee|
-              csv << [employee&.name, employee&.email, employee&.branch&.name]
+              csv << [employee.name, employee.email, employee.branch.name]
             end
           end
 
@@ -19,7 +20,7 @@ module Api
 
         def export_inventory
           @inventories = Inventory.search_by_branch(params["branch_id"])
-          header = ["Name", "inventory code", "quantity", "price", "inventory_type", "main_ingredient", "producer", "category", "batch inventory", "supplier", "branch"]
+          header = ["Tên", "Mã thuốc", "Số lượng", "Giá", "Đơn vị", "Thành phần chính", "Nơi sản xuất", "Thể loại", "Lô sản phẩm", "Nhà cung cấp", "Chi nhánh"]
 
           result = CSV.generate do |csv|
             csv << header
@@ -34,7 +35,7 @@ module Api
 
         def export_order
           @orders = Order.search_by_branch(params["branch_id"])
-          header = ["Order Code", "inventory code", "Inventory name", "price", "quantity", "customer name", "employee name", "branch"]
+          header = ["Mã đơn bán", "Mã thuốc", "Tên thuốc", "Đơn giá", "Số lượng", "Tên khách hàng", "Tên nhân viên", "Chi nhánh"]
 
           result = CSV.generate do |csv|
             csv << header
@@ -49,7 +50,7 @@ module Api
 
         def export_import_inventory
           @import_inventories = ImportInventory.search_by_branch(params["branch_id"])
-          header = ["Import Inventory Code", "inventory code", "Inventory name", "price", "quantity", "batch inventory code", "batch inventory expired at", "supplier name", "employee name", "branch"]
+          header = ["Mã đơn nhập", "Mã thuốc", "Tên thuốc", "Đơn giá", "Số lượng", "Mã lô", "Ngày hết hạn lô", "Tên nhà cung cấp", "Tên nhân viên", "Chi nhánh"]
 
           result = CSV.generate do |csv|
             csv << header

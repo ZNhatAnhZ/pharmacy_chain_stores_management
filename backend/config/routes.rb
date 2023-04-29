@@ -79,7 +79,7 @@ Rails.application.routes.draw do
         end
       end
 
-      scope module: "employee", path: "employee" do
+      scope module: "employ", path: "employ" do
         resources :batch_inventories do
           get :get_all_expired, on: :collection
         end
@@ -109,6 +109,7 @@ Rails.application.routes.draw do
         resources :orders do
           put :complete_order, on: :member
         end
+        resources :employees
       end
     end
   end

@@ -1,8 +1,8 @@
 module Api
   module V1
-    module StoreOwner
+    module Employ
       class SuppliersController < Base
-        before_action :authenticate_store_owner!
+        before_action :authenticate_employee!
         before_action :find_supplier, except: %i(create index)
 
         def index

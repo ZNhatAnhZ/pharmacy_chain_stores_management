@@ -17,24 +17,32 @@ module Api
         end
 
         def update
-          if @employee.update! employee_params
-            render json: @employee.as_json, status: :ok
+          return render json: { error: "Not permission" }, status: :bad_request if @employee.admin? && @employee != @current_admin
+
+          if @current_admin == @employee
+            if @current_admin.authenticate(params[:current_password])
+              if @current_admin.update(employee_params)
+                render json: @current_admin.as_json, status: :ok
+              else
+                render json: { error: @current_admin.errors }, status: :bad_request
+              end
+            else
+              render json: { error: "Current password is incorrect" }, status: :bad_request
+            end
           else
-            render json: @employee, status: :updated, location: @employee
+            if @employee.update(employee_params)
+              render json: @employee.as_json, status: :ok
+            else
+              render json: { error: @employee.errors }, status: :bad_request
+            end
           end
         end
 
         def destroy
-          if @employee.destroy!
-            render json: {
-              data: ActiveModelSerializers::SerializableResource.new(@employee, serializer: EmployeeSerializer),
-              message: ["employee destroy fetched successfully"],
-              status: 200,
-              type: "Success"
-            }
-          else
-            render json: @employee, status: :deleted, location: @employee
-          end
+          @employee.destroy!
+          head :ok
+        rescue StandardError => e
+          render json: { errors: e.message }, status: :bad_request
         end
 
         def create
@@ -50,7 +58,7 @@ module Api
         private
 
         def employee_params
-          params.permit()
+          params.permit(:name, :email, :password, :password_confirmation, :branch_id, :role)
         end
 
         def find_employee
