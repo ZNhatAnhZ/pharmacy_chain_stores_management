@@ -1,13 +1,13 @@
 module Api
   module V1
-    module StoreOwner
-      class OrdersController < Base
-        before_action :authenticate_store_owner!
+    module Customers
+        class OrdersController < Base
+        before_action :authenticate_customer!
         before_action :find_order, except: %i(create index)
         before_action :check_quantity, only: %i(create)
 
         def index
-          @orders = @current_branch.order.time_between(params[:start_date]&.to_time, params[:end_date]&.to_time)
+          @orders = @current_customer.order.time_between(params[:start_date]&.to_time, params[:end_date]&.to_time)
           render json: @orders.as_json(
             include: {
               inventory: { only: %i[id inventory_code name price quantity main_ingredient producer] },
@@ -18,9 +18,9 @@ module Api
         end
 
         def create
-          @order = Order.new order_params.merge(order_code: generate_order_code, branch_id: @current_branch.id, employee_id: @current_employee.id)
+          branch_id = Inventory.find_by(id: params[:inventory_id]).branch_id
+          @order = Order.new order_params.merge(order_code: generate_order_code, branch_id: branch_id, customer_id: @current_customer.id)
           if @order.save!
-            reduce_inventory_quantity if @order.complete?
             render json: @order.as_json(
               include: {
                 inventory: { only: %i[id inventory_code name price quantity main_ingredient producer] },
@@ -43,21 +43,35 @@ module Api
           ), status: :ok
         end
 
-        def complete_order
-          return render json: {message: "already complete order"}, status: :ok if @order.complete?
+        def canceled_order
+          return render json: {message: "already canceled order"}, status: :ok if @order.canceled?
 
-          if @order.update status: "complete"
-            reduce_inventory_quantity
+          if @order.update status: "canceled"
             render json: @order.as_json, status: :ok
           else
             render json: { error: @order.errors }, status: :bad_request
           end
         end
 
+        def update
+          if @order.update(order_params)
+            render json: @order.as_json, status: :ok
+          else
+            render json: { error: @order.errors }, status: :bad_request
+          end
+        end
+
+        def destroy
+          @order.destroy!
+          head :ok
+        rescue StandardError => e
+          render json: { errors: e.message }, status: :bad_request
+        end
+
         private
 
         def order_params
-          params.permit(:total_price, :total_quantity, :status, :inventory_id)
+          params.permit(:total_price, :total_quantity, :status, :inventory_id, :employee_id, :customer_id)
         end
 
         def find_order
@@ -72,12 +86,6 @@ module Api
             render json: {error: "order quantity large than inventory quantity"}, status: :bad_request
             return
           end
-        end
-
-        def reduce_inventory_quantity
-          @inventory = @order.inventory
-          ivnentory_quantity = @inventory.quantity - @order.total_quantity
-          @inventory.update_attribute :quantity, ivnentory_quantity
         end
 
         def generate_order_code

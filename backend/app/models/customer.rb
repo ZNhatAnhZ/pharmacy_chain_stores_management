@@ -1,7 +1,7 @@
 class Customer < ApplicationRecord
   attr_accessor :remember_token, :activation_token, :reset_token
   enum gender: {male: 0, female: 1}
-
+  has_many :order
   before_save :downcase_email
 
   validates :email, presence: true,

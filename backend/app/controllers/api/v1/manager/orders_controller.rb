@@ -46,7 +46,7 @@ module Api
         private
 
         def order_params
-          params.permit(:total_price, :total_quantity, :status, :inventory_id, :customer_name)
+          params.permit(:total_price, :total_quantity, :status, :inventory_id)
         end
 
         def find_order

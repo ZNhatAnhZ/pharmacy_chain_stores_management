@@ -111,6 +111,16 @@ Rails.application.routes.draw do
         end
         resources :employees
       end
+
+      scope module: "customers", path: "customers" do
+      post "/login", to: "customer_auth#create"
+        resources :orders
+
+        resources :inventories do
+          get :get_expired, on: :collection
+          get :get_out_of_stock, on: :collection
+        end
+      end
     end
   end
 

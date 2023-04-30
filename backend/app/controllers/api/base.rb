@@ -55,5 +55,18 @@ module Api
         type: "failure"
       }, status: :unauthorized
     end
+
+    def authenticate_customer!
+      token = request.headers['Authorization'].split(' ').last if request.headers['Authorization'].present?
+      customer_id = JsonWebToken.decode(token)["customer_id"] if token
+      @current_customer = Customer.find_by id: customer_id
+      return if @current_customer
+
+      render json: {
+        message: ["You need to log in to use the app"],
+        status: 401,
+        type: "failure"
+      }, status: :unauthorized
+    end
   end
 end
