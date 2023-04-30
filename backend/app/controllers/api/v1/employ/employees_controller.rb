@@ -27,7 +27,7 @@ module Api
         private
 
         def employee_params
-          params.permit(:name, :email, :password, :password_confirmation)
+          params.permit(:name, :email, :password, :password_confirmation, :address, :contact, :gender)
         end
 
         def find_employee

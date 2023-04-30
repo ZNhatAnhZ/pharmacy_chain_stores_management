@@ -3,7 +3,9 @@ Employee.create!(
   email: "pharmacymanager@gmail.com",
   password: "123456",
   password_confirmation: "123456",
-  role: "admin",
+  address: "Ha Noi Viet Nam",
+  contact: Faker::PhoneNumber.unique.phone_number,
+  role: "manager",
 )
 
 Branch.create!(
@@ -34,6 +36,8 @@ Branch.create!(
   name = Faker::Name.unique.name
   email = "employeetest-#{n+1}@gmail.com"
   password = "123456"
+  address = "Ha Noi Viet Nam",
+  contact = Faker::PhoneNumber.unique.phone_number
 
   Employee.create!(
     name: name,
@@ -41,7 +45,45 @@ Branch.create!(
     password: password,
     password_confirmation: password,
     role: "employee",
+    address: address,
+    contact: contact,
     branch_id: Branch.all.pluck(:id).sample
+  )
+end
+
+20.times do |n|
+  name = Faker::Name.unique.name
+  email = "storeownertest-#{n+1}@gmail.com"
+  password = "123456"
+  address = "Ha Noi Viet Nam",
+  contact = Faker::PhoneNumber.unique.phone_number
+
+  Employee.create!(
+    name: name,
+    email: email,
+    password: password,
+    password_confirmation: password,
+    role: "store_owner",
+    address: address,
+    contact: contact,
+    branch_id: Branch.all.pluck(:id).sample
+  )
+end
+
+20.times do |n|
+  name = Faker::Name.unique.name
+  email = "customertest-#{n+1}@gmail.com"
+  password = "123456"
+  address = "Ha Noi Viet Nam",
+  contact = Faker::PhoneNumber.unique.phone_number
+
+  Customer.create!(
+    name: name,
+    email: email,
+    password: password,
+    password_confirmation: password,
+    address: address,
+    contact: contact,
   )
 end
 
@@ -135,17 +177,16 @@ end
   total_price = Faker::Commerce.price(range: 1..100)
   total_quantity = Faker::Number.between(from: 10, to: 50)
   order_code = Faker::Code.nric
-  customer_name = Faker::Name.unique.name
   branch_id = Branch.all.pluck(:id).sample
   employee_id = Employee.where(branch_id: branch_id).pluck(:id).sample
+  customer_id = Customer.pluck(:id).sample
   Order.create!(
     total_price: total_price,
     order_code: order_code,
-    customer_name: customer_name,
-              total_quantity: total_quantity,
-              branch_id: branch_id,
-              inventory_id: Inventory.all.pluck(:id).sample,
-              created_at: (rand*30).days.ago,
-              employee_id: employee_id
+    total_quantity: total_quantity,
+    branch_id: branch_id,
+    inventory_id: Inventory.all.pluck(:id).sample,
+    created_at: (rand*30).days.ago,
+    employee_id: employee_id
   )
 end
