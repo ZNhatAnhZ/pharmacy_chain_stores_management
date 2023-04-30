@@ -32,8 +32,8 @@ module Api
     def authenticate_manager!
       token = request.headers['Authorization'].split(' ').last if request.headers['Authorization'].present?
       employee_id = JsonWebToken.decode(token)["employee_id"] if token
-      @current_admin = Employee.find_by id: employee_id
-      return if @current_admin && @current_admin.admin?
+      @current_manager = Employee.find_by id: employee_id
+      return if @current_manager && @current_manager.manager?
 
       render json: {
         message: ["You need to log in to use the app"],

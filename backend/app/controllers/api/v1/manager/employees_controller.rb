@@ -17,14 +17,14 @@ module Api
         end
 
         def update
-          return render json: { error: "Not permission" }, status: :bad_request if @employee.admin? && @employee != @current_admin
+          return render json: { error: "Not permission" }, status: :bad_request if @employee.manager? && @employee != @current_manager
 
-          if @current_admin == @employee
-            if @current_admin.authenticate(params[:current_password])
-              if @current_admin.update(employee_params)
-                render json: @current_admin.as_json, status: :ok
+          if @current_manager == @employee
+            if @current_manager.authenticate(params[:current_password])
+              if @current_manager.update(employee_params)
+                render json: @current_manager.as_json, status: :ok
               else
-                render json: { error: @current_admin.errors }, status: :bad_request
+                render json: { error: @current_manager.errors }, status: :bad_request
               end
             else
               render json: { error: "Current password is incorrect" }, status: :bad_request
