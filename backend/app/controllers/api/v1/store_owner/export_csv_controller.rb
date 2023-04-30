@@ -40,7 +40,7 @@ module Api
             csv << header
             @orders.each do |order|
               csv << [order.order_code, order&.inventory&.inventory_code, order&.inventory&.name, order.total_price, order.total_quantity,
-                        order.customer_name, order&.employee&.name, order&.branch&.name]
+                        order&.customer&.name, order&.employee&.name, order&.branch&.name]
             end
           end
 
