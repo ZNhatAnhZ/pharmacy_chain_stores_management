@@ -71,12 +71,26 @@ ActiveRecord::Schema.define(version: 2023_03_26_092955) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "customers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.string "password_digest"
+    t.string "contact"
+    t.integer "gender", default: 1
+    t.string "address"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "employees", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "email"
     t.string "password_digest"
     t.bigint "branch_id"
     t.integer "role", default: 1
+    t.string "contact"
+    t.integer "gender", default: 1
+    t.string "address"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "reset_password_token"
@@ -128,13 +142,14 @@ ActiveRecord::Schema.define(version: 2023_03_26_092955) do
     t.integer "total_quantity"
     t.integer "status", default: 0
     t.string "order_code"
-    t.string "customer_name"
     t.bigint "employee_id"
     t.bigint "inventory_id"
     t.bigint "branch_id"
+    t.bigint "customer_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["branch_id"], name: "index_orders_on_branch_id"
+    t.index ["customer_id"], name: "index_orders_on_customer_id"
     t.index ["employee_id"], name: "index_orders_on_employee_id"
     t.index ["inventory_id"], name: "index_orders_on_inventory_id"
   end
