@@ -11,7 +11,7 @@ module Api
           result = CSV.generate do |csv|
             csv << header
             @employees.each do |employee|
-              csv << [employee.name, employee.email, employee.branch.name]
+              csv << [employee.name, employee.email, employee&.branch&.name]
             end
           end
 

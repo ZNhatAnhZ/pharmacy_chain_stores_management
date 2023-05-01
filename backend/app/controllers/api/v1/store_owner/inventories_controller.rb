@@ -7,7 +7,7 @@ module Api
 
         def index
           @inventories = @current_branch.inventory.search_by_name(params["search_name"]).sort_price(params["sort_price"]).sort_created_time(params["created_time"])
-          @inventories = @inventories.most_ordered if params["most_ordered"] == true
+          @inventories = @inventories.most_ordered if params["most_ordered"].present?
 
           render json: @inventories.map {|inventory|
             if inventory.image.attached?

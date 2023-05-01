@@ -11,12 +11,16 @@ module Api
         end
 
         def update
-          if @current_customer.update(customer_params)
-            render json: @current_customer.as_json(
-              except: :id,
-            ), status: :ok
+          if @current_customer.authenticate(params[:current_password])
+            if @current_customer.update(customer_params)
+              render json: @current_customer.as_json(
+                except: :id,
+              ), status: :ok
+            else
+              render json: { error: @current_customer.errors }, status: :bad_request
+            end
           else
-            render json: { error: @current_customer.errors }, status: :bad_request
+            render json: { error: "Current password is incorrect" }, status: :bad_request
           end
         end
 
