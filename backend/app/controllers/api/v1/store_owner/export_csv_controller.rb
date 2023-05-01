@@ -25,7 +25,7 @@ module Api
             csv << header
             @inventories.each do |inventory|
               csv << [inventory.name, inventory.inventory_code, inventory.quantity, inventory.price, inventory.inventory_type,
-                        inventory.main_ingredient, inventory.producer, inventory.category.name, inventory.batch_inventory.batch_code, inventory.supplier.name, inventory.branch.name]
+                        inventory.main_ingredient, inventory.producer, inventory&.category&.name, inventory&.batch_inventory&.batch_code, inventory&.supplier&.name, inventory&.branch&.name]
             end
           end
 
