@@ -54,16 +54,24 @@ module Api
         end
 
         def update
-          if @order.update(order_params)
-            render json: @order.as_json, status: :ok
+          if !@order.complete?
+            if @order.update(order_params)
+              render json: @order.as_json, status: :ok
+            else
+              render json: { error: @order.errors }, status: :bad_request
+            end
           else
-            render json: { error: @order.errors }, status: :bad_request
+            render json: { error: "Can not update completed order" }, status: :bad_request
           end
         end
 
         def destroy
-          @order.destroy!
-          head :ok
+          if !@order.complete?
+            @order.destroy!
+            head :ok
+          else
+            render json: { error: "Can not delete completed order" }, status: :bad_request
+          end
         rescue StandardError => e
           render json: { errors: e.message }, status: :bad_request
         end

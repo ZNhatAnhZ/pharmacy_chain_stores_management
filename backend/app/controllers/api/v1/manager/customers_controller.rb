@@ -2,19 +2,7 @@ module Api
   module V1
     module Customers
       class CustomersController < Base
-        before_action :authenticate_customer!, except: :create
-
-        def create
-          customer = Customer.new(customer_params)
-          if
-            customer.save!
-            generate_token customer
-            render json: {access_token: @data[:access_token], customer_id: customer&.id,
-              customer_name: customer&.name, customer_email: customer&.email, customer_address: customer&.address, customer_contact: customer&.contact, customer_gender: customer&.gender}, status: :ok
-          end
-        rescue StandardError => e
-          render json: { error: e.message }, status: :bad_request
-        end
+        before_action :authenticate_customer!
 
         def me
           render json: @current_customer.as_json(
@@ -53,15 +41,6 @@ module Api
           @customer = Customer.find_by! id: params[:id]
         rescue StandardError => e
           render json: { errors: e.message }, status: :bad_request
-        end
-
-        def generate_token customer
-
-          access_token = JsonWebToken.encode(customer_id: customer.id)
-          @data = {
-            access_token: access_token,
-            token_type: "Bearer"
-          }
         end
       end
     end
