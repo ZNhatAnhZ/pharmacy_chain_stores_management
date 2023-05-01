@@ -18,7 +18,7 @@ module Api
         end
 
         def create
-          @order = Order.new order_params.merge(order_code: generate_order_code, branch_id: @current_branch.id, employee_id: @current_employee.id)
+          @order = Order.new order_params.merge(order_code: generate_order_code, branch_id: @current_branch.id, employee_id: @current_store_owner.id)
           if @order.save!
             reduce_inventory_quantity if @order.complete?
             render json: @order.as_json(

@@ -32,7 +32,7 @@ module Api
         end
 
         def create
-          @import_inventory = ImportInventory.new import_inventory_params.merge(import_inventory_code: generate_import_inventory_code, branch_id: @current_branch.id, employee_id: @current_employee.id)
+          @import_inventory = ImportInventory.new import_inventory_params.merge(import_inventory_code: generate_import_inventory_code, branch_id: @current_branch.id, employee_id: @current_store_owner.id)
           if @import_inventory.save!
             update_inventory
             render json: @import_inventory.as_json(
