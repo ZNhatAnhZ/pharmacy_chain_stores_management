@@ -54,6 +54,16 @@ module Api
           end
         end
 
+        def rejected_order
+          return render json: {message: "already rejected order"}, status: :ok if @order.rejected?
+
+          if @order.update status: "rejected"
+            render json: @order.as_json, status: :ok
+          else
+            render json: { error: @order.errors }, status: :bad_request
+          end
+        end
+
         private
 
         def order_params

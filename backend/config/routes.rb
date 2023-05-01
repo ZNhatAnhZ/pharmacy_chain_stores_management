@@ -41,6 +41,7 @@ Rails.application.routes.draw do
         resources :batch_inventories do
           get :get_all_expired, on: :collection
         end
+        resources :customers
       end
 
       scope module: "store_owner", path: "store_owner" do
@@ -78,6 +79,7 @@ Rails.application.routes.draw do
           get :get_total_import_inventory_price, on: :collection
           get :header_statistic, on: :collection
         end
+        resources :customers
       end
 
       scope module: "employ", path: "employ" do
@@ -109,13 +111,17 @@ Rails.application.routes.draw do
         resources :import_inventories
         resources :orders do
           put :complete_order, on: :member
+          put :rejected_order, on: :member
         end
         resources :employees
+        resources :customers
       end
 
       scope module: "customers", path: "customers" do
       post "/login", to: "customer_auth#create"
-        resources :orders
+        resources :orders do
+          put :canceled_order, on: :member
+        end
         resources :customers do
           get :me, on: :collection
           put :update, path: '/me'
