@@ -12,10 +12,15 @@ import 'package:medical_chain_manangement/inventory/inventory_detail_modify.dart
 import 'package:medical_chain_manangement/inventory/inventory_page.dart';
 import 'package:medical_chain_manangement/import_inventory/import_inventory_detail.dart';
 import 'package:medical_chain_manangement/ledger/ledger_page.dart';
+import 'package:medical_chain_manangement/partner/add_partner_page.dart';
 import 'package:medical_chain_manangement/partner/partner_detail.dart';
+import 'package:medical_chain_manangement/partner/partner_modify.dart';
 import 'package:medical_chain_manangement/resetPassword/reset_password.dart';
 import 'package:medical_chain_manangement/selling_drug/selling_drug.dart';
 import 'package:medical_chain_manangement/store/store.dart';
+import 'package:medical_chain_manangement/store/store_add.dart';
+import 'package:medical_chain_manangement/store/store_detail.dart';
+import 'package:medical_chain_manangement/store/store_modify.dart';
 import 'package:medical_chain_manangement/transaction/transaction_in.dart';
 import 'package:medical_chain_manangement/partner/partner.dart';
 import 'package:medical_chain_manangement/transaction/transaction_in_detail.dart';
@@ -61,8 +66,13 @@ class MyApp extends StatelessWidget {
         '/transaction_out': (context) => TransactionOut(),
         '/transaction_out_detail': (context) => TransactionOutDetail(),
         '/partner': (context) => Partner(),
+        '/partner_add': (context) => AddPartner(),
+        '/partner_modify': (context) => PartnerModify(),
         '/partner_detail': (context) => PartnerDetail(),
         '/store': (context) => Store(),
+        '/store_add': (context) => AddStore(),
+        '/store_modify': (context) => StoreModify(),
+        '/store_detail': (context) => StoreDetail(),
         '/ledger': (context) => LedgerPage(),
         '/settings': (context) => Settings(),
         '/employee_page': (context) => EmployeePage(),

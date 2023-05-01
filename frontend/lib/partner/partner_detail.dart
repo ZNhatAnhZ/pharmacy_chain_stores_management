@@ -47,103 +47,158 @@ class _PartnerDetail extends State<PartnerDetail> {
       ),
       body: Row(
         children: <Widget>[
-          SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                        minWidth: MediaQuery.of(context).size.width),
-                    child: DataTable(
-                      showCheckboxColumn: false,
-                      columns: [
-                        DataColumn(
-                          label: Text("Id"),
-                          numeric: false,
-                        ),
-                        DataColumn(
-                          label: Text("Tên sản phẩm"),
-                          numeric: false,
-                        ),
-                        DataColumn(
-                          label: Text("Giá sản phẩm"),
-                          numeric: false,
-                        ),
-                        DataColumn(
-                          label: Text("Loại sản phẩm"),
-                          numeric: false,
-                        ),
-                        DataColumn(
-                          label: Text("Số lượng"),
-                          numeric: false,
-                        ),
-                        DataColumn(
-                          label: Text("Mã sản phẩm"),
-                          numeric: false,
-                        ),
-                        DataColumn(
-                          label: Text("Thành phần chính"),
-                          numeric: false,
-                        ),
-                        DataColumn(
-                          label: Text("Nhà sản xuất"),
-                          numeric: false,
-                        ),
-                      ],
-                      rows: inventories
-                          .map(
-                            (inventory) => DataRow(
-                              cells: [
-                                DataCell(
-                                  Text(
-                                    inventory.id.toString(),
-                                  ),
-                                ),
-                                DataCell(
-                                  Text(
-                                    inventory.name!,
-                                  ),
-                                ),
-                                DataCell(
-                                  Text(
-                                    inventory.price.toString(),
-                                  ),
-                                ),
-                                DataCell(
-                                  Text(
-                                    inventory.inventory_type!,
-                                  ),
-                                ),
-                                DataCell(
-                                  Text(
-                                    inventory.quantity.toString(),
-                                  ),
-                                ),
-                                DataCell(
-                                  Text(
-                                    inventory.inventory_code!,
-                                  ),
-                                ),
-                                DataCell(
-                                  Text(
-                                    inventory.main_ingredient!,
-                                  ),
-                                ),
-                                DataCell(
-                                  Text(
-                                    inventory.producer!,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )
-                          .toList(),
-                    ),
-                  ),
+          if (auth.isLoggedIn && auth.employee['role'] == 'manager')
+            SizedBox(
+              width: 10,
+            ),
+          if (auth.isLoggedIn && auth.employee['role'] == 'manager')
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 10,
                 ),
-              )),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.green,
+                  ),
+                  child: Text('Sửa nhà cung cấp',
+                      style: TextStyle(color: Colors.white)),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/partner_modify',
+                        arguments: supplier);
+                  },
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.red,
+                  ),
+                  child: Text("Xóa nhà cung cấp",
+                      style: TextStyle(color: Colors.white)),
+                  onPressed: () {
+                    supplierService
+                        .deleteSupplier(auth.employee['access_token'],
+                            supplier.id.toString(), auth.employee['role'])
+                        .then((value) =>
+                            Navigator.pushReplacementNamed(context, '/partner'))
+                        .catchError((err) => print(err));
+                  },
+                )
+              ],
+            ),
+          SizedBox(
+            width: 10,
+          ),
+          Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Container(
+                      width: MediaQuery.of(context).size.width - 190,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                              minWidth:
+                                  MediaQuery.of(context).size.width - 190),
+                          child: DataTable(
+                            border: TableBorder(
+                                left: BorderSide(color: Colors.black)),
+                            showCheckboxColumn: false,
+                            columns: [
+                              DataColumn(
+                                label: Text("Id"),
+                                numeric: false,
+                              ),
+                              DataColumn(
+                                label: Text("Tên sản phẩm"),
+                                numeric: false,
+                              ),
+                              DataColumn(
+                                label: Text("Giá sản phẩm"),
+                                numeric: false,
+                              ),
+                              DataColumn(
+                                label: Text("Loại sản phẩm"),
+                                numeric: false,
+                              ),
+                              DataColumn(
+                                label: Text("Số lượng"),
+                                numeric: false,
+                              ),
+                              DataColumn(
+                                label: Text("Mã sản phẩm"),
+                                numeric: false,
+                              ),
+                              DataColumn(
+                                label: Text("Thành phần chính"),
+                                numeric: false,
+                              ),
+                              DataColumn(
+                                label: Text("Nhà sản xuất"),
+                                numeric: false,
+                              ),
+                            ],
+                            rows: inventories
+                                .map(
+                                  (inventory) => DataRow(
+                                    cells: [
+                                      DataCell(
+                                        Text(
+                                          inventory.id.toString(),
+                                        ),
+                                      ),
+                                      DataCell(
+                                        Text(
+                                          inventory.name!,
+                                        ),
+                                      ),
+                                      DataCell(
+                                        Text(
+                                          inventory.price.toString(),
+                                        ),
+                                      ),
+                                      DataCell(
+                                        Text(
+                                          inventory.inventory_type!,
+                                        ),
+                                      ),
+                                      DataCell(
+                                        Text(
+                                          inventory.quantity.toString(),
+                                        ),
+                                      ),
+                                      DataCell(
+                                        Text(
+                                          inventory.inventory_code!,
+                                        ),
+                                      ),
+                                      DataCell(
+                                        Text(
+                                          inventory.main_ingredient!,
+                                        ),
+                                      ),
+                                      DataCell(
+                                        Text(
+                                          inventory.producer!,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                                .toList(),
+                          ),
+                        ),
+                      ),
+                    )),
+              ),
+            ],
+          ),
         ],
       ),
     );

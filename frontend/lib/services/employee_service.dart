@@ -15,9 +15,11 @@ class EmployeeService {
     }
     String url;
     if (role == 'employee') {
-      url = '/api/v1/employees';
-    } else {
+      url = '/api/v1/employ/employees';
+    } else if (role == 'manager') {
       url = '/api/v1/manager/employees';
+    } else {
+      url = '/api/v1/store_owner/employees';
     }
     final response = await http.get(
         Uri.http(BASE_URL, url, {
@@ -30,7 +32,7 @@ class EmployeeService {
         });
     if (response.statusCode == 200) {
       List<dynamic> parsedListJson = jsonDecode(response.body);
-      print(parsedListJson);
+      inspect(parsedListJson);
       List<Employee> result = List<Employee>.from(
           parsedListJson.map<Employee>((dynamic i) => Employee.fromJson(i)));
       return result;
@@ -42,9 +44,11 @@ class EmployeeService {
   void exportEmployeeCSV(String token, String role, String branch_id) async {
     String url;
     if (role == 'employee') {
-      url = '/api/v1/export_csv/export_inventory';
-    } else {
+      url = '/api/v1/employ/export_csv/export_inventory';
+    } else if (role == 'manager') {
       url = '/api/v1/manager/export_csv/export_inventory';
+    } else {
+      url = '/api/v1/store_owner/export_csv/export_inventory';
     }
     if (branch_id == '-1') {
       branch_id = '';
@@ -58,9 +62,11 @@ class EmployeeService {
     var employee_id = data['id'];
     String url;
     if (role == 'employee') {
-      url = '/api/v1/employees/';
-    } else {
+      url = '/api/v1/employ/employees/';
+    } else if (role == 'manager') {
       url = '/api/v1/manager/employees/';
+    } else {
+      url = '/api/v1/store_owner/employees/';
     }
     final response = await http.put(
         Uri.http(BASE_URL, url + employee_id, {
@@ -75,7 +81,7 @@ class EmployeeService {
         });
 
     if (response.statusCode == 200) {
-      print(response);
+      inspect(response);
       Fluttertoast.showToast(
           msg: "Updated the employee",
           toastLength: Toast.LENGTH_SHORT,
@@ -90,9 +96,11 @@ class EmployeeService {
   Future<bool> deleteEmployee(String token, String id, String role) async {
     String url;
     if (role == 'employee') {
-      url = '/api/v1/employees/';
-    } else {
+      url = '/api/v1/employ/employees/';
+    } else if (role == 'manager') {
       url = '/api/v1/manager/employees/';
+    } else {
+      url = '/api/v1/store_owner/employees/';
     }
     final response = await http.delete(Uri.http(BASE_URL, url + id), headers: {
       'Content-Type': 'application/json',
@@ -115,19 +123,25 @@ class EmployeeService {
   Future<bool> createEmployee(String token, Map data, String role) async {
     String url;
     if (role == 'employee') {
-      url = '/api/v1/employees';
-    } else {
+      url = '/api/v1/employ/employees';
+    } else if (role == 'manager') {
       url = '/api/v1/manager/employees';
+    } else {
+      url = '/api/v1/store_owner/employees';
     }
+
     final response = await http.post(Uri.http(BASE_URL, url), headers: {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     }, body: {
       'name': data['name'],
       'email': data['email'],
+      'contact': data['contact'],
+      'gender': data['gender'],
+      'address': data['address'],
       'password': data['password'],
       'password_confirmation': data['password'],
-      'branch_id': data['branch_id'],
+      'branch_id': data['branch_id'] ?? '',
     });
 
     if (response.statusCode == 200) {

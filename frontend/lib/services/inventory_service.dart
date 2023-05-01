@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:html';
 import 'dart:typed_data';
-import 'dart:io';
 
 import 'package:medical_chain_manangement/config.dart';
 import 'package:medical_chain_manangement/models/inventory.dart';
@@ -18,9 +17,11 @@ class InventoryService {
     }
     String url;
     if (role == 'employee') {
-      url = '/api/v1/inventories';
-    } else {
+      url = '/api/v1/employ/inventories';
+    } else if (role == 'manager') {
       url = '/api/v1/manager/inventories';
+    } else {
+      url = '/api/v1/store_owner/inventories';
     }
     final response = await http
         .get(Uri.http(BASE_URL, url, {'branch_id': branch_id}), headers: {
@@ -31,7 +32,7 @@ class InventoryService {
 
     if (response.statusCode == 200) {
       List<dynamic> parsedListJson = jsonDecode(response.body);
-      print(parsedListJson);
+      inspect(parsedListJson);
       List<Inventory> result = List<Inventory>.from(
           parsedListJson.map<Inventory>((dynamic i) => Inventory.fromJson(i)));
       return result;
@@ -65,9 +66,11 @@ class InventoryService {
       branch_id = '';
     }
     if (role == 'employee') {
-      url = '/api/v1/inventories';
-    } else {
+      url = '/api/v1/employ/inventories';
+    } else if (role == 'manager') {
       url = '/api/v1/manager/inventories';
+    } else {
+      url = '/api/v1/store_owner/inventories';
     }
     final response = await http.get(
         Uri.http(BASE_URL, url, {
@@ -84,7 +87,7 @@ class InventoryService {
         });
     if (response.statusCode == 200) {
       List<dynamic> parsedListJson = jsonDecode(response.body);
-      print(parsedListJson);
+      inspect(parsedListJson);
       List<Inventory> result = List<Inventory>.from(
           parsedListJson.map<Inventory>((dynamic i) => Inventory.fromJson(i)));
       return result;
@@ -94,9 +97,17 @@ class InventoryService {
   }
 
   Future<Inventory> createInventory(
-      String token, Map data, Uint8List image) async {
-    var request = http.MultipartRequest(
-        'POST', Uri.http(BASE_URL, '/api/v1/inventories'));
+      String token, Map data, Uint8List image, String role) async {
+    String url;
+    if (role == 'employee') {
+      url = '/api/v1/employ/inventories';
+    } else if (role == 'manager') {
+      url = '/api/v1/manager/inventories';
+    } else {
+      url = '/api/v1/store_owner/inventories';
+    }
+
+    var request = http.MultipartRequest('POST', Uri.http(BASE_URL, url));
 
     request.files.add(http.MultipartFile.fromBytes("image", image,
         filename: data['image_name'], contentType: MediaType('image', 'jpeg')));
@@ -106,25 +117,41 @@ class InventoryService {
       'Authorization': 'Bearer $token',
     });
 
-    request.fields.addAll({
-      "name": data["name"],
-      "price": data["price"],
-      "quantity": data["quantity"],
-      "inventory_type": data["inventory_type"],
-      "category_id": data["category_id"],
-      "batch_inventory_id": data["batch_inventory_id"],
-      "supplier_id": data["supplier_id"],
-      "inventory_code": data["inventory_code"],
-      "main_ingredient": data["main_ingredient"],
-      "producer": data["producer"]
-    });
+    if (data["branch_id"] != null) {
+      request.fields.addAll({
+        "name": data["name"],
+        "price": data["price"],
+        "quantity": data["quantity"],
+        "inventory_type": data["inventory_type"],
+        "category_id": data["category_id"],
+        "batch_inventory_id": data["batch_inventory_id"],
+        "supplier_id": data["supplier_id"],
+        "inventory_code": data["inventory_code"],
+        "main_ingredient": data["main_ingredient"],
+        "branch_id": data["branch_id"],
+        "producer": data["producer"]
+      });
+    } else {
+      request.fields.addAll({
+        "name": data["name"],
+        "price": data["price"],
+        "quantity": data["quantity"],
+        "inventory_type": data["inventory_type"],
+        "category_id": data["category_id"],
+        "batch_inventory_id": data["batch_inventory_id"],
+        "supplier_id": data["supplier_id"],
+        "inventory_code": data["inventory_code"],
+        "main_ingredient": data["main_ingredient"],
+        "producer": data["producer"]
+      });
+    }
 
-    print(request.toString());
+    inspect(request.toString());
 
     final response = await request.send();
 
+    inspect(response);
     if (response.statusCode == 200) {
-      print(response);
       Fluttertoast.showToast(
           msg: "Created a new inventory",
           toastLength: Toast.LENGTH_SHORT,
@@ -142,9 +169,11 @@ class InventoryService {
     var inventory_id = data['id'];
     String url;
     if (role == 'employee') {
-      url = '/api/v1/inventories/';
-    } else {
+      url = '/api/v1/employ/inventories/';
+    } else if (role == 'manager') {
       url = '/api/v1/manager/inventories/';
+    } else {
+      url = '/api/v1/store_owner/inventories/';
     }
     var request =
         http.MultipartRequest('PUT', Uri.http(BASE_URL, url + inventory_id));
@@ -175,7 +204,7 @@ class InventoryService {
     final response = await request.send();
 
     if (response.statusCode == 200) {
-      print(response);
+      inspect(response);
       Fluttertoast.showToast(
           msg: "Updated the inventory",
           toastLength: Toast.LENGTH_SHORT,
@@ -191,9 +220,11 @@ class InventoryService {
   Future<bool> deleteInventory(String token, String id, String role) async {
     String url;
     if (role == 'employee') {
-      url = '/api/v1/inventories/';
-    } else {
+      url = '/api/v1/employ/inventories/';
+    } else if (role == 'manager') {
       url = '/api/v1/manager/inventories/';
+    } else {
+      url = '/api/v1/store_owner/inventories/';
     }
     final response = await http.delete(Uri.http(BASE_URL, url + id), headers: {
       'Content-Type': 'application/json',
@@ -216,9 +247,11 @@ class InventoryService {
   void exportInventoryCSV(String token, String role, String branch_id) async {
     String url;
     if (role == 'employee') {
-      url = '/api/v1/export_csv/export_inventory';
-    } else {
+      url = '/api/v1/employ/export_csv/export_inventory';
+    } else if (role == 'manager') {
       url = '/api/v1/manager/export_csv/export_inventory';
+    } else {
+      url = '/api/v1/store_owner/export_csv/export_inventory';
     }
     if (branch_id == '-1') {
       branch_id = '';
@@ -235,9 +268,11 @@ class InventoryService {
     }
     String url;
     if (role == 'employee') {
-      url = '/api/v1/inventories/get_expired';
-    } else {
+      url = '/api/v1/employ/inventories/get_expired';
+    } else if (role == 'manager') {
       url = '/api/v1/manager/inventories/get_expired';
+    } else {
+      url = '/api/v1/store_owner/inventories/get_expired';
     }
     final response = await http.get(
         Uri.http(BASE_URL, url, {'day_left': '0', 'branch_id': branch_id}),
@@ -249,7 +284,7 @@ class InventoryService {
 
     if (response.statusCode == 200) {
       List<dynamic> parsedListJson = jsonDecode(response.body);
-      print(parsedListJson);
+      inspect(parsedListJson);
       List<Inventory> result = List<Inventory>.from(
           parsedListJson.map<Inventory>((dynamic i) => Inventory.fromJson(i)));
       return result;
@@ -265,9 +300,11 @@ class InventoryService {
     }
     String url;
     if (role == 'employee') {
-      url = '/api/v1/inventories/get_out_of_stock';
-    } else {
+      url = '/api/v1/employ/inventories/get_out_of_stock';
+    } else if (role == 'manager') {
       url = '/api/v1/manager/inventories/get_out_of_stock';
+    } else {
+      url = '/api/v1/store_owner/inventories/get_out_of_stock';
     }
     final response = await http.get(
         Uri.http(BASE_URL, url, {'quantity_left': '0', 'branch_id': branch_id}),
@@ -279,7 +316,7 @@ class InventoryService {
 
     if (response.statusCode == 200) {
       List<dynamic> parsedListJson = jsonDecode(response.body);
-      print(parsedListJson);
+      inspect(parsedListJson);
       List<Inventory> result = List<Inventory>.from(
           parsedListJson.map<Inventory>((dynamic i) => Inventory.fromJson(i)));
       return result;
@@ -291,9 +328,11 @@ class InventoryService {
   Future<bool> deleteAllExpiredInventory(String token, String role) async {
     String url;
     if (role == 'employee') {
-      url = '/api/v1/inventories/destroy_all_expired';
-    } else {
+      url = '/api/v1/employ/inventories/destroy_all_expired';
+    } else if (role == 'manager') {
       url = '/api/v1/manager/inventories/destroy_all_expired';
+    } else {
+      url = '/api/v1/store_owner/inventories/destroy_all_expired';
     }
     final response = await http.delete(Uri.http(BASE_URL, url), headers: {
       'Content-Type': 'application/json',
@@ -316,9 +355,11 @@ class InventoryService {
   Future<bool> sendMailToSupplier(String token, String role) async {
     String url;
     if (role == 'employee') {
-      url = '/api/v1/inventories/send_request_mail_to_supplier';
-    } else {
+      url = '/api/v1/employ/inventories/send_request_mail_to_supplier';
+    } else if (role == 'manager') {
       url = '/api/v1/manager/inventories/send_request_mail_to_supplier';
+    } else {
+      url = '/api/v1/store_owner/inventories/send_request_mail_to_supplier';
     }
     final response = await http
         .get(Uri.http(BASE_URL, url, {'quantity_left': '0'}), headers: {

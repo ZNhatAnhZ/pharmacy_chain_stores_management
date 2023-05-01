@@ -11,9 +11,11 @@ class HeaderStatisticService {
       String token, String role) async {
     String url;
     if (role == 'employee') {
-      url = '/api/v1/statistic/header_statistic';
-    } else {
+      url = '/api/v1/employ/statistic/header_statistic';
+    } else if (role == 'manager') {
       url = '/api/v1/manager/statistic/header_statistic';
+    } else {
+      url = '/api/v1/store_owner/statistic/header_statistic';
     }
     final response = await http.get(Uri.http(BASE_URL, url), headers: {
       'Content-Type': 'application/json',
@@ -22,7 +24,7 @@ class HeaderStatisticService {
     });
     if (response.statusCode == 200) {
       dynamic parsedListJson = jsonDecode(response.body);
-      print(parsedListJson);
+      inspect(parsedListJson);
       HeaderStatistic result = HeaderStatistic.fromJson(parsedListJson);
       return result;
     } else {

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:medical_chain_manangement/config.dart';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
@@ -14,7 +16,7 @@ class ForgotPasswordService {
         });
 
     if (response.statusCode == 200) {
-      print(response);
+      inspect(response);
       Fluttertoast.showToast(
           msg: "Sent reset password token to this email",
           toastLength: Toast.LENGTH_SHORT,
@@ -40,7 +42,7 @@ class ForgotPasswordService {
         });
 
     if (response.statusCode == 200) {
-      print(response);
+      inspect(response);
       Fluttertoast.showToast(
           msg: "Password reset successfully",
           toastLength: Toast.LENGTH_SHORT,
@@ -49,6 +51,36 @@ class ForgotPasswordService {
       return true;
     } else {
       throw Exception(response.toString());
+    }
+  }
+
+  Future<bool> updateAccountInfo(String name, String old_password,
+      String new_password, String role, String id, String token) async {
+    final response = await http
+        .put(Uri.http(BASE_URL, '/api/v1/$role/employees/$id'), headers: {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    }, body: {
+      'name': name == '' ? null : name,
+      'current_password': old_password == '' ? null : old_password,
+      'password': new_password == '' ? null : new_password,
+    });
+
+    if (response.statusCode == 200) {
+      Fluttertoast.showToast(
+          msg: "Updated account info successfully",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          fontSize: 16.0);
+      return true;
+    } else {
+      Fluttertoast.showToast(
+          msg: "Updated account info failed",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          fontSize: 16.0);
+      inspect(response);
+      return false;
     }
   }
 }

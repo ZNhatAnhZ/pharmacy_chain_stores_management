@@ -64,43 +64,44 @@ class _EmployeePage extends State<EmployeePage> {
 
     return Scaffold(
       appBar: AppBar(title: const Text("Quản lý nhân viên"), actions: <Widget>[
-        Padding(
-            padding: EdgeInsets.only(
-              right: 60,
-              top: 15,
-              bottom: 10,
-            ),
-            child: DropdownButton<int>(
-              value: int.parse(branch_value),
-              icon: const Icon(Icons.arrow_downward),
-              elevation: 16,
-              style: const TextStyle(color: Colors.black),
-              underline: Container(
-                height: 1,
-                color: Colors.black,
+        if (auth.employee["role"] == "manager")
+          Padding(
+              padding: EdgeInsets.only(
+                right: 60,
+                top: 15,
+                bottom: 10,
               ),
-              onChanged: (int? value) {
-                if (auth.isLoggedIn) {
-                  employeeService
-                      .getAllEmployee(auth.employee['access_token'],
-                          auth.employee['role'], value.toString())
-                      .then((result) {
-                    setState(() {
-                      employees = List.from(result);
-                      branch_value = value.toString();
+              child: DropdownButton<int>(
+                value: int.parse(branch_value),
+                icon: const Icon(Icons.arrow_downward),
+                elevation: 16,
+                style: const TextStyle(color: Colors.black),
+                underline: Container(
+                  height: 1,
+                  color: Colors.black,
+                ),
+                onChanged: (int? value) {
+                  if (auth.isLoggedIn) {
+                    employeeService
+                        .getAllEmployee(auth.employee['access_token'],
+                            auth.employee['role'], value.toString())
+                        .then((result) {
+                      setState(() {
+                        employees = List.from(result);
+                        branch_value = value.toString();
+                      });
+                    }).catchError((err) {
+                      print(err);
                     });
-                  }).catchError((err) {
-                    print(err);
-                  });
-                }
-              },
-              items: branches.map<DropdownMenuItem<int>>((Branch value) {
-                return DropdownMenuItem<int>(
-                  value: value.id,
-                  child: Text(value.name!),
-                );
-              }).toList(),
-            )),
+                  }
+                },
+                items: branches.map<DropdownMenuItem<int>>((Branch value) {
+                  return DropdownMenuItem<int>(
+                    value: value.id,
+                    child: Text(value.name!),
+                  );
+                }).toList(),
+              )),
         IconButton(
           icon: const Icon(Icons.download_sharp),
           onPressed: () {

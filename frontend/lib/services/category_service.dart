@@ -10,9 +10,11 @@ class CategoryService {
   Future<List<Category>> getAllCategory(String token, String role) async {
     String url;
     if (role == 'employee') {
-      url = '/api/v1/categories';
-    } else {
+      url = '/api/v1/employ/categories';
+    } else if (role == 'manager') {
       url = '/api/v1/manager/categories';
+    } else {
+      url = '/api/v1/store_owner/categories';
     }
     final response = await http.get(Uri.http(BASE_URL, url), headers: {
       'Content-Type': 'application/json',
@@ -21,7 +23,7 @@ class CategoryService {
     });
     if (response.statusCode == 200) {
       List<dynamic> parsedListJson = jsonDecode(response.body);
-      print(parsedListJson);
+      inspect(parsedListJson);
       List<Category> result = List<Category>.from(
           parsedListJson.map<Category>((dynamic i) => Category.fromJson(i)));
       return result;

@@ -48,7 +48,8 @@ class _ImportInventoryDetailState extends State<ImportInventoryDetail> {
   void getAllBatchInventory(AuthBlock auth) {
     if (isCalled == false && auth.isLoggedIn) {
       batchInventoryService
-          .getAllBatchInventory(auth.employee['access_token'], auth.employee['role'])
+          .getAllBatchInventory(
+              auth.employee['access_token'], auth.employee['role'])
           .then((result) {
         setState(() {
           batchInventory = List.from(result);
@@ -304,7 +305,8 @@ class _ImportInventoryDetailState extends State<ImportInventoryDetail> {
                                                         newBatchInventory[
                                                             'batch_code'],
                                                         newBatchInventory[
-                                                            'expired_date'])
+                                                            'expired_date'],
+                                                        auth.employee['role'])
                                                     .then((result) {
                                                   setState(() {
                                                     batchInventory.add(result);
@@ -341,7 +343,8 @@ class _ImportInventoryDetailState extends State<ImportInventoryDetail> {
                             importInventoryService
                                 .createImportInventory(
                                     auth.employee['access_token'],
-                                    newImportInventory)
+                                    newImportInventory,
+                                    auth.employee['role'])
                                 .then((value) => null)
                                 .catchError((err) => print(err));
                           },

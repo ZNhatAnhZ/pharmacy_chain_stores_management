@@ -43,6 +43,15 @@ class _Partner extends State<Partner> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Tất cả các nhà cung cấp"),
+        actions: <Widget>[
+          if (auth.employee["role"] == "manager")
+            IconButton(
+              icon: const Icon(Icons.add_circle),
+              onPressed: () {
+                Navigator.pushNamed(context, '/partner_add');
+              },
+            )
+        ],
       ),
       body: Row(
         children: <Widget>[
@@ -83,8 +92,11 @@ class _Partner extends State<Partner> {
                           .map(
                             (supplier) => DataRow(
                               onSelectChanged: (value) {
-                                Navigator.pushNamed(context, '/partner_detail',
-                                    arguments: supplier);
+                                if (auth.employee["role"] == "manager") {
+                                  Navigator.pushNamed(
+                                      context, '/partner_detail',
+                                      arguments: supplier);
+                                }
                               },
                               cells: [
                                 DataCell(

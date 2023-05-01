@@ -39,7 +39,10 @@ class _AppDrawerState extends State<AppDrawer> {
                     Navigator.pop(context);
                   },
                 ),
-              if (auth.isLoggedIn)
+              if (auth.isLoggedIn &&
+                  (auth.employee['role'] == 'manager' ||
+                      auth.employee['role'] == 'store_owner' ||
+                      auth.employee['role'] == 'employee'))
                 ListTile(
                   leading: Icon(Icons.category,
                       color: Theme.of(context).colorScheme.secondary),
@@ -49,7 +52,9 @@ class _AppDrawerState extends State<AppDrawer> {
                     Navigator.pushNamed(context, '/inventory_page');
                   },
                 ),
-              if (auth.isLoggedIn && auth.employee['role'] == 'employee')
+              if (auth.isLoggedIn &&
+                  (auth.employee['role'] == 'store_owner' ||
+                      auth.employee['role'] == 'employee'))
                 ListTile(
                   leading: Icon(Icons.shopping_cart,
                       color: Theme.of(context).colorScheme.secondary),
@@ -59,7 +64,9 @@ class _AppDrawerState extends State<AppDrawer> {
                     Navigator.pushNamed(context, '/import_inventory_detail');
                   },
                 ),
-              if (auth.isLoggedIn && auth.employee['role'] == 'employee')
+              if (auth.isLoggedIn &&
+                  (auth.employee['role'] == 'store_owner' ||
+                      auth.employee['role'] == 'employee'))
                 ListTile(
                   leading: Icon(Icons.shopping_basket,
                       color: Theme.of(context).colorScheme.secondary),
@@ -89,7 +96,9 @@ class _AppDrawerState extends State<AppDrawer> {
                     Navigator.pushNamed(context, '/transaction_out');
                   },
                 ),
-              if (auth.isLoggedIn)
+              if (auth.isLoggedIn &&
+                  (auth.employee['role'] == 'manager' ||
+                      auth.employee['role'] == 'store_owner'))
                 ListTile(
                   leading: Icon(Icons.attach_money,
                       color: Theme.of(context).colorScheme.secondary),
@@ -99,7 +108,9 @@ class _AppDrawerState extends State<AppDrawer> {
                     Navigator.pushNamed(context, '/ledger');
                   },
                 ),
-              if (auth.isLoggedIn && auth.employee['role'] == 'admin')
+              if (auth.isLoggedIn &&
+                  (auth.employee['role'] == 'manager' ||
+                      auth.employee['role'] == 'store_owner'))
                 ListTile(
                   leading: Icon(Icons.assignment_ind,
                       color: Theme.of(context).colorScheme.secondary),
@@ -109,7 +120,7 @@ class _AppDrawerState extends State<AppDrawer> {
                     Navigator.pushNamed(context, '/partner');
                   },
                 ),
-              if (auth.isLoggedIn && auth.employee['role'] == 'admin')
+              if (auth.isLoggedIn && auth.employee['role'] == 'manager')
                 ListTile(
                   leading: Icon(Icons.store,
                       color: Theme.of(context).colorScheme.secondary),
@@ -119,7 +130,9 @@ class _AppDrawerState extends State<AppDrawer> {
                     Navigator.pushNamed(context, '/store');
                   },
                 ),
-              if (auth.isLoggedIn && auth.employee['role'] == 'admin')
+              if (auth.isLoggedIn &&
+                  (auth.employee['role'] == 'manager' ||
+                      auth.employee['role'] == 'store_owner'))
                 ListTile(
                   leading: Icon(Icons.emoji_people,
                       color: Theme.of(context).colorScheme.secondary),

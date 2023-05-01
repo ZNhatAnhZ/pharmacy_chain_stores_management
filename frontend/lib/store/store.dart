@@ -40,6 +40,14 @@ class _Store extends State<Store> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Tất cả các chi nhánh"),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.add_circle),
+            onPressed: () {
+              Navigator.pushNamed(context, '/store_add');
+            },
+          )
+        ],
       ),
       body: Row(
         children: <Widget>[
@@ -83,6 +91,10 @@ class _Store extends State<Store> {
                       rows: branches
                           .map(
                             (branch) => DataRow(
+                              onSelectChanged: (value) {
+                                Navigator.pushNamed(context, '/store_detail',
+                                    arguments: branch);
+                              },
                               cells: [
                                 DataCell(
                                   Text(

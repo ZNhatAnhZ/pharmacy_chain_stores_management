@@ -122,7 +122,7 @@ class _TransactionOut extends State<TransactionOut> {
             ),
           ),
         ),
-        if (auth.isLoggedIn && auth.employee['role'] == 'admin')
+        if (auth.isLoggedIn && auth.employee['role'] == 'manager')
           Padding(
               padding: EdgeInsets.only(
                 right: 60,

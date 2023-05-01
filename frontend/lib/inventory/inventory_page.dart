@@ -165,7 +165,7 @@ class _InventoryPage extends State<InventoryPage> {
               ),
             ),
           ),
-          if (auth.isLoggedIn && auth.employee['role'] == 'admin')
+          if (auth.isLoggedIn && auth.employee['role'] == 'manager')
             Padding(
                 padding: EdgeInsets.only(
                   right: 60,
@@ -321,7 +321,7 @@ class _InventoryPage extends State<InventoryPage> {
               SizedBox(
                 height: 10,
               ),
-              if (auth.isLoggedIn && auth.employee['role'] == 'admin')
+              if (auth.isLoggedIn && auth.employee['role'] == 'manager')
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     primary: Colors.green,

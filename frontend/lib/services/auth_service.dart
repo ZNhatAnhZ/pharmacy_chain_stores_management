@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:medical_chain_manangement/config.dart';
 import 'package:medical_chain_manangement/models/employee.dart';
@@ -17,7 +18,7 @@ class AuthService {
       'email': employeeCredential.email,
       'password': employeeCredential.password
     });
-    print(response.body);
+    inspect(response.body);
     if (response.statusCode == 200) {
       setEmployee(response.body);
       return jsonDecode(response.body);
@@ -40,7 +41,7 @@ class AuthService {
           'password': employee.password,
           'email': employee.email
         });
-    print(response.body);
+    inspect(response.body);
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
     } else {

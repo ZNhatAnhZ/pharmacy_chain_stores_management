@@ -12,9 +12,11 @@ class ImportInventoryService {
       String branch_id, Map<String, String> dates) async {
     String url;
     if (role == 'employee') {
-      url = '/api/v1/import_inventories';
-    } else {
+      url = '/api/v1/employ/import_inventories';
+    } else if (role == 'manager') {
       url = '/api/v1/manager/import_inventories';
+    } else {
+      url = '/api/v1/store_owner/import_inventories';
     }
     if (branch_id == '-1') {
       branch_id = '';
@@ -32,7 +34,7 @@ class ImportInventoryService {
         });
     if (response.statusCode == 200) {
       List<dynamic> parsedListJson = jsonDecode(response.body);
-      print(parsedListJson);
+      inspect(parsedListJson);
       List<ImportInventory> result = List<ImportInventory>.from(parsedListJson
           .map<ImportInventory>((dynamic i) => ImportInventory.fromJson(i)));
       return result;
@@ -41,9 +43,18 @@ class ImportInventoryService {
     }
   }
 
-  Future<ImportInventory> createImportInventory(String token, Map data) async {
-    final response = await http
-        .post(Uri.http(BASE_URL, '/api/v1/import_inventories'), headers: {
+  Future<ImportInventory> createImportInventory(
+      String token, Map data, String role) async {
+    String url;
+    if (role == 'employee') {
+      url = '/api/v1/employ/import_inventories';
+    } else if (role == 'manager') {
+      url = '/api/v1/manager/import_inventories';
+    } else {
+      url = '/api/v1/store_owner/import_inventories';
+    }
+
+    final response = await http.post(Uri.http(BASE_URL, url), headers: {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     }, body: {
@@ -55,7 +66,7 @@ class ImportInventoryService {
     });
 
     if (response.statusCode == 200) {
-      print(jsonDecode(response.body));
+      inspect(jsonDecode(response.body));
       Fluttertoast.showToast(
           msg: "Created a new import inventory",
           toastLength: Toast.LENGTH_SHORT,
@@ -71,9 +82,11 @@ class ImportInventoryService {
       String token, String role, String branch_id) async {
     String url;
     if (role == 'employee') {
-      url = '/api/v1/export_csv/export_import_inventory';
-    } else {
+      url = '/api/v1/employ/export_csv/export_import_inventory';
+    } else if (role == 'manager') {
       url = '/api/v1/manager/export_csv/export_import_inventory';
+    } else {
+      url = '/api/v1/store_owner/export_csv/export_import_inventory';
     }
     if (branch_id == '-1') {
       branch_id = '';

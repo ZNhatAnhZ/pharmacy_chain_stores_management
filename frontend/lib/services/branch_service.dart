@@ -10,9 +10,11 @@ class BranchService {
   Future<List<Branch>> getAllBranch(String token, String role) async {
     String url;
     if (role == 'employee') {
-      url = '/api/v1/branches';
-    } else {
+      url = '/api/v1/employ/branches';
+    } else if (role == 'manager'){
       url = '/api/v1/manager/branches';
+    } else {
+      url = '/api/v1/store_owner/branches';
     }
     final response = await http.get(Uri.http(BASE_URL, url), headers: {
       'Content-Type': 'application/json',
@@ -21,10 +23,104 @@ class BranchService {
     });
     if (response.statusCode == 200) {
       List<dynamic> parsedListJson = jsonDecode(response.body);
-      print(parsedListJson);
+      inspect(parsedListJson);
       List<Branch> result = List<Branch>.from(
           parsedListJson.map<Branch>((dynamic i) => Branch.fromJson(i)));
       return result;
+    } else {
+      throw Exception(response.body);
+    }
+  }
+
+    Future<bool> createBranch(String token, Map data, String role) async {
+    String url;
+    if (role == 'employee') {
+      url = '/api/v1/employ/branches';
+    } else if (role == 'manager'){
+      url = '/api/v1/manager/branches';
+    } else {
+      url = '/api/v1/store_owner/branches';
+    }
+    final response = await http.post(Uri.http(BASE_URL, url), headers: {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    }, body: {
+      'name': data['name'],
+      'address': data['address'],
+      'branch_code': data['branch_code'],
+      'email': data['email'],
+      'contact': data['contact'],
+    });
+
+    if (response.statusCode == 200) {
+      Fluttertoast.showToast(
+          msg: "Created a new branch",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          fontSize: 16.0);
+      return true;
+    } else {
+      throw Exception(response.toString());
+    }
+  }
+
+  Future<bool> updateBranch(String token, Map data, String role) async {
+    inspect(data);
+    var branch_id = data['id'];
+    String url;
+    if (role == 'employee') {
+      url = '/api/v1/employ/branches/';
+    } else if (role == 'manager'){
+      url = '/api/v1/manager/branches/';
+    } else {
+      url = '/api/v1/store_owner/branches/';
+    }
+    final response =
+        await http.put(Uri.http(BASE_URL, url + branch_id), headers: {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    }, body: {
+      'name': data['name'],
+      'address': data['address'],
+      'branch_code': data['branch_code'],
+      'email': data['email'],
+      'contact': data['contact'],
+    });
+
+    if (response.statusCode == 200) {
+      inspect(response);
+      Fluttertoast.showToast(
+          msg: "Updated the branch",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          fontSize: 16.0);
+      return true;
+    } else {
+      throw Exception(response.toString());
+    }
+  }
+
+  Future<bool> deleteBranch(String token, String id, String role) async {
+    String url;
+    if (role == 'employee') {
+      url = '/api/v1/employ/branches/';
+    } else if (role == 'manager'){
+      url = '/api/v1/manager/branches/';
+    } else {
+      url = '/api/v1/store_owner/branches/';
+    }
+    final response = await http.delete(Uri.http(BASE_URL, url + id), headers: {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    });
+
+    if (response.statusCode == 200) {
+      Fluttertoast.showToast(
+          msg: "Deleted the branch",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          fontSize: 16.0);
+      return true;
     } else {
       throw Exception(response.body);
     }

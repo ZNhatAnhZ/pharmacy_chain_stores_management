@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:medical_chain_manangement/blocks/auth_block.dart';
 import 'package:medical_chain_manangement/models/batch_inventory.dart';
+import 'package:medical_chain_manangement/models/branch.dart';
 import 'package:medical_chain_manangement/models/category.dart';
 import 'package:medical_chain_manangement/models/inventory.dart';
 import 'package:dropdown_search/dropdown_search.dart';
@@ -14,6 +15,8 @@ import 'package:medical_chain_manangement/services/inventory_service.dart';
 import 'package:medical_chain_manangement/services/supplier_service.dart';
 import 'package:provider/provider.dart';
 import 'package:file_picker/file_picker.dart';
+
+import '../services/branch_service.dart';
 
 class AddInventoryPage extends StatefulWidget {
   @override
@@ -27,16 +30,19 @@ class _AddInventoryPageState extends State<AddInventoryPage> {
   SupplierService supplierService = SupplierService();
   ImportInventoryService importInventoryService = ImportInventoryService();
   CategoryService categoryService = CategoryService();
+  BranchService branchService = BranchService();
 
   List<Inventory> inventorys = List.empty();
   List<BatchInventory> batchInventory = List.empty();
   List<Supplier> supplier = List.empty();
   List<Category> categories = List.empty();
+  List<Branch> branches = List.empty();
 
   bool isCalled = false;
   bool isCalled1 = false;
   bool isCalled2 = false;
   bool isCalled3 = false;
+  bool isCalled4 = false;
 
   void getAllInventory(AuthBlock auth) {
     if (isCalled == false && auth.isLoggedIn) {
@@ -100,6 +106,21 @@ class _AddInventoryPageState extends State<AddInventoryPage> {
     }
   }
 
+  void getAllBranch(AuthBlock auth) {
+    if (isCalled4 == false && auth.isLoggedIn) {
+      branchService
+          .getAllBranch(auth.employee['access_token'], auth.employee['role'])
+          .then((result) {
+        setState(() {
+          branches = List.from(result);
+          isCalled4 = true;
+        });
+      }).catchError((err) {
+        print(err);
+      });
+    }
+  }
+
   final _formKey = GlobalKey<FormState>();
   Map newInventory = {};
   Map newBatchInventory = {};
@@ -112,6 +133,9 @@ class _AddInventoryPageState extends State<AddInventoryPage> {
     getAllBatchInventory(auth);
     getAllSupplier(auth);
     getAllCategory(auth);
+    if (auth.employee['role'] == 'manager') {
+      getAllBranch(auth);
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -345,7 +369,8 @@ class _AddInventoryPageState extends State<AddInventoryPage> {
                                                         newBatchInventory[
                                                             'batch_code'],
                                                         newBatchInventory[
-                                                            'expired_date'])
+                                                            'expired_date'],
+                                                        auth.employee['role'])
                                                     .then((result) {
                                                   setState(() {
                                                     batchInventory.add(result);
@@ -450,6 +475,30 @@ class _AddInventoryPageState extends State<AddInventoryPage> {
                       ),
                     ),
                   ),
+                  if (auth.employee['role'] == 'manager')
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 12.0),
+                      child: DropdownSearch<String>(
+                        popupProps: PopupProps.menu(
+                          showSelectedItems: true,
+                          showSearchBox: true,
+                        ),
+                        items: List<String>.of(branches
+                            .map((e) => e.id!.toString() + ": " + e.name!)),
+                        dropdownDecoratorProps: DropDownDecoratorProps(
+                          dropdownSearchDecoration: InputDecoration(
+                            labelText: "Chọn chi nhánh cho thuốc",
+                            hintText: "Chọn chi nhánh cho thuốc",
+                          ),
+                        ),
+                        onChanged: (e) {
+                          newInventory['branch_id'] =
+                              e?.split(':').elementAt(0);
+                          print(e);
+                        },
+                        // selectedItem: "Brazil",
+                      ),
+                    ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 12.0),
                     child: Row(
@@ -499,8 +548,11 @@ class _AddInventoryPageState extends State<AddInventoryPage> {
                               style: TextStyle(color: Colors.white)),
                           onPressed: () {
                             inventoryService
-                                .createInventory(auth.employee['access_token'],
-                                    newInventory, image_file)
+                                .createInventory(
+                                    auth.employee['access_token'],
+                                    newInventory,
+                                    image_file,
+                                    auth.employee['role'])
                                 .then((value) => Navigator.pushReplacementNamed(
                                     context, '/inventory_page'))
                                 .catchError((err) => print(err));

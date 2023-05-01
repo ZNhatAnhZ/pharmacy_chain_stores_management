@@ -12,9 +12,11 @@ class OrderService {
       Map<String, String> dates) async {
     String url;
     if (role == 'employee') {
-      url = '/api/v1/orders';
-    } else {
+      url = '/api/v1/employ/orders';
+    } else if (role == 'manager') {
       url = '/api/v1/manager/orders';
+    } else {
+      url = '/api/v1/store_owner/orders';
     }
     if (branch_id == '-1') {
       branch_id = '';
@@ -32,7 +34,7 @@ class OrderService {
         });
     if (response.statusCode == 200) {
       List<dynamic> parsedListJson = jsonDecode(response.body);
-      print(parsedListJson);
+      inspect(parsedListJson);
       List<Order> result = List<Order>.from(
           parsedListJson.map<Order>((dynamic i) => Order.fromJson(i)));
       return result;
@@ -41,21 +43,28 @@ class OrderService {
     }
   }
 
-  Future<Order> createOrder(String token, Map data) async {
+  Future<Order> createOrder(String token, Map data, String role) async {
     inspect(data);
-    final response =
-        await http.post(Uri.http(BASE_URL, '/api/v1/orders'), headers: {
+    String url;
+    if (role == 'employee') {
+      url = '/api/v1/employ/orders';
+    } else if (role == 'manager') {
+      url = '/api/v1/manager/orders';
+    } else {
+      url = '/api/v1/store_owner/orders';
+    }
+    final response = await http.post(Uri.http(BASE_URL, url), headers: {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     }, body: {
       "total_price": data["total_price"],
       "total_quantity": data["total_quantity"],
       "inventory_id": data["inventory_id"],
-      "customer_name": data["customer_name"],
+      "customer_id": data["customer_id"],
     });
 
     if (response.statusCode == 200) {
-      print(jsonDecode(response.body));
+      inspect(jsonDecode(response.body));
       Fluttertoast.showToast(
           msg: "Created a new order",
           toastLength: Toast.LENGTH_SHORT,
@@ -70,9 +79,11 @@ class OrderService {
   void exportOrderCSV(String token, String role, String branch_id) async {
     String url;
     if (role == 'employee') {
-      url = '/api/v1/export_csv/export_order';
-    } else {
+      url = '/api/v1/employ/export_csv/export_order';
+    } else if (role == 'manager') {
       url = '/api/v1/manager/export_csv/export_order';
+    } else {
+      url = '/api/v1/store_owner/export_csv/export_order';
     }
     if (branch_id == '-1') {
       branch_id = '';

@@ -1,37 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:medical_chain_manangement/blocks/auth_block.dart';
-import 'package:medical_chain_manangement/models/employee.dart';
-import 'package:dropdown_search/dropdown_search.dart';
-import 'package:medical_chain_manangement/services/forgot_password_service.dart';
+import 'package:medical_chain_manangement/services/branch_service.dart';
 import 'package:provider/provider.dart';
 
-class Settings extends StatefulWidget {
+class AddStore extends StatefulWidget {
   @override
-  _SettingsState createState() => _SettingsState();
+  _AddStoreState createState() => _AddStoreState();
 }
 
-class _SettingsState extends State<Settings> {
-  ForgotPasswordService forgotPasswordService = ForgotPasswordService();
-  bool isCalled = false;
-  void intializeName(String existname) {
-    if (isCalled == false) {
-      name = existname;
-      isCalled = true;
-    }
-  }
+class _AddStoreState extends State<AddStore> {
+  BranchService branchService = BranchService();
 
-  String old_password = '';
-  String new_password = '';
-  String name = '';
+  Map newStore = {};
 
   @override
   Widget build(BuildContext context) {
     AuthBlock auth = Provider.of<AuthBlock>(context);
-    intializeName(auth.employee['employee_name']);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Sửa thông tin tài khoản"),
+        title: const Text("Tạo chi nhánh"),
       ),
       body: Center(
         child: Form(
@@ -44,63 +32,100 @@ class _SettingsState extends State<Settings> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 12.0),
                     child: TextFormField(
-                      // initialValue: employee.email,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return 'Hãy nhập mật khẩu cũ';
+                          return 'Hãy nhập tên chi nhánh';
                         }
                         return null;
                       },
                       onChanged: (value) {
                         setState(() {
-                          old_password = value;
+                          newStore['name'] = value;
                         });
                       },
                       decoration: InputDecoration(
-                        hintText: 'Hãy nhập mật khẩu cũ',
-                        labelText: 'Hãy nhập mật khẩu cũ',
+                        hintText: 'Hãy nhập tên chi nhánh',
+                        labelText: 'Hãy nhập tên chi nhánh',
                       ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 12.0),
                     child: TextFormField(
-                      initialValue: name,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return 'Nhập tên tài khoản';
+                          return 'Hãy nhập địa chỉ';
                         }
                         return null;
                       },
                       onChanged: (value) {
                         setState(() {
-                          name = value;
+                          newStore['address'] = value;
                         });
                       },
                       decoration: InputDecoration(
-                        hintText: 'Nhập tên tài khoản',
-                        labelText: 'Nhập tên tài khoản',
+                        hintText: 'Hãy nhập địa chỉ',
+                        labelText: 'Hãy nhập địa chỉ',
                       ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 12.0),
                     child: TextFormField(
-                      // initialValue: employee.email,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return 'Hãy nhập mật khẩu mới';
+                          return 'Hãy nhập mã chi nhánh';
                         }
                         return null;
                       },
                       onChanged: (value) {
                         setState(() {
-                          new_password = value;
+                          newStore['branch_code'] = value;
                         });
                       },
                       decoration: InputDecoration(
-                        hintText: 'Hãy nhập mật khẩu mới',
-                        labelText: 'Hãy nhập mật khẩu mới',
+                        hintText: 'Hãy nhập mã chi nhánh',
+                        labelText: 'Hãy nhập mã chi nhánh',
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 12.0),
+                    child: TextFormField(
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Hãy nhập email';
+                        }
+                        return null;
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          newStore['email'] = value;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Nhập email',
+                        labelText: 'Nhập email',
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 12.0),
+                    child: TextFormField(
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Hãy nhập số điện thoại';
+                        }
+                        return null;
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          newStore['contact'] = value;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Hãy nhập số điện thoại',
+                        labelText: 'Hãy nhập số điện thoại',
                       ),
                     ),
                   ),
@@ -116,30 +141,12 @@ class _SettingsState extends State<Settings> {
                           child: Text('Submit',
                               style: TextStyle(color: Colors.white)),
                           onPressed: () {
-                            EmployeeCredential employeeCredential =
-                                EmployeeCredential(email: '', password: '');
-                            employeeCredential.email =
-                                auth.employee['employee_email'];
-                            employeeCredential.password = new_password;
-                            forgotPasswordService
-                                .updateAccountInfo(
-                                  name,
-                                  old_password,
-                                  new_password,
-                                  auth.employee['role'],
-                                  auth.employee['employee_id'].toString(),
-                                  auth.employee['access_token'],
-                                )
-                                .then((value) => {
-                                      if (value)
-                                        {
-                                          auth
-                                              .employeeLogin(employeeCredential)
-                                              .then((e) {
-                                            Navigator.pop(context);
-                                          })
-                                        }
-                                    });
+                            branchService
+                                .createBranch(auth.employee['access_token'],
+                                    newStore, auth.employee['role'])
+                                .then((value) => Navigator.pushReplacementNamed(
+                                    context, '/store'))
+                                .catchError((err) => print(err));
                           },
                         )),
                   ),

@@ -11,9 +11,11 @@ class BatchInventoryService {
       String token, String role) async {
     String url;
     if (role == 'employee') {
-      url = '/api/v1/batch_inventories';
-    } else {
+      url = '/api/v1/employ/batch_inventories';
+    } else if (role == 'manager') {
       url = '/api/v1/manager/batch_inventories';
+    } else {
+      url = '/api/v1/store_owner/batch_inventories';
     }
     final response = await http.get(Uri.http(BASE_URL, url), headers: {
       'Content-Type': 'application/json',
@@ -22,7 +24,7 @@ class BatchInventoryService {
     });
     if (response.statusCode == 200) {
       List<dynamic> parsedListJson = jsonDecode(response.body);
-      print(parsedListJson);
+      inspect(parsedListJson);
       List<BatchInventory> result = List<BatchInventory>.from(parsedListJson
           .map<BatchInventory>((dynamic i) => BatchInventory.fromJson(i)));
       return result;
@@ -32,9 +34,16 @@ class BatchInventoryService {
   }
 
   Future<BatchInventory> createBatchInventory(
-      String token, String batch_code, String expired_date) async {
-    final response = await http
-        .post(Uri.http(BASE_URL, '/api/v1/batch_inventories'), headers: {
+      String token, String batch_code, String expired_date, String role) async {
+    String url;
+    if (role == 'employee') {
+      url = '/api/v1/employ/batch_inventories';
+    } else if (role == 'manager') {
+      url = '/api/v1/manager/batch_inventories';
+    } else {
+      url = '/api/v1/store_owner/batch_inventories';
+    }
+    final response = await http.post(Uri.http(BASE_URL, url), headers: {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     }, body: {
@@ -43,7 +52,7 @@ class BatchInventoryService {
     });
 
     if (response.statusCode == 200) {
-      print(jsonDecode(response.body));
+      inspect(jsonDecode(response.body));
       Fluttertoast.showToast(
           msg: "Created a new batch",
           toastLength: Toast.LENGTH_SHORT,

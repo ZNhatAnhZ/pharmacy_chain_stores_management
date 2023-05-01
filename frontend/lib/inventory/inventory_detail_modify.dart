@@ -390,7 +390,8 @@ class _InventoryDetailModifyState extends State<InventoryDetailModify> {
                                                         newBatchInventory[
                                                             'batch_code'],
                                                         newBatchInventory[
-                                                            'expired_date'])
+                                                            'expired_date'],
+                                                        auth.employee['role'])
                                                     .then((result) {
                                                   setState(() {
                                                     batchInventory.add(result);

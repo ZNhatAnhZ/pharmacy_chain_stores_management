@@ -56,34 +56,36 @@ class _AddEmployeeState extends State<AddEmployee> {
                     padding: const EdgeInsets.only(bottom: 12.0),
                     child: Row(
                       children: [
-                        Expanded(
-                          child: DropdownSearch<String>(
-                            popupProps: PopupProps.menu(
-                              showSelectedItems: true,
-                              showSearchBox: true,
-                            ),
-                            items: List<String>.of(branches
-                                .map((e) => e.id!.toString() + ": " + e.name!)),
-                            dropdownDecoratorProps: DropDownDecoratorProps(
-                              dropdownSearchDecoration: InputDecoration(
-                                labelText: "Chọn chi nhánh",
-                                hintText: "Chọn chi nhánh",
+                        if (auth.employee["role"] == "manager")
+                          Expanded(
+                            child: DropdownSearch<String>(
+                              popupProps: PopupProps.menu(
+                                showSelectedItems: true,
+                                showSearchBox: true,
                               ),
+                              items: List<String>.of(branches.map(
+                                  (e) => e.id!.toString() + ": " + e.name!)),
+                              dropdownDecoratorProps: DropDownDecoratorProps(
+                                dropdownSearchDecoration: InputDecoration(
+                                  labelText: "Chọn chi nhánh",
+                                  hintText: "Chọn chi nhánh",
+                                ),
+                              ),
+                              onChanged: (e) {
+                                newEmployee['branch_id'] =
+                                    e?.split(':').elementAt(0);
+                                print(e);
+                              },
+                              // selectedItem: "Brazil",
                             ),
-                            onChanged: (e) {
-                              newEmployee['branch_id'] =
-                                  e?.split(':').elementAt(0);
-                              print(e);
-                            },
-                            // selectedItem: "Brazil",
                           ),
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.add_circle),
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/add_branch');
-                          },
-                        ),
+                        if (auth.employee["role"] == "manager")
+                          IconButton(
+                            icon: const Icon(Icons.add_circle),
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/add_branch');
+                            },
+                          ),
                       ],
                     ),
                   ),
@@ -124,6 +126,66 @@ class _AddEmployeeState extends State<AddEmployee> {
                       decoration: InputDecoration(
                         hintText: 'Nhập email',
                         labelText: 'Nhập email',
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 12.0),
+                    child: TextFormField(
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Hãy nhập số điện thoại';
+                        }
+                        return null;
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          newEmployee['contact'] = value;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Hãy nhập số điện thoại',
+                        labelText: 'Hãy nhập số điện thoại',
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 12.0),
+                    child: TextFormField(
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Hãy nhập giới tính';
+                        }
+                        return null;
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          newEmployee['gender'] = value;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Hãy nhập giới tính',
+                        labelText: 'Hãy nhập giới tính',
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 12.0),
+                    child: TextFormField(
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Hãy nhập địa chỉ';
+                        }
+                        return null;
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          newEmployee['address'] = value;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Hãy nhập địa chỉ',
+                        labelText: 'Hãy nhập địa chỉ',
                       ),
                     ),
                   ),

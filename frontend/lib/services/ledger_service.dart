@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:html';
 
 import 'package:medical_chain_manangement/config.dart';
@@ -13,9 +14,11 @@ class LedgerService {
     }
     String url;
     if (role == 'employee') {
-      url = '/api/v1/ledger';
-    } else {
+      url = '/api/v1/employ/ledger';
+    } else if (role == 'manager') {
       url = '/api/v1/manager/ledger';
+    } else {
+      url = '/api/v1/store_owner/ledger';
     }
     final response = await http.get(
         Uri.http(BASE_URL, url, {
@@ -30,7 +33,7 @@ class LedgerService {
         });
     if (response.statusCode == 200) {
       List<dynamic> parsedListJson = jsonDecode(response.body);
-      print(parsedListJson);
+      inspect(parsedListJson);
       List<Ledger> result = List<Ledger>.from(
           parsedListJson.map<Ledger>((dynamic i) => Ledger.fromJson(i)));
       return result;
@@ -42,9 +45,11 @@ class LedgerService {
   void exportLedgerCSV(String token, String role, String branch_id) async {
     String url;
     if (role == 'employee') {
-      url = '/api/v1/export_csv/export_ledger';
-    } else {
+      url = '/api/v1/employ/export_csv/export_ledger';
+    } else if (role == 'manager') {
       url = '/api/v1/manager/export_csv/export_ledger';
+    } else {
+      url = '/api/v1/store_owner/export_csv/export_ledger';
     }
     if (branch_id == '-1') {
       branch_id = '';
