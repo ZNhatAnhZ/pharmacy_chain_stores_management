@@ -16,6 +16,7 @@ Rails.application.routes.draw do
           get :get_expired, on: :collection
           get :get_out_of_stock, on: :collection
           get :send_request_mail_to_supplier, on: :collection
+          delete :destroy_all_expired, on: :collection
         end
         resources :statistic do
           get :get_total_order_price, on: :collection
@@ -115,7 +116,11 @@ Rails.application.routes.draw do
       scope module: "customers", path: "customers" do
       post "/login", to: "customer_auth#create"
         resources :orders
-
+        resources :customers do
+          get :me, on: :collection
+          put :update, path: '/me'
+          # delete :delete, path: '/me'
+        end
         resources :inventories do
           get :get_expired, on: :collection
           get :get_out_of_stock, on: :collection
