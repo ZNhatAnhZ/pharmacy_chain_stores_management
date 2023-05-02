@@ -4,17 +4,13 @@ module Api
       class CustomersController < Base
         before_action :authenticate_employee!
         before_action :find_customer, only: :show
-        
+
         def show
-          render json: @customer.as_json(
-            except: :id,
-          ), status: :ok
+          render json: @customer.as_json(), status: :ok
         end
 
         def index
-          render json: Customer.all.as_json(
-            except: :id,
-          ), status: :ok
+          render json: Customer.all.as_json(), status: :ok
         end
 
         private

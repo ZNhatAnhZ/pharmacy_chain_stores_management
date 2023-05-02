@@ -17,17 +17,13 @@ module Api
         end
 
         def me
-          render json: @current_customer.as_json(
-            except: :id,
-          ), status: :ok
+          render json: @current_customer.as_json(), status: :ok
         end
 
         def update
           if @current_customer.authenticate(params[:current_password])
             if @current_customer.update(customer_params)
-              render json: @current_customer.as_json(
-                except: :id,
-              ), status: :ok
+              render json: @current_customer.as_json(), status: :ok
             else
               render json: { error: @current_customer.errors }, status: :bad_request
             end

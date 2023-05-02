@@ -113,6 +113,8 @@ Rails.application.routes.draw do
           put :complete_order, on: :member
           put :rejected_order, on: :member
         end
+        resources :categories
+        resources :suppliers
         resources :employees
         resources :customers
       end

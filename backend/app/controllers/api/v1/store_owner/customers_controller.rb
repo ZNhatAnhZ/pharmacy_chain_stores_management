@@ -1,8 +1,8 @@
 module Api
   module V1
-    module Manager
+    module StoreOwner
       class CustomersController < Base
-        before_action :authenticate_manager!
+        before_action :authenticate_store_owner!
         before_action :find_customer, only: :show
 
         def show
