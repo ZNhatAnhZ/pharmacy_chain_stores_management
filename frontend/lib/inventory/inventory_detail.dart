@@ -4,6 +4,8 @@ import 'package:medical_chain_manangement/models/inventory.dart';
 import 'package:medical_chain_manangement/services/inventory_service.dart';
 import 'package:provider/provider.dart';
 
+import '../services/order_service.dart';
+
 class InventoryDetail extends StatefulWidget {
   @override
   State<InventoryDetail> createState() => _InventoryDetailState();
@@ -11,6 +13,8 @@ class InventoryDetail extends StatefulWidget {
 
 class _InventoryDetailState extends State<InventoryDetail> {
   InventoryService inventoryService = InventoryService();
+  OrderService orderService = OrderService();
+  Map newOrder = {};
 
   @override
   Widget build(BuildContext context) {
@@ -136,45 +140,103 @@ class _InventoryDetailState extends State<InventoryDetail> {
                             ),
                           ),
                         ),
-                        Padding(
-                            padding: const EdgeInsets.only(bottom: 25, top: 10),
-                            child: Row(
-                              children: [
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    primary: Colors.green,
+                        if (auth.employee['role'] != null)
+                          Padding(
+                              padding:
+                                  const EdgeInsets.only(bottom: 25, top: 10),
+                              child: Row(
+                                children: [
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Colors.green,
+                                    ),
+                                    child: Text('Sửa inventory',
+                                        style: TextStyle(color: Colors.white)),
+                                    onPressed: () {
+                                      Navigator.pushNamed(
+                                          context, '/inventory_detail_modify',
+                                          arguments: inventory);
+                                    },
                                   ),
-                                  child: Text('Sửa inventory',
-                                      style: TextStyle(color: Colors.white)),
-                                  onPressed: () {
-                                    Navigator.pushNamed(
-                                        context, '/inventory_detail_modify',
-                                        arguments: inventory);
-                                  },
-                                ),
-                                SizedBox(
-                                  width: 30,
-                                ),
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    primary: Colors.red,
+                                  SizedBox(
+                                    width: 30,
                                   ),
-                                  child: Text('Xóa sản phẩm',
-                                      style: TextStyle(color: Colors.white)),
-                                  onPressed: () {
-                                    inventoryService
-                                        .deleteInventory(
-                                            auth.employee['access_token'],
-                                            inventory.id.toString(),
-                                            auth.employee['role'])
-                                        .then((value) =>
-                                            Navigator.pushReplacementNamed(
-                                                context, '/inventory_page'))
-                                        .catchError((err) => print(err));
-                                  },
-                                )
-                              ],
-                            )),
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Colors.red,
+                                    ),
+                                    child: Text('Xóa sản phẩm',
+                                        style: TextStyle(color: Colors.white)),
+                                    onPressed: () {
+                                      inventoryService
+                                          .deleteInventory(
+                                              auth.employee['access_token'],
+                                              inventory.id.toString(),
+                                              auth.employee['role'])
+                                          .then((value) =>
+                                              Navigator.pushReplacementNamed(
+                                                  context, '/inventory_page'))
+                                          .catchError((err) => print(err));
+                                    },
+                                  )
+                                ],
+                              )),
+                        if (auth.employee['role'] == null)
+                          Padding(
+                              padding:
+                                  const EdgeInsets.only(bottom: 25, top: 10),
+                              child: Row(
+                                children: [
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Colors.green,
+                                    ),
+                                    child: Text('Mua thuốc',
+                                        style: TextStyle(color: Colors.white)),
+                                    onPressed: () {
+                                      orderService
+                                          .createOrder(
+                                              auth.employee['access_token'],
+                                              newOrder,
+                                              auth.employee['role'] ?? 'null')
+                                          .then((value) => null)
+                                          .catchError((err) => print(err));
+                                    },
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Expanded(
+                                    child: TextFormField(
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                      onChanged: (value) {
+                                        setState(() {
+                                          newOrder['inventory_id'] =
+                                              inventory.id.toString();
+                                          newOrder['customer_id'] = auth
+                                              .employee['customer_id']
+                                              .toString();
+                                          newOrder['total_quantity'] = value;
+                                          newOrder['total_price'] =
+                                              (int.parse(value) *
+                                                      inventory.price!)
+                                                  .toString();
+
+                                          print(value);
+                                        });
+                                      },
+                                      decoration: InputDecoration(
+                                        hintText: 'Hãy nhập số lượng',
+                                        labelText: 'Hãy nhập số lượng',
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )),
                       ],
                     ),
                   ),

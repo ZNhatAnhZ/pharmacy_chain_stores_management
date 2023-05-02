@@ -287,51 +287,80 @@ class _TransactionOutDetailState extends State<TransactionOutDetail> {
                             ),
                           ),
                         ),
-                        Padding(
-                            padding: const EdgeInsets.only(bottom: 25, top: 10),
-                            child: Row(
-                              children: [
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    primary: Colors.green,
+                        if (auth.employee['role'] != null)
+                          Padding(
+                              padding:
+                                  const EdgeInsets.only(bottom: 25, top: 10),
+                              child: Row(
+                                children: [
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Colors.green,
+                                    ),
+                                    child: Text('Xác nhận đơn mua',
+                                        style: TextStyle(color: Colors.white)),
+                                    onPressed: () {
+                                      orderService
+                                          .completeOrder(
+                                              auth.employee['access_token'],
+                                              order.id.toString(),
+                                              auth.employee['role'])
+                                          .then((value) => {
+                                                Navigator.pushReplacementNamed(
+                                                    context, '/transaction_out')
+                                              });
+                                    },
                                   ),
-                                  child: Text('Xác nhận đơn mua',
-                                      style: TextStyle(color: Colors.white)),
-                                  onPressed: () {
-                                    orderService
-                                        .completeOrder(
-                                            auth.employee['access_token'],
-                                            order.id.toString(),
-                                            auth.employee['role'])
-                                        .then((value) => {
-                                              Navigator.pushReplacementNamed(
-                                                  context, '/transaction_out')
-                                            });
-                                  },
-                                ),
-                                SizedBox(
-                                  width: 30,
-                                ),
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    primary: Colors.red,
+                                  SizedBox(
+                                    width: 30,
                                   ),
-                                  child: Text('Từ chối đơn mua',
-                                      style: TextStyle(color: Colors.white)),
-                                  onPressed: () {
-                                    orderService
-                                        .rejectOrder(
-                                            auth.employee['access_token'],
-                                            order.id.toString(),
-                                            auth.employee['role'])
-                                        .then((value) => {
-                                              Navigator.pushReplacementNamed(
-                                                  context, '/transaction_out')
-                                            });
-                                  },
-                                )
-                              ],
-                            )),
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Colors.red,
+                                    ),
+                                    child: Text('Từ chối đơn mua',
+                                        style: TextStyle(color: Colors.white)),
+                                    onPressed: () {
+                                      orderService
+                                          .rejectOrder(
+                                              auth.employee['access_token'],
+                                              order.id.toString(),
+                                              auth.employee['role'])
+                                          .then((value) => {
+                                                Navigator.pushReplacementNamed(
+                                                    context, '/transaction_out')
+                                              });
+                                    },
+                                  )
+                                ],
+                              )),
+                        if (auth.employee['role'] == null &&
+                            order.status == 'pending')
+                          Padding(
+                              padding:
+                                  const EdgeInsets.only(bottom: 25, top: 10),
+                              child: Row(
+                                children: [
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Colors.red,
+                                    ),
+                                    child: Text('Từ chối đơn hàng',
+                                        style: TextStyle(color: Colors.white)),
+                                    onPressed: () {
+                                      orderService
+                                          .customerRejectOrder(
+                                              auth.employee['access_token'],
+                                              order.id.toString(),
+                                              auth.employee['role'] ?? 'null')
+                                          .then((value) => {
+                                                Navigator.pushReplacementNamed(
+                                                    context, '/transaction_out')
+                                              });
+                                    },
+                                  )
+                                ],
+                              )),
                       ],
                     ),
                   ),
