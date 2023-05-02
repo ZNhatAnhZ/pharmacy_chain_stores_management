@@ -12,7 +12,8 @@ module Api
             include: {
               inventory: { only: %i[id inventory_code name price quantity main_ingredient producer] },
               branch: { except: %i[created_at updated_at] },
-              employee: { except: %i[created_at updated_at] }
+              employee: { except: %i[created_at updated_at] },
+              customer: { except: %i[created_at updated_at] }
             }
           ), status: :ok
         end
@@ -25,7 +26,8 @@ module Api
               include: {
                 inventory: { only: %i[id inventory_code name price quantity main_ingredient producer] },
                 branch: { except: %i[created_at updated_at] },
-                employee: { except: %i[created_at updated_at] }
+                employee: { except: %i[created_at updated_at] },
+                customer: { except: %i[created_at updated_at] }
               }
             ), status: :ok
           end
@@ -38,7 +40,8 @@ module Api
             include: {
               inventory: { only: %i[id inventory_code name price quantity main_ingredient producer] },
               branch: { except: %i[created_at updated_at] },
-              employee: { except: %i[created_at updated_at] }
+              employee: { except: %i[created_at updated_at] },
+              customer: { except: %i[created_at updated_at] }
             }
           ), status: :ok
         end
@@ -54,10 +57,20 @@ module Api
           end
         end
 
+        def rejected_order
+          return render json: {message: "already rejected order"}, status: :ok if @order.rejected?
+
+          if @order.update status: "rejected"
+            render json: @order.as_json, status: :ok
+          else
+            render json: { error: @order.errors }, status: :bad_request
+          end
+        end
+
         private
 
         def order_params
-          params.permit(:total_price, :total_quantity, :status, :inventory_id)
+          params.permit(:total_price, :total_quantity, :status, :inventory_id, :customer_id)
         end
 
         def find_order

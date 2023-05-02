@@ -12,7 +12,8 @@ module Api
             include: {
               inventory: { only: %i[id inventory_code name price quantity main_ingredient producer] },
               branch: { except: %i[created_at updated_at] },
-              employee: { except: %i[created_at updated_at] }
+              employee: { except: %i[created_at updated_at] },
+              customer: { except: %i[created_at updated_at] }
             }
           ), status: :ok
         end
@@ -25,7 +26,8 @@ module Api
               include: {
                 inventory: { only: %i[id inventory_code name price quantity main_ingredient producer] },
                 branch: { except: %i[created_at updated_at] },
-                employee: { except: %i[created_at updated_at] }
+                employee: { except: %i[created_at updated_at] },
+                customer: { except: %i[created_at updated_at] }
               }
             ), status: :ok
           end
@@ -38,7 +40,8 @@ module Api
             include: {
               inventory: { only: %i[id inventory_code name price quantity main_ingredient producer] },
               branch: { except: %i[created_at updated_at] },
-              employee: { except: %i[created_at updated_at] }
+              employee: { except: %i[created_at updated_at] },
+              customer: { except: %i[created_at updated_at] }
             }
           ), status: :ok
         end
@@ -67,7 +70,7 @@ module Api
         private
 
         def order_params
-          params.permit(:total_price, :total_quantity, :status, :inventory_id)
+          params.permit(:total_price, :total_quantity, :status, :inventory_id, :customer_id)
         end
 
         def find_order
