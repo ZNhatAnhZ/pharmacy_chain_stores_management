@@ -275,6 +275,19 @@ class _TransactionOutDetailState extends State<TransactionOutDetail> {
                           ),
                         ),
                         Padding(
+                          padding: const EdgeInsets.only(bottom: 25),
+                          child: TextFormField(
+                            readOnly: true,
+                            initialValue:
+                                "Tên khách hàng: " + order.customer!.name!,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                        Padding(
                             padding: const EdgeInsets.only(bottom: 25, top: 10),
                             child: Row(
                               children: [

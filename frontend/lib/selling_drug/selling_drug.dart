@@ -176,12 +176,6 @@ class _SellingDrugState extends State<SellingDrug> {
                             // selectedItem: "Brazil",
                           ),
                         ),
-                        IconButton(
-                          icon: const Icon(Icons.add_circle),
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/add_customer');
-                          },
-                        ),
                       ],
                     ),
                   ),
