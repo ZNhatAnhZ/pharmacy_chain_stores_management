@@ -120,7 +120,7 @@ Rails.application.routes.draw do
       end
 
       scope module: "customers", path: "customers" do
-      post "/login", to: "customer_auth#create"
+        post "/login", to: "customer_auth#create"
         resources :orders do
           put :canceled_order, on: :member
         end
@@ -133,6 +133,12 @@ Rails.application.routes.draw do
           get :get_expired, on: :collection
           get :get_out_of_stock, on: :collection
         end
+      end
+
+      scope module: "admins", path: "admins" do
+        post "/login", to: "admin_auth#create"
+        resources :customers
+        resources :employees
       end
     end
   end

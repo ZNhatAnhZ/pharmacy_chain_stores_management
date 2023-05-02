@@ -5,6 +5,9 @@ class Employee < ApplicationRecord
   enum gender: {male: 0, female: 1}
   scope :latest_employee, ->{order(created_at: :desc)}
   scope :search_by_branch, lambda { |branch_id| where(branch_id: branch_id) if branch_id.present? }
+  scope :search_by_role, lambda { |role| where(role: role) if role.present? }
+  scope :except_manager, -> { where.not(role: "manager") }
+
   EMPLOYEE_ATTRS = %w(name email password password_confirmation branch_id).freeze
   before_save :downcase_email
 

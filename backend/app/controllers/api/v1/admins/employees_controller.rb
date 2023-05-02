@@ -1,12 +1,12 @@
 module Api
   module V1
-    module Manager
+    module Admins
       class EmployeesController < Base
-        before_action :authenticate_manager!
+        before_action :authenticate_admin!
         before_action :find_employee, except: %i(create index)
 
         def index
-          @employees = Employee.except_manager.search_by_role(params["role"]).search_by_branch(params["branch_id"])
+          @employees = Employee.search_by_role(params["role"]).search_by_branch(params["branch_id"])
           render json: @employees.as_json, status: :ok
         end
 
@@ -17,24 +17,10 @@ module Api
         end
 
         def update
-          return render json: { error: "Not permission" }, status: :bad_request if @employee.manager? && @employee != @current_manager
-
-          if @current_manager == @employee
-            if @current_manager.authenticate(params[:current_password])
-              if @current_manager.update(employee_params)
-                render json: @current_manager.as_json, status: :ok
-              else
-                render json: { error: @current_manager.errors }, status: :bad_request
-              end
-            else
-              render json: { error: "Current password is incorrect" }, status: :bad_request
-            end
+          if @employee.update(employee_params)
+            render json: @employee.as_json, status: :ok
           else
-            if @employee.update(employee_params)
-              render json: @employee.as_json, status: :ok
-            else
-              render json: { error: @employee.errors }, status: :bad_request
-            end
+            render json: { error: @employee.errors }, status: :bad_request
           end
         end
 
