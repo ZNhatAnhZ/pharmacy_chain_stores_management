@@ -56,8 +56,15 @@ class ForgotPasswordService {
 
   Future<bool> updateAccountInfo(String name, String old_password,
       String new_password, String role, String id, String token) async {
-    final response = await http
-        .put(Uri.http(BASE_URL, '/api/v1/$role/employees/$id'), headers: {
+    String url;
+    if (role == 'employee') {
+      url = '/api/v1/employ/employees/';
+    } else if (role == 'manager') {
+      url = '/api/v1/manager/employees/';
+    } else {
+      url = '/api/v1/store_owner/employees/';
+    }
+    final response = await http.put(Uri.http(BASE_URL, url + id), headers: {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     }, body: {

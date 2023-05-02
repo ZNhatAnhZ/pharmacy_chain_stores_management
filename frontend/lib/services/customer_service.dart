@@ -9,7 +9,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 class CustomerService {
   Future<List<Customer>> getAllCustomer(String token, String role) async {
     String url;
-    if (role == 'customer') {
+    if (role == 'employee') {
       url = '/api/v1/employ/customers';
     } else if (role == 'manager') {
       url = '/api/v1/manager/customers';

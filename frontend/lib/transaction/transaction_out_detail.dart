@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:medical_chain_manangement/blocks/auth_block.dart';
 import 'package:medical_chain_manangement/models/order.dart';
+import 'package:medical_chain_manangement/services/order_service.dart';
 import 'package:provider/provider.dart';
 
 class TransactionOutDetail extends StatefulWidget {
@@ -9,6 +10,7 @@ class TransactionOutDetail extends StatefulWidget {
 }
 
 class _TransactionOutDetailState extends State<TransactionOutDetail> {
+  OrderService orderService = OrderService();
   @override
   Widget build(BuildContext context) {
     AuthBlock auth = Provider.of<AuthBlock>(context);
@@ -272,6 +274,51 @@ class _TransactionOutDetailState extends State<TransactionOutDetail> {
                             ),
                           ),
                         ),
+                        Padding(
+                            padding: const EdgeInsets.only(bottom: 25, top: 10),
+                            child: Row(
+                              children: [
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Colors.green,
+                                  ),
+                                  child: Text('Xác nhận đơn mua',
+                                      style: TextStyle(color: Colors.white)),
+                                  onPressed: () {
+                                    orderService
+                                        .completeOrder(
+                                            auth.employee['access_token'],
+                                            order.id.toString(),
+                                            auth.employee['role'])
+                                        .then((value) => {
+                                              Navigator.pushReplacementNamed(
+                                                  context, '/transaction_out')
+                                            });
+                                  },
+                                ),
+                                SizedBox(
+                                  width: 30,
+                                ),
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Colors.red,
+                                  ),
+                                  child: Text('Từ chối đơn mua',
+                                      style: TextStyle(color: Colors.white)),
+                                  onPressed: () {
+                                    orderService
+                                        .rejectOrder(
+                                            auth.employee['access_token'],
+                                            order.id.toString(),
+                                            auth.employee['role'])
+                                        .then((value) => {
+                                              Navigator.pushReplacementNamed(
+                                                  context, '/transaction_out')
+                                            });
+                                  },
+                                )
+                              ],
+                            )),
                       ],
                     ),
                   ),

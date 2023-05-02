@@ -92,4 +92,62 @@ class OrderService {
         href: Uri.http(BASE_URL, url, {'branch_id': branch_id}).toString())
       ..click();
   }
+
+  Future<bool> completeOrder(String token, String order_id, String role) async {
+    inspect(order_id);
+    String url;
+    if (role == 'employee') {
+      url = '/api/v1/employ/orders/';
+    } else if (role == 'manager') {
+      url = '/api/v1/manager/orders/';
+    } else {
+      url = '/api/v1/store_owner/orders/';
+    }
+    final response = await http
+        .put(Uri.http(BASE_URL, url + order_id + "/complete_order"), headers: {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    });
+
+    if (response.statusCode == 200) {
+      inspect(jsonDecode(response.body));
+      Fluttertoast.showToast(
+          msg: "Completed an order",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          fontSize: 16.0);
+      return true;
+    } else {
+      throw Exception(response.body);
+    }
+  }
+
+  Future<bool> rejectOrder(String token, String order_id, String role) async {
+    inspect(order_id);
+    String url;
+    if (role == 'employee') {
+      url = '/api/v1/employ/orders/';
+    } else if (role == 'manager') {
+      url = '/api/v1/manager/orders/';
+    } else {
+      url = '/api/v1/store_owner/orders/';
+    }
+    final response = await http
+        .put(Uri.http(BASE_URL, url + order_id + "/rejected_order"), headers: {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    });
+
+    if (response.statusCode == 200) {
+      inspect(jsonDecode(response.body));
+      Fluttertoast.showToast(
+          msg: "Rejected an order",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          fontSize: 16.0);
+      return true;
+    } else {
+      throw Exception(response.body);
+    }
+  }
 }

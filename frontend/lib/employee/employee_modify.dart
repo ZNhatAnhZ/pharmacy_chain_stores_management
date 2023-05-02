@@ -21,7 +21,9 @@ class _EmployeeModifyState extends State<EmployeeModify> {
   bool isCalled1 = false;
 
   void getAllBranch(AuthBlock auth) {
-    if (isCalled == false && auth.isLoggedIn) {
+    if (isCalled == false &&
+        auth.isLoggedIn &&
+        auth.employee['role'] == "manager") {
       branchService
           .getAllBranch(auth.employee['access_token'], auth.employee['role'])
           .then((result) {
@@ -36,7 +38,7 @@ class _EmployeeModifyState extends State<EmployeeModify> {
   }
 
   void initialize_employee_value(Employee employee) {
-    if (isCalled && isCalled1 == false) {
+    if (isCalled1 == false) {
       branches.forEach((branch) {
         if (branch.id == employee.branch_id) {
           selectedBranch = branch.id.toString() + ": " + branch.name!;
@@ -46,6 +48,9 @@ class _EmployeeModifyState extends State<EmployeeModify> {
       newEmployee['id'] = employee.id.toString();
       newEmployee['name'] = employee.name!;
       newEmployee['email'] = employee.email!;
+      newEmployee['contact'] = employee.contact!;
+      newEmployee['gender'] = employee.gender!;
+      newEmployee['address'] = employee.address!;
       newEmployee['branch_id'] = employee.branch_id.toString();
 
       isCalled1 = true;
@@ -75,42 +80,43 @@ class _EmployeeModifyState extends State<EmployeeModify> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 12.0),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: DropdownSearch<String>(
-                            popupProps: PopupProps.menu(
-                              showSelectedItems: true,
-                              showSearchBox: true,
-                            ),
-                            items: List<String>.of(branches
-                                .map((e) => e.id!.toString() + ": " + e.name!)),
-                            selectedItem: selectedBranch,
-                            dropdownDecoratorProps: DropDownDecoratorProps(
-                              dropdownSearchDecoration: InputDecoration(
-                                labelText: "Chọn chi nhánh",
-                                hintText: "Chọn chi nhánh",
+                  if (auth.employee["role"] == "manager")
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 12.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: DropdownSearch<String>(
+                              popupProps: PopupProps.menu(
+                                showSelectedItems: true,
+                                showSearchBox: true,
                               ),
+                              items: List<String>.of(branches.map(
+                                  (e) => e.id!.toString() + ": " + e.name!)),
+                              selectedItem: selectedBranch,
+                              dropdownDecoratorProps: DropDownDecoratorProps(
+                                dropdownSearchDecoration: InputDecoration(
+                                  labelText: "Chọn chi nhánh",
+                                  hintText: "Chọn chi nhánh",
+                                ),
+                              ),
+                              onChanged: (e) {
+                                newEmployee['branch_id'] =
+                                    e?.split(':').elementAt(0);
+                                print(e);
+                              },
+                              // selectedItem: "Brazil",
                             ),
-                            onChanged: (e) {
-                              newEmployee['branch_id'] =
-                                  e?.split(':').elementAt(0);
-                              print(e);
-                            },
-                            // selectedItem: "Brazil",
                           ),
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.add_circle),
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/add_branch');
-                          },
-                        ),
-                      ],
+                          IconButton(
+                            icon: const Icon(Icons.add_circle),
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/add_branch');
+                            },
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 12.0),
                     child: TextFormField(
@@ -150,6 +156,75 @@ class _EmployeeModifyState extends State<EmployeeModify> {
                       decoration: InputDecoration(
                         hintText: 'Nhập email',
                         labelText: 'Nhập email',
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 12.0),
+                    child: TextFormField(
+                      initialValue: employee.contact,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Hãy nhập số điện thoại';
+                        }
+                        return null;
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          newEmployee['contact'] = value;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Hãy nhập số điện thoại',
+                        labelText: 'Hãy nhập số điện thoại',
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 12.0),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: DropdownSearch<String>(
+                            popupProps: PopupProps.menu(
+                              showSelectedItems: true,
+                              showSearchBox: true,
+                            ),
+                            items: List.unmodifiable(['male', 'female']),
+                            dropdownDecoratorProps: DropDownDecoratorProps(
+                              dropdownSearchDecoration: InputDecoration(
+                                labelText: "Hãy nhập giới tính",
+                                hintText: "Hãy nhập giới tính",
+                              ),
+                            ),
+                            onChanged: (e) {
+                              newEmployee['gender'] = e;
+                              print(e);
+                            },
+                            selectedItem: employee.gender,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 12.0),
+                    child: TextFormField(
+                      initialValue: employee.address,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Hãy nhập địa chỉ';
+                        }
+                        return null;
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          newEmployee['address'] = value;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Hãy nhập địa chỉ',
+                        labelText: 'Hãy nhập địa chỉ',
                       ),
                     ),
                   ),

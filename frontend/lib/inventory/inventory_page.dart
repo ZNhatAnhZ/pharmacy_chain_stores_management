@@ -38,7 +38,9 @@ class _InventoryPage extends State<InventoryPage> {
   }
 
   void getAllBranch(AuthBlock auth) {
-    if (isCalled1 == false && auth.isLoggedIn) {
+    if (isCalled1 == false &&
+        auth.isLoggedIn &&
+        auth.employee['role'] == "manager") {
       branchService
           .getAllBranch(auth.employee['access_token'], auth.employee['role'])
           .then((result) {

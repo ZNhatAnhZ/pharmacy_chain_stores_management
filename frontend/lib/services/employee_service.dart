@@ -59,6 +59,7 @@ class EmployeeService {
   }
 
   Future<bool> updateEmployee(String token, Map data, String role) async {
+    inspect(data);
     var employee_id = data['id'];
     String url;
     if (role == 'employee') {
@@ -130,19 +131,35 @@ class EmployeeService {
       url = '/api/v1/store_owner/employees';
     }
 
-    final response = await http.post(Uri.http(BASE_URL, url), headers: {
-      'Accept': 'application/json',
-      'Authorization': 'Bearer $token',
-    }, body: {
-      'name': data['name'],
-      'email': data['email'],
-      'contact': data['contact'],
-      'gender': data['gender'],
-      'address': data['address'],
-      'password': data['password'],
-      'password_confirmation': data['password'],
-      'branch_id': data['branch_id'] ?? '',
-    });
+    final response;
+    if (data['branch_id'] != null) {
+      response = await http.post(Uri.http(BASE_URL, url), headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      }, body: {
+        'name': data['name'],
+        'email': data['email'],
+        'contact': data['contact'],
+        'gender': data['gender'],
+        'address': data['address'],
+        'password': data['password'],
+        'password_confirmation': data['password'],
+        'branch_id': data['branch_id'],
+      });
+    } else {
+      response = await http.post(Uri.http(BASE_URL, url), headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      }, body: {
+        'name': data['name'],
+        'email': data['email'],
+        'contact': data['contact'],
+        'gender': data['gender'],
+        'address': data['address'],
+        'password': data['password'],
+        'password_confirmation': data['password'],
+      });
+    }
 
     if (response.statusCode == 200) {
       Fluttertoast.showToast(

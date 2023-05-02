@@ -1,4 +1,5 @@
 import 'package:medical_chain_manangement/models/branch.dart';
+import 'package:medical_chain_manangement/models/customer.dart';
 import 'package:medical_chain_manangement/models/employee.dart';
 import 'package:medical_chain_manangement/models/inventory.dart';
 
@@ -8,10 +9,10 @@ class Order {
   int? total_quantity;
   String? status;
   String? order_code;
-  String? customer_name;
   int? employee_id;
   int? inventory_id;
   int? branch_id;
+  Customer? customer;
   Inventory? inventory;
   Branch? branch;
   Employee? employee;
@@ -22,7 +23,7 @@ class Order {
     this.total_quantity,
     this.status,
     this.order_code,
-    this.customer_name,
+    this.customer,
     this.employee_id,
     this.inventory_id,
     this.branch_id,
@@ -38,7 +39,7 @@ class Order {
       total_quantity: json['total_quantity'] ?? -1,
       status: json['status'] ?? '',
       order_code: json['order_code'] ?? "",
-      customer_name: json['customer_name'] ?? "",
+      customer: Customer.fromJson(json['customer'] ?? Map()),
       employee_id: json['employee_id'] ?? -1,
       inventory_id: json['inventory_id'] ?? -1,
       branch_id: json['branch_id'] ?? -1,

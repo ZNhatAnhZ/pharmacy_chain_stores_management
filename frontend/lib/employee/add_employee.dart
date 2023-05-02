@@ -19,7 +19,9 @@ class _AddEmployeeState extends State<AddEmployee> {
   bool isCalled = false;
 
   void getAllBranch(AuthBlock auth) {
-    if (isCalled == false && auth.isLoggedIn) {
+    if (isCalled == false &&
+        auth.isLoggedIn &&
+        auth.employee['role'] == "manager") {
       branchService
           .getAllBranch(auth.employee['access_token'], auth.employee['role'])
           .then((result) {
@@ -52,11 +54,11 @@ class _AddEmployeeState extends State<AddEmployee> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 12.0),
-                    child: Row(
-                      children: [
-                        if (auth.employee["role"] == "manager")
+                  if (auth.employee["role"] == "manager")
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 12.0),
+                      child: Row(
+                        children: [
                           Expanded(
                             child: DropdownSearch<String>(
                               popupProps: PopupProps.menu(
@@ -79,16 +81,15 @@ class _AddEmployeeState extends State<AddEmployee> {
                               // selectedItem: "Brazil",
                             ),
                           ),
-                        if (auth.employee["role"] == "manager")
                           IconButton(
                             icon: const Icon(Icons.add_circle),
                             onPressed: () {
                               Navigator.pushNamed(context, '/add_branch');
                             },
                           ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 12.0),
                     child: TextFormField(
@@ -151,22 +152,29 @@ class _AddEmployeeState extends State<AddEmployee> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 12.0),
-                    child: TextFormField(
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Hãy nhập giới tính';
-                        }
-                        return null;
-                      },
-                      onChanged: (value) {
-                        setState(() {
-                          newEmployee['gender'] = value;
-                        });
-                      },
-                      decoration: InputDecoration(
-                        hintText: 'Hãy nhập giới tính',
-                        labelText: 'Hãy nhập giới tính',
-                      ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: DropdownSearch<String>(
+                            popupProps: PopupProps.menu(
+                              showSelectedItems: true,
+                              showSearchBox: true,
+                            ),
+                            items: List.unmodifiable(['male', 'female']),
+                            dropdownDecoratorProps: DropDownDecoratorProps(
+                              dropdownSearchDecoration: InputDecoration(
+                                labelText: "Hãy nhập giới tính",
+                                hintText: "Hãy nhập giới tính",
+                              ),
+                            ),
+                            onChanged: (e) {
+                              newEmployee['gender'] = e;
+                              print(e);
+                            },
+                            // selectedItem: "Brazil",
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   Padding(

@@ -38,7 +38,9 @@ class _TransactionOut extends State<TransactionOut> {
   }
 
   void getAllBranch(AuthBlock auth) {
-    if (isCalled1 == false && auth.isLoggedIn) {
+    if (isCalled1 == false &&
+        auth.isLoggedIn &&
+        auth.employee['role'] == "manager") {
       branchService
           .getAllBranch(auth.employee['access_token'], auth.employee['role'])
           .then((result) {
@@ -58,6 +60,7 @@ class _TransactionOut extends State<TransactionOut> {
 
   @override
   Widget build(BuildContext context) {
+    final scrollController = ScrollController();
     AuthBlock auth = Provider.of<AuthBlock>(context);
     getAllOrder(auth);
     getAllBranch(auth);
@@ -174,118 +177,113 @@ class _TransactionOut extends State<TransactionOut> {
               scrollDirection: Axis.vertical,
               child: Container(
                 width: MediaQuery.of(context).size.width,
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                        minWidth: MediaQuery.of(context).size.width),
-                    child: DataTable(
-                      showCheckboxColumn: false,
-                      columns: [
-                        DataColumn(
-                          label: Text("ID"),
-                          numeric: false,
-                        ),
-                        DataColumn(
-                          label: Text("Tổng tiền"),
-                          numeric: false,
-                        ),
-                        DataColumn(
-                          label: Text("Tổng số lượng"),
-                          numeric: false,
-                        ),
-                        DataColumn(
-                          label: Text("Mã đơn"),
-                          numeric: false,
-                        ),
-                        DataColumn(
-                          label: Text("Tên khách hàng"),
-                          numeric: false,
-                        ),
-                        DataColumn(
-                          label: Text("Tên hàng"),
-                          numeric: true,
-                        ),
-                        DataColumn(
-                          label: Text("Mã hàng"),
-                          numeric: true,
-                        ),
-                        DataColumn(
-                          label: Text("Tên nhà sản xuất"),
-                          numeric: false,
-                        ),
-                        DataColumn(
-                          label: Text("Tên nhân viên"),
-                          numeric: true,
-                        ),
-                        DataColumn(
-                          label: Text("Ngày tạo"),
-                          numeric: true,
-                        ),
-                      ],
-                      rows: orders
-                          .map(
-                            (product) => DataRow(
-                              onSelectChanged: (value) {
-                                Navigator.pushNamed(
-                                    context, '/transaction_out_detail',
-                                    arguments: product);
-                              },
-                              cells: [
-                                DataCell(
-                                  Text(
-                                    product.id.toString(),
+                child: Scrollbar(
+                  controller: scrollController,
+                  child: SingleChildScrollView(
+                    controller: scrollController,
+                    scrollDirection: Axis.horizontal,
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                          minWidth: MediaQuery.of(context).size.width),
+                      child: DataTable(
+                        showCheckboxColumn: false,
+                        columns: [
+                          DataColumn(
+                            label: Text("ID"),
+                            numeric: false,
+                          ),
+                          DataColumn(
+                            label: Text("Tổng tiền"),
+                            numeric: false,
+                          ),
+                          DataColumn(
+                            label: Text("Mã đơn"),
+                            numeric: false,
+                          ),
+                          DataColumn(
+                            label: Text("Tên khách hàng"),
+                            numeric: false,
+                          ),
+                          DataColumn(
+                            label: Text("Tên hàng"),
+                            numeric: true,
+                          ),
+                          DataColumn(
+                            label: Text("Mã hàng"),
+                            numeric: true,
+                          ),
+                          DataColumn(
+                            label: Text("Tên nhà sản xuất"),
+                            numeric: false,
+                          ),
+                          DataColumn(
+                            label: Text("Tên nhân viên"),
+                            numeric: true,
+                          ),
+                          DataColumn(
+                            label: Text("Ngày tạo"),
+                            numeric: true,
+                          ),
+                        ],
+                        rows: orders
+                            .map(
+                              (product) => DataRow(
+                                onSelectChanged: (value) {
+                                  Navigator.pushNamed(
+                                      context, '/transaction_out_detail',
+                                      arguments: product);
+                                },
+                                cells: [
+                                  DataCell(
+                                    Text(
+                                      product.id.toString(),
+                                    ),
                                   ),
-                                ),
-                                DataCell(
-                                  Text(
-                                    product.total_price.toString(),
+                                  DataCell(
+                                    Text(
+                                      product.total_price.toString(),
+                                    ),
                                   ),
-                                ),
-                                DataCell(
-                                  Text(
-                                    product.total_quantity.toString(),
+                                  DataCell(
+                                    Text(
+                                      product.order_code!,
+                                    ),
                                   ),
-                                ),
-                                DataCell(
-                                  Text(
-                                    product.order_code!,
+                                  DataCell(
+                                    Text(
+                                      product.customer!.name!,
+                                    ),
                                   ),
-                                ),
-                                DataCell(
-                                  Text(
-                                    product.customer_name!,
+                                  DataCell(
+                                    Text(
+                                      product.inventory!.name!,
+                                    ),
                                   ),
-                                ),
-                                DataCell(
-                                  Text(
-                                    product.inventory!.name!,
+                                  DataCell(
+                                    Text(
+                                      product.inventory!.inventory_code!,
+                                    ),
                                   ),
-                                ),
-                                DataCell(
-                                  Text(
-                                    product.inventory!.inventory_code!,
+                                  DataCell(
+                                    Text(
+                                      product.inventory!.producer!,
+                                    ),
                                   ),
-                                ),
-                                DataCell(
-                                  Text(
-                                    product.inventory!.producer!,
+                                  DataCell(
+                                    Text(
+                                      product.employee!.name!,
+                                    ),
                                   ),
-                                ),
-                                DataCell(
-                                  Text(
-                                    product.employee!.name!,
+                                  DataCell(
+                                    Text(
+                                      product.created_date!,
+                                    ),
                                   ),
-                                ),
-                                DataCell(
-                                  Text(
-                                    product.created_date!,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )
-                          .toList(),
+                                ],
+                              ),
+                            )
+                            .toList(),
+                      ),
                     ),
                   ),
                 ),
