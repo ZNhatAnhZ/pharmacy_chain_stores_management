@@ -15,7 +15,9 @@ class Inventory < ApplicationRecord
   scope :search_by_name, lambda { |search| where("name LIKE ? OR inventory_code LIKE ?", "%#{search}%", "%#{search}%") if search.present? }
   scope :search_by_branch, lambda { |branch_id| where(branch_id: branch_id) if branch_id.present? }
   scope :get_out_of_stock, lambda { |quantity| where(quantity: ..quantity) }
-  scope :most_ordered, -> { joins(:order).select('inventories.*, SUM(orders.total_quantity) AS total_quantity').group('inventories.id').order('total_quantity DESC') }
+  scope :most_ordered, -> {
+    joins(:order).where(orders: { status: 'complete' })
+    .select('inventories.*, SUM(orders.total_quantity) AS total_quantity').group('inventories.id').order('total_quantity DESC') }
   scope :sort_price, ->(type){order price: type if type.present?}
   scope :sort_created_time, ->(type){order created_at: type if type.present?}
 
@@ -39,6 +41,6 @@ class Inventory < ApplicationRecord
   end
 
   def total_order_quantity
-    order.sum(:total_quantity)
+    order.where(status: "complete").sum(:total_quantity)
   end
 end

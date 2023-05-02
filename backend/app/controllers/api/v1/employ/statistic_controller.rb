@@ -6,10 +6,10 @@ module Api
 
         def get_total_order_price
           @orders_all = @current_branch.order
-          @orders_today = @current_branch.order.time_between(Time.now.beginning_of_day, Time.now)
-          @orders_week = @current_branch.order.time_between(Time.now.beginning_of_week, Time.now)
-          @orders_month = @current_branch.order.time_between(Time.now.beginning_of_month, Time.now)
-          @orders_year = @current_branch.order.time_between(Time.now.beginning_of_year, Time.now)
+          @orders_today = @current_branch.order.complete.time_between(Time.now.beginning_of_day, Time.now)
+          @orders_week = @current_branch.order.complete.time_between(Time.now.beginning_of_week, Time.now)
+          @orders_month = @current_branch.order.complete.time_between(Time.now.beginning_of_month, Time.now)
+          @orders_year = @current_branch.order.complete.time_between(Time.now.beginning_of_year, Time.now)
           render json: {
             all: @orders_all.pluck(:total_price).sum,
             today: @orders_today.pluck(:total_price).sum,
@@ -20,11 +20,11 @@ module Api
         end
 
         def header_statistic
-          @orders_month = @current_branch.order.time_between(Time.now.beginning_of_month, Time.now.end_of_month)
+          @orders_month = @current_branch.order.complete.time_between(Time.now.beginning_of_month, Time.now.end_of_month)
           @order_month_count = @orders_month&.count
           @order_month_price = @orders_month&.sum('total_price * total_quantity') || 0
 
-          @order_pre_month = @current_branch.order.time_between((Time.now - 1.month).beginning_of_month, (Time.now - 1.month).end_of_month)
+          @order_pre_month = @current_branch.order.complete.time_between((Time.now - 1.month).beginning_of_month, (Time.now - 1.month).end_of_month)
           @order_pre_month_price = @order_pre_month&.sum('total_price * total_quantity') || 0
           @order_percent_from_last_month = @order_pre_month_price == 0 || @order_month_price == 0  ? nil : (@order_month_price - @order_pre_month_price) / 100.0
 
@@ -48,18 +48,18 @@ module Api
 
         def get_order_count
           if params[:type] == "month"
-            @order_count = @current_branch.order.order_by_month
+            @order_count = @current_branch.order.complete.order_by_month
           else
-            @order_count = @current_branch.order.order_by_day
+            @order_count = @current_branch.order.complete.order_by_day
           end
           render json: @order_count , status: :ok
         end
 
         def get_revenue_order
           if params[:type] == "month"
-            @revenue = @current_branch.order.revenue_month_chart
+            @revenue = @current_branch.order.complete.revenue_month_chart
           else
-            @revenue = @current_branch.order.revenue_day_chart
+            @revenue = @current_branch.order.complete.revenue_day_chart
           end
           render json: @revenue , status: :ok
         end

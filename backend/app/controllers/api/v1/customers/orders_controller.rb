@@ -12,20 +12,22 @@ module Api
             include: {
               inventory: { only: %i[id inventory_code name price quantity main_ingredient producer] },
               branch: { except: %i[created_at updated_at] },
-              employee: { except: %i[created_at updated_at] }
+              employee: { except: %i[created_at updated_at] },
+              customer: { except: %i[created_at updated_at] }
             }
           ), status: :ok
         end
 
         def create
           branch_id = Inventory.find_by(id: params[:inventory_id]).branch_id
-          @order = Order.new order_params.merge(order_code: generate_order_code, branch_id: branch_id, customer_id: @current_customer.id)
+          @order = Order.new order_params.merge(order_code: generate_order_code, branch_id: branch_id, customer_id: @current_customer.id, status: "pending")
           if @order.save!
             render json: @order.as_json(
               include: {
                 inventory: { only: %i[id inventory_code name price quantity main_ingredient producer] },
                 branch: { except: %i[created_at updated_at] },
-                employee: { except: %i[created_at updated_at] }
+                employee: { except: %i[created_at updated_at] },
+                customer: { except: %i[created_at updated_at] }
               }
             ), status: :ok
           end
@@ -38,7 +40,8 @@ module Api
             include: {
               inventory: { only: %i[id inventory_code name price quantity main_ingredient producer] },
               branch: { except: %i[created_at updated_at] },
-              employee: { except: %i[created_at updated_at] }
+              employee: { except: %i[created_at updated_at] },
+              customer: { except: %i[created_at updated_at] }
             }
           ), status: :ok
         end

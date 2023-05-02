@@ -47,7 +47,8 @@ module Api
         end
 
         def complete_order
-          return render json: {message: "already complete order"}, status: :ok if @order.complete?
+          return render json: {message: "already complete order"}, status: :bad_request if @order.complete?
+          return render json: {message: "cannot complete order has been canceled"}, status: :bad_request if @order.canceled?
 
           if @order.update status: "complete"
             reduce_inventory_quantity
@@ -58,7 +59,8 @@ module Api
         end
 
         def rejected_order
-          return render json: {message: "already rejected order"}, status: :ok if @order.rejected?
+          return render json: {message: "already rejected order"}, status: :bad_request if @order.rejected?
+          return render json: {message: "cannot rejected order has been canceled"}, status: :bad_request if @order.canceled?
 
           if @order.update status: "rejected"
             render json: @order.as_json, status: :ok
