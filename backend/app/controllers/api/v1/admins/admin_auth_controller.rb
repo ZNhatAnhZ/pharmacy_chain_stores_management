@@ -7,7 +7,7 @@ module Api
           if admin&.authenticate params[:password]
             generate_token admin
             render json: {access_token: @data[:access_token], admin_id: admin&.id,
-              admin_name: admin&.name, admin_email: admin&.email}, status: :ok
+              admin_name: admin&.name, admin_email: admin&.email, role: "admin"}, status: :ok
           else
             render json: {message: "Invalid email or password combination", success: false}, status: :unauthorized
           end
