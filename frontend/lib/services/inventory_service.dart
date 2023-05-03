@@ -20,6 +20,8 @@ class InventoryService {
       url = '/api/v1/employ/inventories';
     } else if (role == 'manager') {
       url = '/api/v1/manager/inventories';
+    } else if (role == 'null') {
+      url = '/api/v1/customers/inventories';
     } else {
       url = '/api/v1/store_owner/inventories';
     }
@@ -69,6 +71,8 @@ class InventoryService {
       url = '/api/v1/employ/inventories';
     } else if (role == 'manager') {
       url = '/api/v1/manager/inventories';
+    } else if (role == 'null') {
+      url = '/api/v1/customers/inventories';
     } else {
       url = '/api/v1/store_owner/inventories';
     }

@@ -24,8 +24,8 @@ class _InventoryPage extends State<InventoryPage> {
   void getAllInventory(AuthBlock auth) {
     if (isCalled == false && auth.isLoggedIn) {
       inventoryService
-          .getAllInventory(
-              auth.employee['access_token'], auth.employee['role'], '')
+          .getAllInventory(auth.employee['access_token'],
+              auth.employee['role'] ?? 'null', '')
           .then((result) {
         setState(() {
           inventorys = List.from(result);
@@ -60,7 +60,7 @@ class _InventoryPage extends State<InventoryPage> {
       inventoryService
           .getSearchedInventory(
               auth.employee['access_token'],
-              auth.employee['role'],
+              auth.employee['role'] ?? 'null',
               branch_value,
               search_name_value,
               selectedFilters)
@@ -127,7 +127,9 @@ class _InventoryPage extends State<InventoryPage> {
     final scrollController = ScrollController();
     AuthBlock auth = Provider.of<AuthBlock>(context);
     getAllInventory(auth);
-    getAllBranch(auth);
+    if (auth.isLoggedIn && auth.employee['role'] != null) {
+      getAllBranch(auth);
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -209,147 +211,155 @@ class _InventoryPage extends State<InventoryPage> {
                     );
                   }).toList(),
                 )),
-          IconButton(
-            icon: const Icon(Icons.download_sharp),
-            onPressed: () {
-              inventoryService.exportInventoryCSV(auth.employee['access_token'],
-                  auth.employee['role'], branch_value);
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.add_circle),
-            onPressed: () {
-              Navigator.pushNamed(context, '/add_inventory_page');
-            },
-          )
+          if (auth.isLoggedIn && auth.employee['role'] != null)
+            IconButton(
+              icon: const Icon(Icons.download_sharp),
+              onPressed: () {
+                inventoryService.exportInventoryCSV(
+                    auth.employee['access_token'],
+                    auth.employee['role'],
+                    branch_value);
+              },
+            ),
+          if (auth.isLoggedIn && auth.employee['role'] != null)
+            IconButton(
+              icon: const Icon(Icons.add_circle),
+              onPressed: () {
+                Navigator.pushNamed(context, '/add_inventory_page');
+              },
+            )
         ],
       ),
       body: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 10,
-              ),
-              ToggleButtons(
-                direction: Axis.vertical,
-                onPressed: (int index) {
-                  // All buttons are selectable.
-                  setState(() {
-                    selectedFilters[index] = !selectedFilters[index];
-                    for (int i = 0; i < selectedFilters.length; i++) {
-                      if (i != index) {
-                        selectedFilters[i] = false;
+          if (auth.isLoggedIn && auth.employee['role'] != null)
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 10,
+                ),
+                ToggleButtons(
+                  direction: Axis.vertical,
+                  onPressed: (int index) {
+                    // All buttons are selectable.
+                    setState(() {
+                      selectedFilters[index] = !selectedFilters[index];
+                      for (int i = 0; i < selectedFilters.length; i++) {
+                        if (i != index) {
+                          selectedFilters[i] = false;
+                        }
                       }
-                    }
-                    if (index == 5 && selectedFilters[index]) {
-                      getExpiredInventory(auth);
-                    } else if (index == 6 && selectedFilters[index]) {
-                      getOutOfStockInventory(auth);
-                    } else {
-                      getSearchedInventory(auth);
-                    }
-                  });
-                },
-                renderBorder: false,
-                selectedBorderColor: Colors.blue[700],
-                selectedColor: Colors.white,
-                fillColor: Colors.blue[200],
-                color: Colors.blue[400],
-                constraints: const BoxConstraints(
-                  minHeight: 40.0,
-                  minWidth: 80.0,
+                      if (index == 5 && selectedFilters[index]) {
+                        getExpiredInventory(auth);
+                      } else if (index == 6 && selectedFilters[index]) {
+                        getOutOfStockInventory(auth);
+                      } else {
+                        getSearchedInventory(auth);
+                      }
+                    });
+                  },
+                  renderBorder: false,
+                  selectedBorderColor: Colors.blue[700],
+                  selectedColor: Colors.white,
+                  fillColor: Colors.blue[200],
+                  color: Colors.blue[400],
+                  constraints: const BoxConstraints(
+                    minHeight: 40.0,
+                    minWidth: 80.0,
+                  ),
+                  isSelected: selectedFilters,
+                  children: <Widget>[
+                    Container(
+                      width: 160,
+                      padding: EdgeInsets.all(8.0),
+                      child: Text('Lọc giá tăng dần'),
+                    ),
+                    Container(
+                      width: 160,
+                      padding: EdgeInsets.all(8.0),
+                      child: Text('Lọc giá giảm dần'),
+                    ),
+                    Container(
+                      width: 160,
+                      padding: EdgeInsets.all(8.0),
+                      child: Text('Lọc ordered giảm dần'),
+                    ),
+                    Container(
+                      width: 160,
+                      padding: EdgeInsets.all(8.0),
+                      child: Text('Lọc ngày tạo gần nhất'),
+                    ),
+                    Container(
+                      width: 160,
+                      padding: EdgeInsets.all(8.0),
+                      child: Text('Lọc ngày tạo xa nhất'),
+                    ),
+                    Container(
+                      width: 160,
+                      padding: EdgeInsets.all(8.0),
+                      child: Text('Lọc đã hết hạn'),
+                    ),
+                    Container(
+                      width: 160,
+                      padding: EdgeInsets.all(8.0),
+                      child: Text('Lọc đã hết hàng'),
+                    ),
+                  ],
                 ),
-                isSelected: selectedFilters,
-                children: <Widget>[
-                  Container(
-                    width: 160,
-                    padding: EdgeInsets.all(8.0),
-                    child: Text('Lọc giá tăng dần'),
-                  ),
-                  Container(
-                    width: 160,
-                    padding: EdgeInsets.all(8.0),
-                    child: Text('Lọc giá giảm dần'),
-                  ),
-                  Container(
-                    width: 160,
-                    padding: EdgeInsets.all(8.0),
-                    child: Text('Lọc ordered giảm dần'),
-                  ),
-                  Container(
-                    width: 160,
-                    padding: EdgeInsets.all(8.0),
-                    child: Text('Lọc ngày tạo gần nhất'),
-                  ),
-                  Container(
-                    width: 160,
-                    padding: EdgeInsets.all(8.0),
-                    child: Text('Lọc ngày tạo xa nhất'),
-                  ),
-                  Container(
-                    width: 160,
-                    padding: EdgeInsets.all(8.0),
-                    child: Text('Lọc đã hết hạn'),
-                  ),
-                  Container(
-                    width: 160,
-                    padding: EdgeInsets.all(8.0),
-                    child: Text('Lọc đã hết hàng'),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.red,
+                SizedBox(
+                  height: 10,
                 ),
-                child: Text('Xóa sản phẩm hết hạn',
-                    style: TextStyle(color: Colors.white)),
-                onPressed: () {
-                  inventoryService
-                      .deleteAllExpiredInventory(
-                          auth.employee['access_token'], auth.employee['role'])
-                      .then((value) => Navigator.pushReplacementNamed(
-                          context, '/inventory_page'))
-                      .catchError((err) => print(err));
-                },
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              if (auth.isLoggedIn && auth.employee['role'] == 'manager')
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.green,
+                    primary: Colors.red,
                   ),
-                  child: Text(
-                      "Gửi sản phẩm hết hạn" + '\n' + " cho bên cung cấp",
+                  child: Text('Xóa sản phẩm hết hạn',
                       style: TextStyle(color: Colors.white)),
                   onPressed: () {
                     inventoryService
-                        .sendMailToSupplier(auth.employee['access_token'],
+                        .deleteAllExpiredInventory(
+                            auth.employee['access_token'],
                             auth.employee['role'])
+                        .then((value) => Navigator.pushReplacementNamed(
+                            context, '/inventory_page'))
                         .catchError((err) => print(err));
                   },
-                )
-            ],
-          ),
-          SizedBox(
-            width: 10,
-          ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                if (auth.isLoggedIn && auth.employee['role'] == 'manager')
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.green,
+                    ),
+                    child: Text(
+                        "Gửi sản phẩm hết hạn" + '\n' + " cho bên cung cấp",
+                        style: TextStyle(color: Colors.white)),
+                    onPressed: () {
+                      inventoryService
+                          .sendMailToSupplier(auth.employee['access_token'],
+                              auth.employee['role'])
+                          .catchError((err) => print(err));
+                    },
+                  )
+              ],
+            ),
+          if (auth.isLoggedIn && auth.employee['role'] != null)
+            SizedBox(
+              width: 10,
+            ),
           Column(
             children: <Widget>[
               Expanded(
                 child: SingleChildScrollView(
                     scrollDirection: Axis.vertical,
                     child: Container(
-                      width: MediaQuery.of(context).size.width - 190,
+                      width: MediaQuery.of(context).size.width -
+                          (auth.employee['role'] == null ? 0 : 190),
                       child: Scrollbar(
                         controller: scrollController,
                         child: SingleChildScrollView(
@@ -357,8 +367,8 @@ class _InventoryPage extends State<InventoryPage> {
                           scrollDirection: Axis.horizontal,
                           child: ConstrainedBox(
                             constraints: BoxConstraints(
-                                minWidth:
-                                    MediaQuery.of(context).size.width - 190),
+                                minWidth: MediaQuery.of(context).size.width -
+                                    (auth.employee['role'] == null ? 0 : 190)),
                             child: DataTable(
                               border: TableBorder(
                                   left: BorderSide(color: Colors.black)),

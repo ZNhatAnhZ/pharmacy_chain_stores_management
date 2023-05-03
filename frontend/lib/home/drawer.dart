@@ -23,8 +23,12 @@ class _AppDrawerState extends State<AppDrawer> {
             currentAccountPicture: CircleAvatar(
               backgroundImage: AssetImage('images/avatar.png'),
             ),
-            accountEmail: Text(auth.employee['employee_email']),
-            accountName: Text(auth.employee['employee_name']),
+            accountEmail: auth.employee['role'] == null
+                ? Text(auth.employee['customer_email'])
+                : Text(auth.employee['employee_email']),
+            accountName: auth.employee['role'] == null
+                ? Text(auth.employee['customer_name'])
+                : Text(auth.employee['employee_name']),
           ),
         Expanded(
           child: ListView(
@@ -39,10 +43,7 @@ class _AppDrawerState extends State<AppDrawer> {
                     Navigator.pop(context);
                   },
                 ),
-              if (auth.isLoggedIn &&
-                  (auth.employee['role'] == 'manager' ||
-                      auth.employee['role'] == 'store_owner' ||
-                      auth.employee['role'] == 'employee'))
+              if (auth.isLoggedIn)
                 ListTile(
                   leading: Icon(Icons.category,
                       color: Theme.of(context).colorScheme.secondary),
@@ -76,7 +77,10 @@ class _AppDrawerState extends State<AppDrawer> {
                     Navigator.pushNamed(context, '/selling_drug');
                   },
                 ),
-              if (auth.isLoggedIn)
+              if (auth.isLoggedIn &&
+                  (auth.employee['role'] == 'store_owner' ||
+                      auth.employee['role'] == 'employee' ||
+                      auth.employee['role'] == 'manager'))
                 ListTile(
                   leading: Icon(Icons.arrow_back_rounded,
                       color: Theme.of(context).colorScheme.secondary),
@@ -147,10 +151,20 @@ class _AppDrawerState extends State<AppDrawer> {
                 ListTile(
                   leading: Icon(Icons.lock,
                       color: Theme.of(context).colorScheme.secondary),
-                  title: Text('Đăng nhập'),
+                  title: Text('Đăng nhập nhân viên'),
                   onTap: () {
                     Navigator.pop(context);
                     Navigator.pushNamed(context, '/auth');
+                  },
+                ),
+              if (!auth.isLoggedIn)
+                ListTile(
+                  leading: Icon(Icons.lock,
+                      color: Theme.of(context).colorScheme.secondary),
+                  title: Text('Đăng nhập khách hàng'),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.pushNamed(context, '/auth_customer');
                   },
                 ),
               if (auth.isLoggedIn)

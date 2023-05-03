@@ -15,6 +15,8 @@ class OrderService {
       url = '/api/v1/employ/orders';
     } else if (role == 'manager') {
       url = '/api/v1/manager/orders';
+    } else if (role == 'null') {
+      url = '/api/v1/customers/orders';
     } else {
       url = '/api/v1/store_owner/orders';
     }
@@ -50,6 +52,8 @@ class OrderService {
       url = '/api/v1/employ/orders';
     } else if (role == 'manager') {
       url = '/api/v1/manager/orders';
+    } else if (role == 'null') {
+      url = '/api/v1/customers/orders';
     } else {
       url = '/api/v1/store_owner/orders';
     }
@@ -142,6 +146,39 @@ class OrderService {
       inspect(jsonDecode(response.body));
       Fluttertoast.showToast(
           msg: "Rejected an order",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          fontSize: 16.0);
+      return true;
+    } else {
+      throw Exception(response.body);
+    }
+  }
+
+    Future<bool> customerRejectOrder(String token, String order_id, String role) async {
+    inspect(order_id);
+    String url;
+    if (role == 'employee') {
+      url = '/api/v1/employ/orders/';
+    } else if (role == 'manager') {
+      url = '/api/v1/manager/orders/';
+    } else if (role == 'null') {
+      url = '/api/v1/customers/orders/';
+    } else {
+      url = '/api/v1/store_owner/orders/';
+    }
+    final response = await http
+        .put(Uri.http(BASE_URL, url + order_id), headers: {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    }, body: {
+      "status": "canceled"
+    });
+
+    if (response.statusCode == 200) {
+      inspect(jsonDecode(response.body));
+      Fluttertoast.showToast(
+          msg: "Cancelled an order",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           fontSize: 16.0);

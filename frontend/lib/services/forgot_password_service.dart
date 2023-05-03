@@ -54,23 +54,30 @@ class ForgotPasswordService {
     }
   }
 
-  Future<bool> updateAccountInfo(String name, String old_password,
-      String new_password, String role, String id, String token) async {
+  Future<bool> updateAccountInfo(
+      Map data, String role, String id, String token) async {
+    inspect(data);
     String url;
     if (role == 'employee') {
       url = '/api/v1/employ/employees/';
     } else if (role == 'manager') {
       url = '/api/v1/manager/employees/';
+    } else if (role == 'null') {
+      url = '/api/v1/customers/customers/me';
     } else {
       url = '/api/v1/store_owner/employees/';
     }
-    final response = await http.put(Uri.http(BASE_URL, url + id), headers: {
+    final response = await http
+        .put(Uri.http(BASE_URL, url + (role != 'null' ? id : '')), headers: {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     }, body: {
-      'name': name == '' ? null : name,
-      'current_password': old_password == '' ? null : old_password,
-      'password': new_password == '' ? null : new_password,
+      'name': data["name"],
+      'current_password': data["old_password"],
+      'password': data["new_password"],
+      'address': data["address"],
+      'contact': data["contact"],
+      'gender': data["gender"],
     });
 
     if (response.statusCode == 200) {

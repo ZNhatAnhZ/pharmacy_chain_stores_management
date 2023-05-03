@@ -107,11 +107,13 @@ class _HomePage extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     AuthBlock auth = Provider.of<AuthBlock>(context);
-    getAllHeaderStatistic(auth);
-    getRevenueOrder(auth);
-    getRevenueImport(auth);
-    getCountImport(auth);
-    getCountOrder(auth);
+    if (auth.employee['role'] != null) {
+      getAllHeaderStatistic(auth);
+      getRevenueOrder(auth);
+      getRevenueImport(auth);
+      getCountImport(auth);
+      getCountOrder(auth);
+    }
 
     return Scaffold(
       drawer: Drawer(

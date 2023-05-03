@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:medical_chain_manangement/blocks/auth_block.dart';
 import 'package:medical_chain_manangement/models/employee.dart';
@@ -13,21 +15,28 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   ForgotPasswordService forgotPasswordService = ForgotPasswordService();
   bool isCalled = false;
-  void intializeName(String existname) {
-    if (isCalled == false) {
-      name = existname;
+  void intializeName(AuthBlock auth) {
+    if (isCalled == false && auth.employee['role'] == null) {
+      data['name'] = auth.employee['customer_name'];
+      data['contact'] = auth.employee['customer_contact'];
+      data['gender'] = auth.employee['customer_gender'];
+      data['address'] = auth.employee['customer_address'];
+      isCalled = true;
+    } else if (isCalled == false && auth.employee['role'] != null) {
+      data['name'] = auth.employee['employee_name'];
+      data['contact'] = auth.employee['employee_contact'];
+      data['gender'] = auth.employee['employee_gender'];
+      data['address'] = auth.employee['employee_address'];
       isCalled = true;
     }
   }
 
-  String old_password = '';
-  String new_password = '';
-  String name = '';
+  Map data = {};
 
   @override
   Widget build(BuildContext context) {
     AuthBlock auth = Provider.of<AuthBlock>(context);
-    intializeName(auth.employee['employee_name']);
+    intializeName(auth);
 
     return Scaffold(
       appBar: AppBar(
@@ -53,7 +62,7 @@ class _SettingsState extends State<Settings> {
                       },
                       onChanged: (value) {
                         setState(() {
-                          old_password = value;
+                          data['old_password'] = value;
                         });
                       },
                       decoration: InputDecoration(
@@ -65,7 +74,7 @@ class _SettingsState extends State<Settings> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 12.0),
                     child: TextFormField(
-                      initialValue: name,
+                      initialValue: data['name'],
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Nhập tên tài khoản';
@@ -74,7 +83,7 @@ class _SettingsState extends State<Settings> {
                       },
                       onChanged: (value) {
                         setState(() {
-                          name = value;
+                          data['name'] = value;
                         });
                       },
                       decoration: InputDecoration(
@@ -95,13 +104,82 @@ class _SettingsState extends State<Settings> {
                       },
                       onChanged: (value) {
                         setState(() {
-                          new_password = value;
+                          data['new_password'] = value;
                         });
                       },
                       decoration: InputDecoration(
                         hintText: 'Hãy nhập mật khẩu mới',
                         labelText: 'Hãy nhập mật khẩu mới',
                       ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 12.0),
+                    child: TextFormField(
+                      initialValue: data['contact'],
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Hãy nhập số điện thoại';
+                        }
+                        return null;
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          data['contact'] = value;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Hãy nhập số điện thoại',
+                        labelText: 'Hãy nhập số điện thoại',
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 12.0),
+                    child: TextFormField(
+                      initialValue: data['address'],
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Hãy nhập địa chỉ';
+                        }
+                        return null;
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          data['address'] = value;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Hãy nhập địa chỉ',
+                        labelText: 'Hãy nhập địa chỉ',
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 12.0),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: DropdownSearch<String>(
+                            popupProps: PopupProps.menu(
+                              showSelectedItems: true,
+                              showSearchBox: true,
+                            ),
+                            items: List.unmodifiable(['male', 'female']),
+                            dropdownDecoratorProps: DropDownDecoratorProps(
+                              dropdownSearchDecoration: InputDecoration(
+                                labelText: "Hãy nhập giới tính",
+                                hintText: "Hãy nhập giới tính",
+                              ),
+                            ),
+                            onChanged: (e) {
+                              data['gender'] = e;
+                              print(e);
+                            },
+                            selectedItem: data['gender'],
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   Padding(
@@ -119,22 +197,32 @@ class _SettingsState extends State<Settings> {
                             EmployeeCredential employeeCredential =
                                 EmployeeCredential(email: '', password: '');
                             employeeCredential.email =
-                                auth.employee['employee_email'];
-                            employeeCredential.password = new_password;
+                                auth.employee['role'] == null
+                                    ? auth.employee['customer_email']
+                                    : auth.employee['employee_email'];
+                            employeeCredential.password = data['new_password'];
                             forgotPasswordService
                                 .updateAccountInfo(
-                                  name,
-                                  old_password,
-                                  new_password,
-                                  auth.employee['role'],
+                                  data,
+                                  auth.employee['role'] ?? 'null',
                                   auth.employee['employee_id'].toString(),
                                   auth.employee['access_token'],
                                 )
                                 .then((value) => {
-                                      if (value)
+                                      if (value &&
+                                          auth.employee['role'] != null)
                                         {
                                           auth
                                               .employeeLogin(employeeCredential)
+                                              .then((e) {
+                                            Navigator.pop(context);
+                                          })
+                                        }
+                                      else if (value &&
+                                          auth.employee['role'] == null)
+                                        {
+                                          auth
+                                              .customerLogin(employeeCredential)
                                               .then((e) {
                                             Navigator.pop(context);
                                           })

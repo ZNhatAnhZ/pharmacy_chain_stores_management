@@ -24,8 +24,8 @@ class _TransactionOut extends State<TransactionOut> {
   void getAllOrder(AuthBlock auth) {
     if (isCalled == false && auth.isLoggedIn) {
       orderService
-          .getAllOrder(
-              auth.employee['access_token'], auth.employee['role'], '', dates)
+          .getAllOrder(auth.employee['access_token'],
+              auth.employee['role'] ?? 'null', '', dates)
           .then((result) {
         setState(() {
           orders = List.from(result);
@@ -63,7 +63,9 @@ class _TransactionOut extends State<TransactionOut> {
     final scrollController = ScrollController();
     AuthBlock auth = Provider.of<AuthBlock>(context);
     getAllOrder(auth);
-    getAllBranch(auth);
+    if (auth.employee['role'] != null) {
+      getAllBranch(auth);
+    }
 
     return Scaffold(
       appBar: AppBar(actions: <Widget>[
@@ -163,13 +165,14 @@ class _TransactionOut extends State<TransactionOut> {
                   );
                 }).toList(),
               )),
-        IconButton(
-          icon: const Icon(Icons.download_sharp),
-          onPressed: () {
-            orderService.exportOrderCSV(auth.employee['access_token'],
-                auth.employee['role'], branch_value);
-          },
-        ),
+        if (auth.employee['role'] != null)
+          IconButton(
+            icon: const Icon(Icons.download_sharp),
+            onPressed: () {
+              orderService.exportOrderCSV(auth.employee['access_token'],
+                  auth.employee['role'], branch_value);
+            },
+          ),
       ]),
       body: Row(
         children: <Widget>[

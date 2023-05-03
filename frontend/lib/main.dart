@@ -4,7 +4,7 @@ import 'package:medical_chain_manangement/employee/employee_detail.dart';
 import 'package:medical_chain_manangement/employee/employee_modify.dart';
 import 'package:medical_chain_manangement/employee/employee_page.dart';
 import 'package:medical_chain_manangement/home/home_page.dart';
-import 'package:medical_chain_manangement/auth/employee_auth.dart';
+import 'package:medical_chain_manangement/auth_employee/employee_auth.dart';
 import 'package:medical_chain_manangement/blocks/auth_block.dart';
 import 'package:medical_chain_manangement/inventory/add_inventory_page.dart';
 import 'package:medical_chain_manangement/inventory/inventory_detail.dart';
@@ -28,6 +28,7 @@ import 'package:medical_chain_manangement/transaction/transaction_out_detail.dar
 import 'package:medical_chain_manangement/user_settings/settings.dart';
 import 'package:provider/provider.dart';
 
+import 'auth_customer/customer_auth.dart';
 import 'transaction/transaction_out.dart';
 
 void main() {
@@ -55,6 +56,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => HomePage(),
         '/auth': (context) => EmployeeAuth(),
+        '/auth_customer': (context) => CustomerAuth(),
         '/inventory_page': (context) => InventoryPage(),
         '/add_inventory_page': (context) => AddInventoryPage(),
         '/inventory_detail': (context) => InventoryDetail(),
