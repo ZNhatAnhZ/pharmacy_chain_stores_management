@@ -5,6 +5,7 @@ class Customer {
   String? password;
   String? address;
   String? contact;
+  String? gender;
   Customer({
     this.id,
     this.name,
@@ -12,6 +13,7 @@ class Customer {
     this.password,
     this.address,
     this.contact,
+    this.gender,
   });
   factory Customer.fromJson(Map<String, dynamic> json) {
     return Customer(
@@ -21,6 +23,7 @@ class Customer {
       password: json['password'] ?? "",
       address: json['address'] ?? "",
       contact: json['contact'] ?? "",
+      gender: json['gender'] ?? "",
     );
   }
 }

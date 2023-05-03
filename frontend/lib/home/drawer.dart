@@ -13,7 +13,7 @@ class _AppDrawerState extends State<AppDrawer> {
     AuthBlock auth = Provider.of<AuthBlock>(context);
     return Column(
       children: <Widget>[
-        if (auth.isLoggedIn)
+        if (auth.isLoggedIn && auth.employee['role'] == 'customer')
           UserAccountsDrawerHeader(
             decoration: BoxDecoration(
                 image: DecorationImage(
@@ -23,12 +23,36 @@ class _AppDrawerState extends State<AppDrawer> {
             currentAccountPicture: CircleAvatar(
               backgroundImage: AssetImage('images/avatar.png'),
             ),
-            accountEmail: auth.employee['role'] == null
-                ? Text(auth.employee['customer_email'])
-                : Text(auth.employee['employee_email']),
-            accountName: auth.employee['role'] == null
-                ? Text(auth.employee['customer_name'])
-                : Text(auth.employee['employee_name']),
+            accountEmail: Text(auth.employee['customer_email']),
+            accountName: Text(auth.employee['customer_name']),
+          ),
+        if (auth.isLoggedIn && auth.employee['role'] == 'admin')
+          UserAccountsDrawerHeader(
+            decoration: BoxDecoration(
+                image: DecorationImage(
+              fit: BoxFit.cover,
+              image: AssetImage('images/drawer-header.jpg'),
+            )),
+            currentAccountPicture: CircleAvatar(
+              backgroundImage: AssetImage('images/avatar.png'),
+            ),
+            accountEmail: Text(auth.employee['admin_email']),
+            accountName: Text(auth.employee['admin_name']),
+          ),
+        if (auth.isLoggedIn &&
+            auth.employee['role'] != 'customer' &&
+            auth.employee['role'] != 'admin')
+          UserAccountsDrawerHeader(
+            decoration: BoxDecoration(
+                image: DecorationImage(
+              fit: BoxFit.cover,
+              image: AssetImage('images/drawer-header.jpg'),
+            )),
+            currentAccountPicture: CircleAvatar(
+              backgroundImage: AssetImage('images/avatar.png'),
+            ),
+            accountEmail: Text(auth.employee['employee_email']),
+            accountName: Text(auth.employee['employee_name']),
           ),
         Expanded(
           child: ListView(
@@ -43,7 +67,7 @@ class _AppDrawerState extends State<AppDrawer> {
                     Navigator.pop(context);
                   },
                 ),
-              if (auth.isLoggedIn)
+              if (auth.isLoggedIn && (auth.employee['role'] != 'admin'))
                 ListTile(
                   leading: Icon(Icons.category,
                       color: Theme.of(context).colorScheme.secondary),
@@ -90,7 +114,7 @@ class _AppDrawerState extends State<AppDrawer> {
                     Navigator.pushNamed(context, '/transaction_in');
                   },
                 ),
-              if (auth.isLoggedIn)
+              if (auth.isLoggedIn && (auth.employee['role'] != 'admin'))
                 ListTile(
                   leading: Icon(Icons.arrow_forward_rounded,
                       color: Theme.of(context).colorScheme.secondary),
@@ -135,8 +159,8 @@ class _AppDrawerState extends State<AppDrawer> {
                   },
                 ),
               if (auth.isLoggedIn &&
-                  (auth.employee['role'] == 'manager' ||
-                      auth.employee['role'] == 'store_owner'))
+                  (auth.employee['role'] != 'employee' ||
+                      auth.employee['role'] != 'customer'))
                 ListTile(
                   leading: Icon(Icons.emoji_people,
                       color: Theme.of(context).colorScheme.secondary),
@@ -144,6 +168,18 @@ class _AppDrawerState extends State<AppDrawer> {
                   onTap: () {
                     Navigator.pop(context);
                     Navigator.pushNamed(context, '/employee_page');
+                  },
+                ),
+              if (auth.isLoggedIn &&
+                  (auth.employee['role'] == 'manager' ||
+                      auth.employee['role'] == 'admin'))
+                ListTile(
+                  leading: Icon(Icons.accessibility_new_sharp,
+                      color: Theme.of(context).colorScheme.secondary),
+                  title: Text('Khách hàng'),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.pushNamed(context, '/customer_page');
                   },
                 ),
               Divider(),
@@ -165,6 +201,16 @@ class _AppDrawerState extends State<AppDrawer> {
                   onTap: () {
                     Navigator.pop(context);
                     Navigator.pushNamed(context, '/auth_customer');
+                  },
+                ),
+                              if (!auth.isLoggedIn)
+                ListTile(
+                  leading: Icon(Icons.lock,
+                      color: Theme.of(context).colorScheme.secondary),
+                  title: Text('Đăng nhập quản trị viên'),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.pushNamed(context, '/auth_admin');
                   },
                 ),
               if (auth.isLoggedIn)

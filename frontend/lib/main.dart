@@ -28,7 +28,9 @@ import 'package:medical_chain_manangement/transaction/transaction_out_detail.dar
 import 'package:medical_chain_manangement/user_settings/settings.dart';
 import 'package:provider/provider.dart';
 
+import 'auth_admin/admin_auth.dart';
 import 'auth_customer/customer_auth.dart';
+import 'customer/customer_page.dart';
 import 'transaction/transaction_out.dart';
 
 void main() {
@@ -57,6 +59,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => HomePage(),
         '/auth': (context) => EmployeeAuth(),
         '/auth_customer': (context) => CustomerAuth(),
+        '/auth_admin': (context) => AdminAuth(),
         '/inventory_page': (context) => InventoryPage(),
         '/add_inventory_page': (context) => AddInventoryPage(),
         '/inventory_detail': (context) => InventoryDetail(),
@@ -82,6 +85,7 @@ class MyApp extends StatelessWidget {
         '/employee_modify': (context) => EmployeeModify(),
         '/employee_add': (context) => AddEmployee(),
         '/reset_password': (context) => ResetPassword(),
+        '/customer_page': (context) => CustomerPage(),
       },
     );
   }

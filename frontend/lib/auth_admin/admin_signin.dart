@@ -1,24 +1,19 @@
-import 'dart:developer';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:medical_chain_manangement/blocks/auth_block.dart';
 import 'package:medical_chain_manangement/models/employee.dart';
 import 'package:medical_chain_manangement/services/forgot_password_service.dart';
 import 'package:provider/provider.dart';
 
-class EmployeeSignIn extends StatefulWidget {
+class AdminSignIn extends StatefulWidget {
   @override
-  _EmployeeSignInState createState() => _EmployeeSignInState();
+  _AdminSignInState createState() => _AdminSignInState();
 }
 
-class _EmployeeSignInState extends State<EmployeeSignIn> {
+class _AdminSignInState extends State<AdminSignIn> {
   final _formKey = GlobalKey<FormState>();
   final EmployeeCredential employeeCredential =
       EmployeeCredential(email: '', password: '');
   final ForgotPasswordService forgotPasswordService = ForgotPasswordService();
-  AuthBlock buth = AuthBlock();
 
   @override
   Widget build(BuildContext context) {
@@ -88,18 +83,16 @@ class _EmployeeSignInState extends State<EmployeeSignIn> {
                                       Colors.white),
                                 )
                               : Text(
-                                  'Đăng nhập',
+                                  'Sign In',
                                   style: TextStyle(color: Colors.white),
                                 ),
                           onPressed: () async {
                             // Validate form
                             if (_formKey.currentState!.validate() &&
                                 !auth.loading) {
-                              auth.employeeLogin(employeeCredential);
-                            }
-
-                            if (auth.isLoggedIn) {
-                              Navigator.pop(context);
+                              auth.adminLogin(employeeCredential).then((e) {
+                                Navigator.pop(context);
+                              });
                             }
                           },
                         );
@@ -107,41 +100,6 @@ class _EmployeeSignInState extends State<EmployeeSignIn> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 15.0),
-                  child: SizedBox(
-                    width: double.infinity,
-                    height: 50,
-                    child: Consumer<AuthBlock>(
-                      builder: (BuildContext context, AuthBlock auth,
-                          Widget? child) {
-                        return ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: Theme.of(context).primaryColor,
-                          ),
-                          child: auth.loading && auth.loadingType == 'login'
-                              ? CircularProgressIndicator(
-                                  valueColor: AlwaysStoppedAnimation<Color>(
-                                      Colors.white),
-                                )
-                              : Text(
-                                  'Quên mật khẩu',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                          onPressed: () async {
-                            forgotPasswordService
-                                .forgotPassword(employeeCredential.email)
-                                .then((value) => {
-                                      Navigator.pushNamed(
-                                          context, '/reset_password',
-                                          arguments: employeeCredential.email)
-                                    });
-                          },
-                        );
-                      },
-                    ),
-                  ),
-                )
               ],
             ),
           ),

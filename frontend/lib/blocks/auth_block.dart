@@ -97,8 +97,23 @@ class AuthBlock extends ChangeNotifier {
     loading = false;
   }
 
+    adminLogin(EmployeeCredential employeeCredential) async {
+    loading = true;
+    loadingType = 'login';
+    _authService.adminLogin(employeeCredential).then((value) async {
+      _employee = value;
+      isLoggedIn = _employee.isNotEmpty;
+      loading = false;
+      notifyListeners();
+    }).onError((error, stackTrace) {
+      print(error);
+      loading = false;
+    });
+  }
+
   logout() async {
     await _authService.logout();
+    _employee.clear();
     isLoggedIn = false;
     notifyListeners();
   }
