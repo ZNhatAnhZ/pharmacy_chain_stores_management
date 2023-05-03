@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:medical_chain_manangement/blocks/auth_block.dart';
-import 'employee_signin.dart';
-import 'employee_signup.dart';
+import 'admin_signin.dart';
 
-class EmployeeAuth extends StatelessWidget {
-  final List<Widget> tabs = [EmployeeSignIn()];
+class AdminAuth extends StatelessWidget {
+  final List<Widget> tabs = [AdminSignIn()];
   @override
   Widget build(BuildContext context) {
     final AuthBlock authBlock = Provider.of<AuthBlock>(context);
@@ -13,9 +12,9 @@ class EmployeeAuth extends StatelessWidget {
       appBar: AppBar(
         title: Text((() {
           if (authBlock.currentIndex == 0) {
-            return 'Employee sign In';
+            return 'Customer sign In';
           } else {
-            return 'Employee Create Account';
+            return 'Customer Create Account';
           }
         }())),
       ),

@@ -25,7 +25,7 @@ class AuthService {
       setEmployee(response.body);
       return jsonDecode(response.body);
     } else {
-      if (response.statusCode == 403) {
+      if (response.statusCode == 401) {
         Fluttertoast.showToast(
             msg: "Invalid Credentials",
             toastLength: Toast.LENGTH_SHORT,
@@ -59,9 +59,9 @@ class AuthService {
     }
   }
 
-    Future<Map> customerLogin(EmployeeCredential employeeCredential) async {
-    final response =
-        await http.post(Uri.http(BASE_URL, '/api/v1/customers/login'), headers: {
+  Future<Map> customerLogin(EmployeeCredential employeeCredential) async {
+    final response = await http
+        .post(Uri.http(BASE_URL, '/api/v1/customers/login'), headers: {
       "Access-Control-Allow-Origin": "*", // Required for CORS support to work
     }, body: {
       'email': employeeCredential.email,
@@ -72,7 +72,7 @@ class AuthService {
       setEmployee(response.body);
       return jsonDecode(response.body);
     } else {
-      if (response.statusCode == 403) {
+      if (response.statusCode == 401) {
         Fluttertoast.showToast(
             msg: "Invalid Credentials",
             toastLength: Toast.LENGTH_SHORT,
@@ -83,15 +83,15 @@ class AuthService {
     }
   }
 
-    Future<Map> customerRegister(Customer customer) async {
-    final response = await http.post(Uri.http(BASE_URL, '/api/v1/customers/customers'),
-        body: {
-          'name': customer.name,
-          'password': customer.password,
-          'email': customer.email,
-          'address': customer.address,
-          'contact': customer.contact,
-        });
+  Future<Map> customerRegister(Customer customer) async {
+    final response = await http
+        .post(Uri.http(BASE_URL, '/api/v1/customers/customers'), body: {
+      'name': customer.name,
+      'password': customer.password,
+      'email': customer.email,
+      'address': customer.address,
+      'contact': customer.contact,
+    });
     inspect(response.body);
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
@@ -102,6 +102,30 @@ class AuthService {
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.CENTER,
             timeInSecForIosWeb: 1,
+            fontSize: 16.0);
+      }
+      throw Exception(response.body);
+    }
+  }
+
+    Future<Map> adminLogin(EmployeeCredential employeeCredential) async {
+    final response =
+        await http.post(Uri.http(BASE_URL, '/api/v1/admins/login'), headers: {
+      "Access-Control-Allow-Origin": "*", // Required for CORS support to work
+    }, body: {
+      'email': employeeCredential.email,
+      'password': employeeCredential.password
+    });
+    inspect(response.body);
+    if (response.statusCode == 200) {
+      setEmployee(response.body);
+      return jsonDecode(response.body);
+    } else {
+      if (response.statusCode == 401) {
+        Fluttertoast.showToast(
+            msg: "Invalid Credentials",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
             fontSize: 16.0);
       }
       throw Exception(response.body);
