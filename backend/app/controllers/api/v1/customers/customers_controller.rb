@@ -10,7 +10,7 @@ module Api
             customer.save!
             generate_token customer
             render json: {access_token: @data[:access_token], customer_id: customer&.id,
-              customer_name: customer&.name, customer_email: customer&.email, customer_address: customer&.address, customer_contact: customer&.contact, customer_gender: customer&.gender}, status: :ok
+              customer_name: customer&.name, customer_email: customer&.email, customer_address: customer&.address, customer_contact: customer&.contact, customer_gender: customer&.gender, role: "customer"}, status: :ok
           end
         rescue StandardError => e
           render json: { error: e.message }, status: :bad_request
