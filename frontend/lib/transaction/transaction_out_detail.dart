@@ -287,7 +287,7 @@ class _TransactionOutDetailState extends State<TransactionOutDetail> {
                             ),
                           ),
                         ),
-                        if (auth.employee['role'] != null)
+                        if (auth.employee['role'] != 'customer')
                           Padding(
                               padding:
                                   const EdgeInsets.only(bottom: 25, top: 10),
@@ -334,7 +334,7 @@ class _TransactionOutDetailState extends State<TransactionOutDetail> {
                                   )
                                 ],
                               )),
-                        if (auth.employee['role'] == null &&
+                        if (auth.employee['role'] == 'customer' &&
                             order.status == 'pending')
                           Padding(
                               padding:
@@ -352,7 +352,7 @@ class _TransactionOutDetailState extends State<TransactionOutDetail> {
                                           .customerRejectOrder(
                                               auth.employee['access_token'],
                                               order.id.toString(),
-                                              auth.employee['role'] ?? 'null')
+                                              auth.employee['role'])
                                           .then((value) => {
                                                 Navigator.pushReplacementNamed(
                                                     context, '/transaction_out')

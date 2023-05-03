@@ -21,7 +21,8 @@ class _AddEmployeeState extends State<AddEmployee> {
   void getAllBranch(AuthBlock auth) {
     if (isCalled == false &&
         auth.isLoggedIn &&
-        auth.employee['role'] == "manager") {
+        (auth.employee['role'] == "manager" ||
+            auth.employee['role'] == "admin")) {
       branchService
           .getAllBranch(auth.employee['access_token'], auth.employee['role'])
           .then((result) {
@@ -54,7 +55,8 @@ class _AddEmployeeState extends State<AddEmployee> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  if (auth.employee["role"] == "manager")
+                  if (auth.employee["role"] == "manager" ||
+                      auth.employee['role'] == "admin")
                     Padding(
                       padding: const EdgeInsets.only(bottom: 12.0),
                       child: Row(
@@ -81,12 +83,13 @@ class _AddEmployeeState extends State<AddEmployee> {
                               // selectedItem: "Brazil",
                             ),
                           ),
-                          IconButton(
-                            icon: const Icon(Icons.add_circle),
-                            onPressed: () {
-                              Navigator.pushNamed(context, '/add_branch');
-                            },
-                          ),
+                          if (auth.employee["role"] == "manager")
+                            IconButton(
+                              icon: const Icon(Icons.add_circle),
+                              onPressed: () {
+                                Navigator.pushNamed(context, '/add_branch');
+                              },
+                            ),
                         ],
                       ),
                     ),
@@ -177,6 +180,35 @@ class _AddEmployeeState extends State<AddEmployee> {
                       ],
                     ),
                   ),
+                  if (auth.employee['role'] == 'admin')
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 12.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: DropdownSearch<String>(
+                              popupProps: PopupProps.menu(
+                                showSelectedItems: true,
+                                showSearchBox: true,
+                              ),
+                              items: List.unmodifiable(
+                                  ['manager', 'store_owner', 'employee']),
+                              dropdownDecoratorProps: DropDownDecoratorProps(
+                                dropdownSearchDecoration: InputDecoration(
+                                  labelText: "Hãy nhập vai trò",
+                                  hintText: "Hãy nhập vai trò",
+                                ),
+                              ),
+                              onChanged: (e) {
+                                newEmployee['role'] = e;
+                                print(e);
+                              },
+                              // selectedItem: "Brazil",
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 12.0),
                     child: TextFormField(

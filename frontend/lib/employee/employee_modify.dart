@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:medical_chain_manangement/blocks/auth_block.dart';
 import 'package:medical_chain_manangement/models/employee.dart';
@@ -23,7 +25,8 @@ class _EmployeeModifyState extends State<EmployeeModify> {
   void getAllBranch(AuthBlock auth) {
     if (isCalled == false &&
         auth.isLoggedIn &&
-        auth.employee['role'] == "manager") {
+        (auth.employee['role'] == "manager" ||
+            auth.employee['role'] == "admin")) {
       branchService
           .getAllBranch(auth.employee['access_token'], auth.employee['role'])
           .then((result) {
@@ -34,11 +37,15 @@ class _EmployeeModifyState extends State<EmployeeModify> {
       }).catchError((err) {
         print(err);
       });
+    } else {
+      setState(() {
+        isCalled = true;
+      });
     }
   }
 
   void initialize_employee_value(Employee employee) {
-    if (isCalled1 == false) {
+    if (isCalled && isCalled1 == false) {
       branches.forEach((branch) {
         if (branch.id == employee.branch_id) {
           selectedBranch = branch.id.toString() + ": " + branch.name!;
@@ -51,6 +58,7 @@ class _EmployeeModifyState extends State<EmployeeModify> {
       newEmployee['contact'] = employee.contact!;
       newEmployee['gender'] = employee.gender!;
       newEmployee['address'] = employee.address!;
+      newEmployee['role'] = employee.role!;
       newEmployee['branch_id'] = employee.branch_id.toString();
 
       isCalled1 = true;
@@ -80,7 +88,8 @@ class _EmployeeModifyState extends State<EmployeeModify> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  if (auth.employee["role"] == "manager")
+                  if (auth.employee["role"] == "manager" ||
+                      auth.employee["role"] == "admin")
                     Padding(
                       padding: const EdgeInsets.only(bottom: 12.0),
                       child: Row(
@@ -207,6 +216,35 @@ class _EmployeeModifyState extends State<EmployeeModify> {
                       ],
                     ),
                   ),
+                  if (auth.employee['role'] == 'admin')
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 12.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: DropdownSearch<String>(
+                              popupProps: PopupProps.menu(
+                                showSelectedItems: true,
+                                showSearchBox: true,
+                              ),
+                              items: List.unmodifiable(
+                                  ['manager', 'store_owner', 'employee']),
+                              dropdownDecoratorProps: DropDownDecoratorProps(
+                                dropdownSearchDecoration: InputDecoration(
+                                  labelText: "Hãy nhập vai trò",
+                                  hintText: "Hãy nhập vai trò",
+                                ),
+                              ),
+                              onChanged: (e) {
+                                newEmployee['role'] = e;
+                                print(e);
+                              },
+                              selectedItem: employee.role,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 12.0),
                     child: TextFormField(

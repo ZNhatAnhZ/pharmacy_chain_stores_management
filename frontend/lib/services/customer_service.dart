@@ -13,6 +13,8 @@ class CustomerService {
       url = '/api/v1/employ/customers';
     } else if (role == 'manager') {
       url = '/api/v1/manager/customers';
+    } else if (role == 'admin') {
+      url = '/api/v1/admins/customers';
     } else {
       url = '/api/v1/store_owner/customers';
     }

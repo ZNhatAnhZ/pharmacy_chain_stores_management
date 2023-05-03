@@ -11,8 +11,10 @@ class BranchService {
     String url;
     if (role == 'employee') {
       url = '/api/v1/employ/branches';
-    } else if (role == 'manager'){
+    } else if (role == 'manager') {
       url = '/api/v1/manager/branches';
+    } else if (role == 'admin') {
+      url = '/api/v1/admins/branches';
     } else {
       url = '/api/v1/store_owner/branches';
     }
@@ -32,11 +34,11 @@ class BranchService {
     }
   }
 
-    Future<bool> createBranch(String token, Map data, String role) async {
+  Future<bool> createBranch(String token, Map data, String role) async {
     String url;
     if (role == 'employee') {
       url = '/api/v1/employ/branches';
-    } else if (role == 'manager'){
+    } else if (role == 'manager') {
       url = '/api/v1/manager/branches';
     } else {
       url = '/api/v1/store_owner/branches';
@@ -70,7 +72,7 @@ class BranchService {
     String url;
     if (role == 'employee') {
       url = '/api/v1/employ/branches/';
-    } else if (role == 'manager'){
+    } else if (role == 'manager') {
       url = '/api/v1/manager/branches/';
     } else {
       url = '/api/v1/store_owner/branches/';
@@ -104,7 +106,7 @@ class BranchService {
     String url;
     if (role == 'employee') {
       url = '/api/v1/employ/branches/';
-    } else if (role == 'manager'){
+    } else if (role == 'manager') {
       url = '/api/v1/manager/branches/';
     } else {
       url = '/api/v1/store_owner/branches/';

@@ -15,7 +15,7 @@ class OrderService {
       url = '/api/v1/employ/orders';
     } else if (role == 'manager') {
       url = '/api/v1/manager/orders';
-    } else if (role == 'null') {
+    } else if (role == 'customer') {
       url = '/api/v1/customers/orders';
     } else {
       url = '/api/v1/store_owner/orders';
@@ -52,7 +52,7 @@ class OrderService {
       url = '/api/v1/employ/orders';
     } else if (role == 'manager') {
       url = '/api/v1/manager/orders';
-    } else if (role == 'null') {
+    } else if (role == 'customer') {
       url = '/api/v1/customers/orders';
     } else {
       url = '/api/v1/store_owner/orders';
@@ -162,7 +162,7 @@ class OrderService {
       url = '/api/v1/employ/orders/';
     } else if (role == 'manager') {
       url = '/api/v1/manager/orders/';
-    } else if (role == 'null') {
+    } else if (role == 'customer') {
       url = '/api/v1/customers/orders/';
     } else {
       url = '/api/v1/store_owner/orders/';

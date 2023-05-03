@@ -107,7 +107,8 @@ class _HomePage extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     AuthBlock auth = Provider.of<AuthBlock>(context);
-    if (auth.employee['role'] != null) {
+    if (auth.employee['role'] != 'customer' &&
+        auth.employee['role'] != 'admin') {
       getAllHeaderStatistic(auth);
       getRevenueOrder(auth);
       getRevenueImport(auth);

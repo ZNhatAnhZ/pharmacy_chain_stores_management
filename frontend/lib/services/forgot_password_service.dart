@@ -62,13 +62,13 @@ class ForgotPasswordService {
       url = '/api/v1/employ/employees/';
     } else if (role == 'manager') {
       url = '/api/v1/manager/employees/';
-    } else if (role == 'null') {
+    } else if (role == 'customer') {
       url = '/api/v1/customers/customers/me';
     } else {
       url = '/api/v1/store_owner/employees/';
     }
     final response = await http
-        .put(Uri.http(BASE_URL, url + (role != 'null' ? id : '')), headers: {
+        .put(Uri.http(BASE_URL, url + (role != 'employee' ? id : '')), headers: {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     }, body: {

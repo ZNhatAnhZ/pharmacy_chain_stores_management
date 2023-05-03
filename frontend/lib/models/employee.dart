@@ -8,6 +8,7 @@ class Employee {
   String? contact;
   String? gender;
   String? address;
+  String? role;
   int? branch_id;
   Branch? branch;
   Employee({
@@ -20,6 +21,7 @@ class Employee {
     this.contact,
     this.gender,
     this.address,
+    this.role,
   });
   factory Employee.fromJson(Map<String, dynamic> json) {
     return Employee(
@@ -30,6 +32,7 @@ class Employee {
       contact: json['contact'] ?? "",
       gender: json['gender'] ?? "",
       address: json['address'] ?? "",
+      role: json['role'] ?? "",
       branch_id: json['branch_id'] ?? -1,
       branch: Branch.fromJson(json['branch'] ?? Map()),
     );

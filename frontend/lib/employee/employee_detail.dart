@@ -84,6 +84,19 @@ class _EmployeeDetailState extends State<EmployeeDetail> {
                             ),
                           ),
                         ),
+                        if (auth.employee['role'] == "admin")
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 25),
+                            child: TextFormField(
+                              readOnly: true,
+                              initialValue: "Vai trò: " + employee.role!,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
                         Padding(
                             padding: const EdgeInsets.only(bottom: 25, top: 10),
                             child: Row(

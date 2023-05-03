@@ -18,6 +18,8 @@ class EmployeeService {
       url = '/api/v1/employ/employees';
     } else if (role == 'manager') {
       url = '/api/v1/manager/employees';
+    } else if (role == 'admin') {
+      url = '/api/v1/admins/employees';
     } else {
       url = '/api/v1/store_owner/employees';
     }
@@ -66,6 +68,8 @@ class EmployeeService {
       url = '/api/v1/employ/employees/';
     } else if (role == 'manager') {
       url = '/api/v1/manager/employees/';
+    } else if (role == 'admin') {
+      url = '/api/v1/admins/employees/';
     } else {
       url = '/api/v1/store_owner/employees/';
     }
@@ -100,6 +104,8 @@ class EmployeeService {
       url = '/api/v1/employ/employees/';
     } else if (role == 'manager') {
       url = '/api/v1/manager/employees/';
+    } else if (role == 'admin') {
+      url = '/api/v1/admins/employees/';
     } else {
       url = '/api/v1/store_owner/employees/';
     }
@@ -127,38 +133,73 @@ class EmployeeService {
       url = '/api/v1/employ/employees';
     } else if (role == 'manager') {
       url = '/api/v1/manager/employees';
+    } else if (role == 'admin') {
+      url = '/api/v1/admins/employees';
     } else {
       url = '/api/v1/store_owner/employees';
     }
 
     final response;
     if (data['branch_id'] != null) {
-      response = await http.post(Uri.http(BASE_URL, url), headers: {
-        'Accept': 'application/json',
-        'Authorization': 'Bearer $token',
-      }, body: {
-        'name': data['name'],
-        'email': data['email'],
-        'contact': data['contact'],
-        'gender': data['gender'],
-        'address': data['address'],
-        'password': data['password'],
-        'password_confirmation': data['password'],
-        'branch_id': data['branch_id'],
-      });
+      if (data['role'] != null) {
+        response = await http.post(Uri.http(BASE_URL, url), headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        }, body: {
+          'name': data['name'],
+          'email': data['email'],
+          'contact': data['contact'],
+          'gender': data['gender'],
+          'address': data['address'],
+          'password': data['password'],
+          'password_confirmation': data['password'],
+          'branch_id': data['branch_id'],
+          'role': data['role'],
+        });
+      } else {
+        response = await http.post(Uri.http(BASE_URL, url), headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        }, body: {
+          'name': data['name'],
+          'email': data['email'],
+          'contact': data['contact'],
+          'gender': data['gender'],
+          'address': data['address'],
+          'password': data['password'],
+          'password_confirmation': data['password'],
+          'branch_id': data['branch_id'],
+        });
+      }
     } else {
-      response = await http.post(Uri.http(BASE_URL, url), headers: {
-        'Accept': 'application/json',
-        'Authorization': 'Bearer $token',
-      }, body: {
-        'name': data['name'],
-        'email': data['email'],
-        'contact': data['contact'],
-        'gender': data['gender'],
-        'address': data['address'],
-        'password': data['password'],
-        'password_confirmation': data['password'],
-      });
+      if (data['role'] != null) {
+        response = await http.post(Uri.http(BASE_URL, url), headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        }, body: {
+          'name': data['name'],
+          'email': data['email'],
+          'contact': data['contact'],
+          'gender': data['gender'],
+          'address': data['address'],
+          'password': data['password'],
+          'password_confirmation': data['password'],
+          'role': data['role'],
+        });
+      } else {
+        response = await http.post(Uri.http(BASE_URL, url), headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        }, body: {
+          'name': data['name'],
+          'email': data['email'],
+          'contact': data['contact'],
+          'gender': data['gender'],
+          'address': data['address'],
+          'password': data['password'],
+          'password_confirmation': data['password'],
+        });
+      }
     }
 
     if (response.statusCode == 200) {

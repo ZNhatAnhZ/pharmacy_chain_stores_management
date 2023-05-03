@@ -39,7 +39,9 @@ class _EmployeePage extends State<EmployeePage> {
   }
 
   void getAllBranch(AuthBlock auth) {
-    if (isCalled1 == false && auth.isLoggedIn && auth.employee['role'] == "manager") {
+    if (isCalled1 == false &&
+        auth.isLoggedIn &&
+        auth.employee['role'] == "manager") {
       branchService
           .getAllBranch(auth.employee['access_token'], auth.employee['role'])
           .then((result) {
@@ -102,13 +104,14 @@ class _EmployeePage extends State<EmployeePage> {
                   );
                 }).toList(),
               )),
-        IconButton(
-          icon: const Icon(Icons.download_sharp),
-          onPressed: () {
-            employeeService.exportEmployeeCSV(auth.employee['access_token'],
-                auth.employee['role'], branch_value);
-          },
-        ),
+        if (auth.employee['role'] != "admin")
+          IconButton(
+            icon: const Icon(Icons.download_sharp),
+            onPressed: () {
+              employeeService.exportEmployeeCSV(auth.employee['access_token'],
+                  auth.employee['role'], branch_value);
+            },
+          ),
         IconButton(
           icon: const Icon(Icons.add_circle),
           onPressed: () {
@@ -146,6 +149,11 @@ class _EmployeePage extends State<EmployeePage> {
                           label: Text("Branch ID"),
                           numeric: false,
                         ),
+                        if (auth.employee['role'] == "admin")
+                          DataColumn(
+                            label: Text("Vai trò"),
+                            numeric: false,
+                          ),
                       ],
                       rows: employees
                           .map(
@@ -175,6 +183,12 @@ class _EmployeePage extends State<EmployeePage> {
                                     employee.branch_id.toString(),
                                   ),
                                 ),
+                                if (auth.employee['role'] == "admin")
+                                  DataCell(
+                                    Text(
+                                      employee.role!,
+                                    ),
+                                  ),
                               ],
                             ),
                           )

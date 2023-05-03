@@ -25,7 +25,7 @@ class _InventoryPage extends State<InventoryPage> {
     if (isCalled == false && auth.isLoggedIn) {
       inventoryService
           .getAllInventory(auth.employee['access_token'],
-              auth.employee['role'] ?? 'null', '')
+              auth.employee['role'], '')
           .then((result) {
         setState(() {
           inventorys = List.from(result);
@@ -60,7 +60,7 @@ class _InventoryPage extends State<InventoryPage> {
       inventoryService
           .getSearchedInventory(
               auth.employee['access_token'],
-              auth.employee['role'] ?? 'null',
+              auth.employee['role'],
               branch_value,
               search_name_value,
               selectedFilters)
@@ -127,7 +127,7 @@ class _InventoryPage extends State<InventoryPage> {
     final scrollController = ScrollController();
     AuthBlock auth = Provider.of<AuthBlock>(context);
     getAllInventory(auth);
-    if (auth.isLoggedIn && auth.employee['role'] != null) {
+    if (auth.isLoggedIn && auth.employee['role'] != 'customer') {
       getAllBranch(auth);
     }
 
@@ -211,7 +211,7 @@ class _InventoryPage extends State<InventoryPage> {
                     );
                   }).toList(),
                 )),
-          if (auth.isLoggedIn && auth.employee['role'] != null)
+          if (auth.isLoggedIn && auth.employee['role'] != 'customer')
             IconButton(
               icon: const Icon(Icons.download_sharp),
               onPressed: () {
@@ -221,7 +221,7 @@ class _InventoryPage extends State<InventoryPage> {
                     branch_value);
               },
             ),
-          if (auth.isLoggedIn && auth.employee['role'] != null)
+          if (auth.isLoggedIn && auth.employee['role'] != 'customer')
             IconButton(
               icon: const Icon(Icons.add_circle),
               onPressed: () {
@@ -233,7 +233,7 @@ class _InventoryPage extends State<InventoryPage> {
       body: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-          if (auth.isLoggedIn && auth.employee['role'] != null)
+          if (auth.isLoggedIn && auth.employee['role'] != 'customer')
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -348,7 +348,7 @@ class _InventoryPage extends State<InventoryPage> {
                   )
               ],
             ),
-          if (auth.isLoggedIn && auth.employee['role'] != null)
+          if (auth.isLoggedIn && auth.employee['role'] != 'customer')
             SizedBox(
               width: 10,
             ),
@@ -359,7 +359,7 @@ class _InventoryPage extends State<InventoryPage> {
                     scrollDirection: Axis.vertical,
                     child: Container(
                       width: MediaQuery.of(context).size.width -
-                          (auth.employee['role'] == null ? 0 : 190),
+                          (auth.employee['role'] == 'customer' ? 0 : 190),
                       child: Scrollbar(
                         controller: scrollController,
                         child: SingleChildScrollView(
@@ -368,7 +368,7 @@ class _InventoryPage extends State<InventoryPage> {
                           child: ConstrainedBox(
                             constraints: BoxConstraints(
                                 minWidth: MediaQuery.of(context).size.width -
-                                    (auth.employee['role'] == null ? 0 : 190)),
+                                    (auth.employee['role'] == 'customer' ? 0 : 190)),
                             child: DataTable(
                               border: TableBorder(
                                   left: BorderSide(color: Colors.black)),

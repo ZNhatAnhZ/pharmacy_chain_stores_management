@@ -25,7 +25,7 @@ class _TransactionOut extends State<TransactionOut> {
     if (isCalled == false && auth.isLoggedIn) {
       orderService
           .getAllOrder(auth.employee['access_token'],
-              auth.employee['role'] ?? 'null', '', dates)
+              auth.employee['role'], '', dates)
           .then((result) {
         setState(() {
           orders = List.from(result);
@@ -63,7 +63,7 @@ class _TransactionOut extends State<TransactionOut> {
     final scrollController = ScrollController();
     AuthBlock auth = Provider.of<AuthBlock>(context);
     getAllOrder(auth);
-    if (auth.employee['role'] != null) {
+    if (auth.employee['role'] != 'customer') {
       getAllBranch(auth);
     }
 
@@ -165,7 +165,7 @@ class _TransactionOut extends State<TransactionOut> {
                   );
                 }).toList(),
               )),
-        if (auth.employee['role'] != null)
+        if (auth.employee['role'] != 'customer')
           IconButton(
             icon: const Icon(Icons.download_sharp),
             onPressed: () {

@@ -140,7 +140,7 @@ class _InventoryDetailState extends State<InventoryDetail> {
                             ),
                           ),
                         ),
-                        if (auth.employee['role'] != null)
+                        if (auth.employee['role'] != 'customer')
                           Padding(
                               padding:
                                   const EdgeInsets.only(bottom: 25, top: 10),
@@ -181,7 +181,7 @@ class _InventoryDetailState extends State<InventoryDetail> {
                                   )
                                 ],
                               )),
-                        if (auth.employee['role'] == null)
+                        if (auth.employee['role'] == 'customer')
                           Padding(
                               padding:
                                   const EdgeInsets.only(bottom: 25, top: 10),
@@ -198,7 +198,7 @@ class _InventoryDetailState extends State<InventoryDetail> {
                                           .createOrder(
                                               auth.employee['access_token'],
                                               newOrder,
-                                              auth.employee['role'] ?? 'null')
+                                              auth.employee['role'])
                                           .then((value) => null)
                                           .catchError((err) => print(err));
                                     },

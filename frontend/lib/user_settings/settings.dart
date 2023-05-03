@@ -16,13 +16,13 @@ class _SettingsState extends State<Settings> {
   ForgotPasswordService forgotPasswordService = ForgotPasswordService();
   bool isCalled = false;
   void intializeName(AuthBlock auth) {
-    if (isCalled == false && auth.employee['role'] == null) {
+    if (isCalled == false && auth.employee['role'] == 'customer') {
       data['name'] = auth.employee['customer_name'];
       data['contact'] = auth.employee['customer_contact'];
       data['gender'] = auth.employee['customer_gender'];
       data['address'] = auth.employee['customer_address'];
       isCalled = true;
-    } else if (isCalled == false && auth.employee['role'] != null) {
+    } else if (isCalled == false && auth.employee['role'] != 'customer') {
       data['name'] = auth.employee['employee_name'];
       data['contact'] = auth.employee['employee_contact'];
       data['gender'] = auth.employee['employee_gender'];
@@ -197,20 +197,20 @@ class _SettingsState extends State<Settings> {
                             EmployeeCredential employeeCredential =
                                 EmployeeCredential(email: '', password: '');
                             employeeCredential.email =
-                                auth.employee['role'] == null
+                                auth.employee['role'] == 'customer'
                                     ? auth.employee['customer_email']
                                     : auth.employee['employee_email'];
                             employeeCredential.password = data['new_password'];
                             forgotPasswordService
                                 .updateAccountInfo(
                                   data,
-                                  auth.employee['role'] ?? 'null',
+                                  auth.employee['role'],
                                   auth.employee['employee_id'].toString(),
                                   auth.employee['access_token'],
                                 )
                                 .then((value) => {
                                       if (value &&
-                                          auth.employee['role'] != null)
+                                          auth.employee['role'] != 'customer')
                                         {
                                           auth
                                               .employeeLogin(employeeCredential)
@@ -219,7 +219,7 @@ class _SettingsState extends State<Settings> {
                                           })
                                         }
                                       else if (value &&
-                                          auth.employee['role'] == null)
+                                          auth.employee['role'] == 'customer')
                                         {
                                           auth
                                               .customerLogin(employeeCredential)
