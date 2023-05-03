@@ -139,6 +139,7 @@ Rails.application.routes.draw do
         post "/login", to: "admin_auth#create"
         resources :customers
         resources :employees
+        resources :branches
       end
     end
   end

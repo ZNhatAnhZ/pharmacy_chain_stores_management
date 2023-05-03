@@ -22,7 +22,7 @@ class Employee < ApplicationRecord
   validates :password, presence: true,
     length: {minimum: Settings.employee.password_validates.password_min_length}, if: :password, allow_nil: true
 
-  validates :branch_id, presence: true, if: :employee?
+  validates :branch_id, presence: true, if: -> { role != 'manager' }
   has_secure_password
 
   class << self
