@@ -18,10 +18,10 @@ class _AppDrawerState extends State<AppDrawer> {
             decoration: BoxDecoration(
                 image: DecorationImage(
               fit: BoxFit.cover,
-              image: AssetImage('images/drawer-header.jpg'),
+              image: AssetImage('assets/images/drawer-header.jpg'),
             )),
             currentAccountPicture: CircleAvatar(
-              backgroundImage: AssetImage('images/avatar.png'),
+              backgroundImage: AssetImage('assets/images/avatar.png'),
             ),
             accountEmail: Text(auth.employee['customer_email']),
             accountName: Text(auth.employee['customer_name']),
@@ -203,7 +203,7 @@ class _AppDrawerState extends State<AppDrawer> {
                     Navigator.pushNamed(context, '/auth_customer');
                   },
                 ),
-                              if (!auth.isLoggedIn)
+              if (!auth.isLoggedIn)
                 ListTile(
                   leading: Icon(Icons.lock,
                       color: Theme.of(context).colorScheme.secondary),

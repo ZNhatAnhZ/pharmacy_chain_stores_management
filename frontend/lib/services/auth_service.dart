@@ -23,6 +23,11 @@ class AuthService {
     inspect(response.body);
     if (response.statusCode == 200) {
       setEmployee(response.body);
+      Fluttertoast.showToast(
+          msg: "Đăng nhập thành công",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          fontSize: 16.0);
       return jsonDecode(response.body);
     } else {
       if (response.statusCode == 401) {
@@ -70,6 +75,11 @@ class AuthService {
     inspect(response.body);
     if (response.statusCode == 200) {
       setEmployee(response.body);
+      Fluttertoast.showToast(
+          msg: "Đăng nhập thành công",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          fontSize: 16.0);
       return jsonDecode(response.body);
     } else {
       if (response.statusCode == 401) {
@@ -108,7 +118,7 @@ class AuthService {
     }
   }
 
-    Future<Map> adminLogin(EmployeeCredential employeeCredential) async {
+  Future<Map> adminLogin(EmployeeCredential employeeCredential) async {
     final response =
         await http.post(Uri.http(BASE_URL, '/api/v1/admins/login'), headers: {
       "Access-Control-Allow-Origin": "*", // Required for CORS support to work
@@ -119,6 +129,11 @@ class AuthService {
     inspect(response.body);
     if (response.statusCode == 200) {
       setEmployee(response.body);
+      Fluttertoast.showToast(
+          msg: "Đăng nhập thành công",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          fontSize: 16.0);
       return jsonDecode(response.body);
     } else {
       if (response.statusCode == 401) {
