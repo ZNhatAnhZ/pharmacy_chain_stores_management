@@ -28,7 +28,7 @@ COPY pubspec.* ./
 RUN flutter clean
 RUN flutter pub get
 COPY . .
-RUN flutter build web
+RUN flutter build web --release
 
 # final image
 FROM base AS final
