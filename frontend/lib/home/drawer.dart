@@ -18,10 +18,10 @@ class _AppDrawerState extends State<AppDrawer> {
             decoration: BoxDecoration(
                 image: DecorationImage(
               fit: BoxFit.cover,
-              image: AssetImage('assets/images/drawer-header.jpg'),
+              image: NetworkImage('https://i.ibb.co/0rDBY9T/drawer-header.jpg'),
             )),
             currentAccountPicture: CircleAvatar(
-              backgroundImage: AssetImage('assets/images/avatar.png'),
+              backgroundImage: NetworkImage('https://i.ibb.co/SwfM809/avatar.png'),
             ),
             accountEmail: Text(auth.employee['customer_email']),
             accountName: Text(auth.employee['customer_name']),
@@ -31,10 +31,10 @@ class _AppDrawerState extends State<AppDrawer> {
             decoration: BoxDecoration(
                 image: DecorationImage(
               fit: BoxFit.cover,
-              image: AssetImage('images/drawer-header.jpg'),
+              image: NetworkImage('https://i.ibb.co/0rDBY9T/drawer-header.jpg'),
             )),
             currentAccountPicture: CircleAvatar(
-              backgroundImage: AssetImage('images/avatar.png'),
+              backgroundImage: NetworkImage('https://i.ibb.co/SwfM809/avatar.png'),
             ),
             accountEmail: Text(auth.employee['admin_email']),
             accountName: Text(auth.employee['admin_name']),
@@ -46,10 +46,10 @@ class _AppDrawerState extends State<AppDrawer> {
             decoration: BoxDecoration(
                 image: DecorationImage(
               fit: BoxFit.cover,
-              image: AssetImage('images/drawer-header.jpg'),
+              image: NetworkImage('https://i.ibb.co/0rDBY9T/drawer-header.jpg'),
             )),
             currentAccountPicture: CircleAvatar(
-              backgroundImage: AssetImage('images/avatar.png'),
+              backgroundImage: NetworkImage('https://i.ibb.co/SwfM809/avatar.png'),
             ),
             accountEmail: Text(auth.employee['employee_email']),
             accountName: Text(auth.employee['employee_name']),
