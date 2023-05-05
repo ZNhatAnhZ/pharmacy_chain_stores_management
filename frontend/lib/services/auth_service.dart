@@ -15,7 +15,7 @@ class AuthService {
   Future<Map> employeeLogin(EmployeeCredential employeeCredential) async {
     final response =
         await http.post(Uri.http(BASE_URL, '/api/v1/login'), headers: {
-      "Access-Control-Allow-Origin": "*", // Required for CORS support to work
+      "Access-Control-Allow-Origin": "*", 
     }, body: {
       'email': employeeCredential.email,
       'password': employeeCredential.password
