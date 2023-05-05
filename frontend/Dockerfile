@@ -31,9 +31,17 @@ COPY . .
 RUN flutter build web
 
 # final image
-FROM base AS final
-WORKDIR /app
-COPY --from=build /app/build/web ./
-EXPOSE 5000
+# FROM base AS final
+# WORKDIR /app
+# COPY --from=build /app/build/web ./
+# EXPOSE 5000
 
-CMD ["python3", "-m", "http.server", "5000"]
+# CMD ["python3", "-m", "http.server", "5000"]
+
+FROM nginx:1.23.3-alpine as runtime
+COPY --from=build /app/build/web /usr/share/nginx/html
+COPY ./nginx.conf /etc/nginx/nginx.conf
+COPY ./nginx.crt /etc/nginx/certs/nginx.crt
+COPY ./nginx.key /etc/nginx/certs/nginx.key
+EXPOSE 443 81
+CMD ["nginx", "-g", "daemon off;"]
