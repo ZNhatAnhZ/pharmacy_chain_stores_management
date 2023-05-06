@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:medical_chain_manangement/models/employee.dart';
 import 'package:medical_chain_manangement/services/auth_service.dart';
@@ -90,14 +92,21 @@ class AuthBlock extends ChangeNotifier {
     });
   }
 
-  customerRegister(Customer customer) async {
+  customerRegister(Customer customer) {
     loading = true;
     loadingType = 'register';
-    await _authService.customerRegister(customer);
-    loading = false;
+    _authService.customerRegister(customer).then((value) {
+      inspect(value);
+      loading = false;
+      if (value.isNotEmpty) {
+        _employee = value;
+        isLoggedIn = _employee.isNotEmpty;
+        notifyListeners();
+      }
+    });
   }
 
-    adminLogin(EmployeeCredential employeeCredential) async {
+  adminLogin(EmployeeCredential employeeCredential) async {
     loading = true;
     loadingType = 'login';
     _authService.adminLogin(employeeCredential).then((value) async {

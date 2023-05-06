@@ -24,6 +24,11 @@ class ForgotPasswordService {
           fontSize: 16.0);
       return true;
     } else {
+      Fluttertoast.showToast(
+          msg: "Email not exist",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          fontSize: 16.0);
       throw Exception(response.toString());
     }
   }
@@ -67,18 +72,20 @@ class ForgotPasswordService {
     } else {
       url = '/api/v1/store_owner/employees/';
     }
-    final response = await http
-        .put(Uri.http(BASE_URL, url + (role != 'employee' ? id : '')), headers: {
-      'Accept': 'application/json',
-      'Authorization': 'Bearer $token',
-    }, body: {
-      'name': data["name"],
-      'current_password': data["old_password"],
-      'password': data["new_password"],
-      'address': data["address"],
-      'contact': data["contact"],
-      'gender': data["gender"],
-    });
+    final response = await http.put(
+        Uri.http(BASE_URL, url + (role != 'employee' ? id : '')),
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: {
+          'name': data["name"],
+          'current_password': data["old_password"],
+          'password': data["new_password"],
+          'address': data["address"],
+          'contact': data["contact"],
+          'gender': data["gender"],
+        });
 
     if (response.statusCode == 200) {
       Fluttertoast.showToast(

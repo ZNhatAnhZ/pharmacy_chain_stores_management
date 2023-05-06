@@ -21,7 +21,8 @@ class _AppDrawerState extends State<AppDrawer> {
               image: NetworkImage('https://i.ibb.co/0rDBY9T/drawer-header.jpg'),
             )),
             currentAccountPicture: CircleAvatar(
-              backgroundImage: NetworkImage('https://i.ibb.co/SwfM809/avatar.png'),
+              backgroundImage:
+                  NetworkImage('https://i.ibb.co/SwfM809/avatar.png'),
             ),
             accountEmail: Text(auth.employee['customer_email']),
             accountName: Text(auth.employee['customer_name']),
@@ -34,7 +35,8 @@ class _AppDrawerState extends State<AppDrawer> {
               image: NetworkImage('https://i.ibb.co/0rDBY9T/drawer-header.jpg'),
             )),
             currentAccountPicture: CircleAvatar(
-              backgroundImage: NetworkImage('https://i.ibb.co/SwfM809/avatar.png'),
+              backgroundImage:
+                  NetworkImage('https://i.ibb.co/SwfM809/avatar.png'),
             ),
             accountEmail: Text(auth.employee['admin_email']),
             accountName: Text(auth.employee['admin_name']),
@@ -49,7 +51,8 @@ class _AppDrawerState extends State<AppDrawer> {
               image: NetworkImage('https://i.ibb.co/0rDBY9T/drawer-header.jpg'),
             )),
             currentAccountPicture: CircleAvatar(
-              backgroundImage: NetworkImage('https://i.ibb.co/SwfM809/avatar.png'),
+              backgroundImage:
+                  NetworkImage('https://i.ibb.co/SwfM809/avatar.png'),
             ),
             accountEmail: Text(auth.employee['employee_email']),
             accountName: Text(auth.employee['employee_name']),
@@ -188,30 +191,10 @@ class _AppDrawerState extends State<AppDrawer> {
                 ListTile(
                   leading: Icon(Icons.lock,
                       color: Theme.of(context).colorScheme.secondary),
-                  title: Text('Đăng nhập nhân viên'),
+                  title: Text('Đăng nhập'),
                   onTap: () {
                     Navigator.pop(context);
-                    Navigator.pushNamed(context, '/auth');
-                  },
-                ),
-              if (!auth.isLoggedIn)
-                ListTile(
-                  leading: Icon(Icons.lock,
-                      color: Theme.of(context).colorScheme.secondary),
-                  title: Text('Đăng nhập khách hàng'),
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.pushNamed(context, '/auth_customer');
-                  },
-                ),
-              if (!auth.isLoggedIn)
-                ListTile(
-                  leading: Icon(Icons.lock,
-                      color: Theme.of(context).colorScheme.secondary),
-                  title: Text('Đăng nhập quản trị viên'),
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.pushNamed(context, '/auth_admin');
+                    Navigator.pushNamed(context, '/login');
                   },
                 ),
               if (auth.isLoggedIn)
