@@ -1,0 +1,10 @@
+<h1>Đơn Hàng Của Bạn Đã Bị Từ Chối</h1>
+<p>Xin chào <%= @order.customer.name %>,</p>
+<p>Chúng tôi rất tiếc phải thông báo rằng đơn hàng của bạn với các chi tiết sau đã bị từ chối:</p>
+<ul>
+  <li><strong>Mã Đơn Hàng:</strong> <%= @order.order_code %></li>
+  <li><strong>Ngày Đặt Hàng:</strong> <%= @order.created_at %></li>
+  <li><strong>Tổng Tiền:</strong> <%= number_to_currency(@order.total_price * @order.total_quantity) %></li>
+</ul>
+<p>Đơn hàng đã được từ chối vào lúc <%= Time.zone.now %>:</p>
+<p>Chúng tôi xin lỗi vì bất kỳ sự bất tiện nào điều này có thể gây ra và hy vọng có cơ hội được phục vụ bạn trong tương lai.</p>
