@@ -4,7 +4,6 @@ import 'package:medical_chain_manangement/employee/employee_detail.dart';
 import 'package:medical_chain_manangement/employee/employee_modify.dart';
 import 'package:medical_chain_manangement/employee/employee_page.dart';
 import 'package:medical_chain_manangement/home/home_page.dart';
-import 'package:medical_chain_manangement/auth_employee/employee_auth.dart';
 import 'package:medical_chain_manangement/blocks/auth_block.dart';
 import 'package:medical_chain_manangement/inventory/add_inventory_page.dart';
 import 'package:medical_chain_manangement/inventory/inventory_detail.dart';
@@ -28,8 +27,9 @@ import 'package:medical_chain_manangement/transaction/transaction_out_detail.dar
 import 'package:medical_chain_manangement/user_settings/settings.dart';
 import 'package:provider/provider.dart';
 
-import 'auth_admin/admin_auth.dart';
-import 'auth_customer/customer_auth.dart';
+import 'auth_employee/sample_forgotPassword.dart';
+import 'auth_employee/sample_login.dart';
+import 'auth_employee/sample_signup.dart';
 import 'customer/customer_page.dart';
 import 'transaction/transaction_out.dart';
 
@@ -57,9 +57,9 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => HomePage(),
-        '/auth': (context) => EmployeeAuth(),
-        '/auth_customer': (context) => CustomerAuth(),
-        '/auth_admin': (context) => AdminAuth(),
+        '/login': (context) => LoginBodyScreen(),
+        '/signup': (context) => SignUpOne(),
+        '/forgot_password': (context) => ForgotPassword(),
         '/inventory_page': (context) => InventoryPage(),
         '/add_inventory_page': (context) => AddInventoryPage(),
         '/inventory_detail': (context) => InventoryDetail(),

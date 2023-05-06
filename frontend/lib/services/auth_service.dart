@@ -10,12 +10,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../models/customer.dart';
 
 class AuthService {
-  final storage = FlutterSecureStorage();
+  final storage = const FlutterSecureStorage();
 
   Future<Map> employeeLogin(EmployeeCredential employeeCredential) async {
     final response =
         await http.post(Uri.http(BASE_URL, '/api/v1/login'), headers: {
-      "Access-Control-Allow-Origin": "*", 
+      "Access-Control-Allow-Origin": "*",
     }, body: {
       'email': employeeCredential.email,
       'password': employeeCredential.password
@@ -99,11 +99,14 @@ class AuthService {
       'name': customer.name,
       'password': customer.password,
       'email': customer.email,
-      'address': customer.address,
-      'contact': customer.contact,
     });
     inspect(response.body);
     if (response.statusCode == 200) {
+      Fluttertoast.showToast(
+          msg: "Đăng ký thành công",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          fontSize: 16.0);
       return jsonDecode(response.body);
     } else {
       if (response.statusCode == 400) {
