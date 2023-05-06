@@ -86,12 +86,7 @@ module Api
         end
 
         def send_request_mail_to_supplier
-          quantity_left = params[:quantity_left].present? ? params[:quantity_left].to_i : 0
-          @list_inventories_mail = Inventory.get_out_of_stock(quantity_left)
-
-          @list_inventories_mail.each do |inventory|
-            inventory.send_request_email_to_supplier
-          end
+          InventoryMailer.send_request_mail_to_supplier(Branch.first, Supplier.all).deliver_now
           render json: "send mail success", status: :ok
         end
 

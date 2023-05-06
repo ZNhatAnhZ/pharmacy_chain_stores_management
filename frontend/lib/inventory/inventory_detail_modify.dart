@@ -244,8 +244,8 @@ class _InventoryDetailModifyState extends State<InventoryDetailModify> {
                       selectedItem: selectedInventoryType,
                       dropdownDecoratorProps: DropDownDecoratorProps(
                         dropdownSearchDecoration: InputDecoration(
-                          labelText: "Chọn loại thuốc",
-                          hintText: "Chọn loại thuốc",
+                          labelText: "Chọn đơn vị thuốc",
+                          hintText: "Chọn đơn vị thuốc",
                         ),
                       ),
                       onChanged: (e) {

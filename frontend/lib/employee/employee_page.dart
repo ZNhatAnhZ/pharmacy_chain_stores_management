@@ -46,7 +46,7 @@ class _EmployeePage extends State<EmployeePage> {
           .getAllBranch(auth.employee['access_token'], auth.employee['role'])
           .then((result) {
         setState(() {
-          result.add(Branch(id: -1, name: 'All branches'));
+          result.add(Branch(id: -1, name: 'Tất cả các chi nhánh'));
           branches = List.from(result);
           isCalled1 = true;
         });

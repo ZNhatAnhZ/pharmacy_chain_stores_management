@@ -106,7 +106,7 @@ class _InventoryDetailState extends State<InventoryDetail> {
                           child: TextFormField(
                             readOnly: true,
                             initialValue:
-                                "Loại thuốc: " + inventory.inventory_type!,
+                                "Đơn vị: " + inventory.inventory_type!,
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 20,

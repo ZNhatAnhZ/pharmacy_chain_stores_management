@@ -60,7 +60,7 @@ class CustomerService {
     if (response.statusCode == 200) {
       inspect(response);
       Fluttertoast.showToast(
-          msg: "Updated the customer",
+          msg: "Sửa thông tin khách hàng thành công",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           fontSize: 16.0);
@@ -87,7 +87,7 @@ class CustomerService {
 
     if (response.statusCode == 200) {
       Fluttertoast.showToast(
-          msg: "Deleted the customer",
+          msg: "Xóa khách hàng thành công",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           fontSize: 16.0);
@@ -121,7 +121,7 @@ class CustomerService {
 
     if (response.statusCode == 200) {
       Fluttertoast.showToast(
-          msg: "Created the customer",
+          msg: "Tạo tài khoản khách hàng thành công",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           fontSize: 16.0);

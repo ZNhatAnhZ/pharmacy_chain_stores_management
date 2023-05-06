@@ -45,7 +45,7 @@ class _TransactionOut extends State<TransactionOut> {
           .getAllBranch(auth.employee['access_token'], auth.employee['role'])
           .then((result) {
         setState(() {
-          result.add(Branch(id: -1, name: 'All branches'));
+          result.add(Branch(id: -1, name: 'Tất cả các chi nhánh'));
           branches = List.from(result);
           isCalled1 = true;
         });
@@ -216,7 +216,7 @@ class _TransactionOut extends State<TransactionOut> {
                             numeric: true,
                           ),
                           DataColumn(
-                            label: Text("Tên nhà sản xuất"),
+                            label: Text("Trạng thái"),
                             numeric: false,
                           ),
                           DataColumn(
@@ -269,7 +269,7 @@ class _TransactionOut extends State<TransactionOut> {
                                   ),
                                   DataCell(
                                     Text(
-                                      product.inventory!.producer!,
+                                      product.status!,
                                     ),
                                   ),
                                   DataCell(

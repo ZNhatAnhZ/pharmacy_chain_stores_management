@@ -45,7 +45,7 @@ class _InventoryPage extends State<InventoryPage> {
           .getAllBranch(auth.employee['access_token'], auth.employee['role'])
           .then((result) {
         setState(() {
-          result.add(Branch(id: -1, name: 'All branches'));
+          result.add(Branch(id: -1, name: 'Tất cả các chi nhánh'));
           branches = List.from(result);
           isCalled1 = true;
         });
@@ -285,7 +285,7 @@ class _InventoryPage extends State<InventoryPage> {
                     Container(
                       width: 160,
                       padding: EdgeInsets.all(8.0),
-                      child: Text('Lọc ordered giảm dần'),
+                      child: Text('Lọc số lần đặt giảm dần'),
                     ),
                     Container(
                       width: 160,
@@ -331,7 +331,8 @@ class _InventoryPage extends State<InventoryPage> {
                 SizedBox(
                   height: 10,
                 ),
-                if (auth.isLoggedIn && auth.employee['role'] == 'manager')
+                if (auth.isLoggedIn && (auth.employee['role'] == "manager" ||
+            auth.employee['role'] == "store_owner" || auth.employee['role'] == "employee"))
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       primary: Colors.green,
@@ -399,7 +400,7 @@ class _InventoryPage extends State<InventoryPage> {
                                   numeric: false,
                                 ),
                                 DataColumn(
-                                  label: Text("Loại thuốc"),
+                                  label: Text("Đơn vị"),
                                   numeric: false,
                                 ),
                                 DataColumn(

@@ -68,7 +68,7 @@ class ImportInventoryService {
     if (response.statusCode == 200) {
       inspect(jsonDecode(response.body));
       Fluttertoast.showToast(
-          msg: "Created a new import inventory",
+          msg: "Tạo mới đơn nhập thành công",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           fontSize: 16.0);

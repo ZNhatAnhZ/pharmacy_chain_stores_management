@@ -88,7 +88,7 @@ class EmployeeService {
     if (response.statusCode == 200) {
       inspect(response);
       Fluttertoast.showToast(
-          msg: "Updated the employee",
+          msg: "Cập nhật employee thành công",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           fontSize: 16.0);
@@ -117,7 +117,7 @@ class EmployeeService {
 
     if (response.statusCode == 200) {
       Fluttertoast.showToast(
-          msg: "Deleted the employee",
+          msg: "Xóa employee thành công",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           fontSize: 16.0);
@@ -204,7 +204,7 @@ class EmployeeService {
 
     if (response.statusCode == 200) {
       Fluttertoast.showToast(
-          msg: "Created the employee",
+          msg: "Tạo employee thành công",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           fontSize: 16.0);
