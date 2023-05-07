@@ -88,6 +88,24 @@ module Api
 
           render json: @order_by_branch, status: :ok
         end
+
+        def get_order_by_status
+          @order = Order.search_by_branch(params["branch_id"]).group(:status).count
+
+          render json: @order, status: :ok
+        end
+
+        def get_top_user_order
+          top_orders = Customer.joins(:order)
+          .select("customers.name, COUNT(orders.id) AS count")
+          .where("orders.status = ?", "complete")
+          .group("customers.id")
+          .order("count DESC")
+          .limit(10)
+          .map { |user| { user.name => user.count } }
+
+          render json: top_orders.reduce({}, :merge), status: :ok
+        end
       end
     end
   end
