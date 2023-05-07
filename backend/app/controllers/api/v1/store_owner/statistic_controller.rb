@@ -79,7 +79,25 @@ module Api
           else
             @revenue = @current_branch.import_inventory.revenue_day_chart
           end
-          render json: @revenue , status: :ok
+          render json: @revenue, status: :ok
+        end
+
+        def get_order_by_status
+          @order = Order.where(branch_id: @current_branch.id).group(:status).count
+
+          render json: @order, status: :ok
+        end
+
+        def get_top_user_order
+          top_orders = Customer.joins(:order)
+          .select("customers.name, COUNT(orders.id) AS count")
+          .where("orders.status = ? AND orders.branch_id = ?", "complete", @current_branch.id)
+          .group("customers.id")
+          .order("count DESC")
+          .limit(10)
+          .map { |user| { user.name => user.count } }
+
+          render json: top_orders.reduce({}, :merge), status: :ok
         end
       end
     end

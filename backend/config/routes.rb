@@ -27,6 +27,8 @@ Rails.application.routes.draw do
           get :header_statistic, on: :collection
           get :get_import_inventory_count, on: :collection
           get :get_revenue_import_inventory, on: :collection
+          get :get_order_by_status, on: :collection
+          get :get_top_user_order, on: :collection
         end
         resources :ledger
         resources :import_inventories
@@ -78,6 +80,8 @@ Rails.application.routes.draw do
           get :get_revenue_import_inventory, on: :collection
           get :get_total_import_inventory_price, on: :collection
           get :header_statistic, on: :collection
+          get :get_order_by_status, on: :collection
+          get :get_top_user_order, on: :collection
         end
         resources :customers
       end
