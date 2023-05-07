@@ -102,6 +102,14 @@ class InventoryService {
 
   Future<Inventory> createInventory(
       String token, Map data, Uint8List image, String role) async {
+    if (data.isEmpty || image.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "Tạo mới sản phẩm thất bại",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",
+          fontSize: 16.0);
+    }
     String url;
     if (role == 'employee') {
       url = '/api/v1/employ/inventories';
@@ -164,12 +172,26 @@ class InventoryService {
       return Inventory.fromJson(
           jsonDecode(await response.stream.bytesToString()));
     } else {
+      Fluttertoast.showToast(
+          msg: "Tạo mới sản phẩm thất bại",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",
+          fontSize: 16.0);
       throw Exception(response.toString());
     }
   }
 
   Future<Inventory> updateInventory(
       String token, Map data, Uint8List? image, String role) async {
+    if (data.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "Sửa sản phẩm thất bại",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",
+          fontSize: 16.0);
+    }
     var inventory_id = data['id'];
     String url;
     if (role == 'employee') {
@@ -217,7 +239,7 @@ class InventoryService {
       return Inventory.fromJson(
           jsonDecode(await response.stream.bytesToString()));
     } else {
-        Fluttertoast.showToast(
+      Fluttertoast.showToast(
           msg: "Sửa sản phẩm thất bại",
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.CENTER,

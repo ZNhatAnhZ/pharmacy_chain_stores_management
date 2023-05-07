@@ -128,7 +128,7 @@ class _AddInventoryPageState extends State<AddInventoryPage> {
   final _formKey = GlobalKey<FormState>();
   Map newInventory = {};
   Map newBatchInventory = {};
-  late Uint8List image_file;
+  Uint8List image_file = Uint8List.fromList(List.empty());
 
   @override
   Widget build(BuildContext context) {
