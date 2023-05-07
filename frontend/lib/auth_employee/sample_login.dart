@@ -187,6 +187,17 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
 
                                         if (auth.isLoggedIn) {
                                           Navigator.pop(context);
+                                          if (auth.employee['role'] ==
+                                              'customer') {
+                                            Navigator.pushNamed(
+                                                context, '/inventory_page');
+                                          }
+
+                                          if (auth.employee['role'] ==
+                                              'admin') {
+                                            Navigator.pushNamed(
+                                                context, '/employee_page');
+                                          }
                                         } else {
                                           switch (dropdownValue) {
                                             case 'Employee':

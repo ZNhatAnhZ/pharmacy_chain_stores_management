@@ -18,7 +18,8 @@ class ForgotPasswordService {
     if (response.statusCode == 200) {
       inspect(response);
       Fluttertoast.showToast(
-          msg: "Đã gửi mã xác nhận đến email của bạn, vui lòng kiểm tra mã xác thực trong email",
+          msg:
+              "Đã gửi mã xác nhận đến email của bạn, vui lòng kiểm tra mã xác thực trong email",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           fontSize: 16.0);
@@ -63,6 +64,15 @@ class ForgotPasswordService {
   Future<bool> updateAccountInfo(
       Map data, String role, String id, String token) async {
     inspect(data);
+    if (data.length < 6) {
+      Fluttertoast.showToast(
+          msg: "Cập nhật thông tin thất bại",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",
+          fontSize: 16.0);
+      return false;
+    }
     String url;
     if (role == 'employee') {
       url = '/api/v1/employ/employees/';

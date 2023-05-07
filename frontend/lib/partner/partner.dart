@@ -6,6 +6,8 @@ import 'package:medical_chain_manangement/models/supplier.dart';
 import 'package:medical_chain_manangement/services/supplier_service.dart';
 import 'package:provider/provider.dart';
 
+import '../home/drawer.dart';
+
 class Partner extends StatefulWidget {
   @override
   _Partner createState() => _Partner();
@@ -41,6 +43,9 @@ class _Partner extends State<Partner> {
     getAllSupplier(auth);
 
     return Scaffold(
+            drawer: Drawer(
+        child: AppDrawer(),
+      ),
       appBar: AppBar(
         title: Text("Tất cả các nhà cung cấp"),
         actions: <Widget>[

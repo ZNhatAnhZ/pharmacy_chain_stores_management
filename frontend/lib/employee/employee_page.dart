@@ -8,6 +8,8 @@ import 'package:medical_chain_manangement/services/branch_service.dart';
 import 'package:medical_chain_manangement/services/employee_service.dart';
 import 'package:provider/provider.dart';
 
+import '../home/drawer.dart';
+
 class EmployeePage extends StatefulWidget {
   @override
   _EmployeePage createState() => _EmployeePage();
@@ -65,6 +67,9 @@ class _EmployeePage extends State<EmployeePage> {
     getAllBranch(auth);
 
     return Scaffold(
+            drawer: Drawer(
+        child: AppDrawer(),
+      ),
       appBar: AppBar(title: const Text("Quản lý nhân viên"), actions: <Widget>[
         if (auth.employee["role"] == "manager")
           Padding(

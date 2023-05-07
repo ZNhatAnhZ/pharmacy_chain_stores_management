@@ -8,6 +8,8 @@ import 'package:medical_chain_manangement/services/inventory_service.dart';
 import 'package:medical_chain_manangement/services/order_service.dart';
 import 'package:provider/provider.dart';
 
+import '../home/drawer.dart';
+
 class SellingDrug extends StatefulWidget {
   @override
   _SellingDrugState createState() => _SellingDrugState();
@@ -64,6 +66,9 @@ class _SellingDrugState extends State<SellingDrug> {
     getAllCustomers(auth);
 
     return Scaffold(
+            drawer: Drawer(
+        child: AppDrawer(),
+      ),
       appBar: AppBar(
         title: const Text("Bán hàng"),
       ),
@@ -194,7 +199,10 @@ class _SellingDrugState extends State<SellingDrug> {
                             orderService
                                 .createOrder(auth.employee['access_token'],
                                     newOrder, auth.employee['role'])
-                                .then((value) => null)
+                                .then((value) {
+                                  Navigator.pushReplacementNamed(
+                                    context, '/transaction_out');
+                                })
                                 .catchError((err) => print(err));
                           },
                         )),

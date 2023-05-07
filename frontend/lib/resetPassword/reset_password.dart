@@ -53,6 +53,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 12.0),
                     child: TextFormField(
+                      obscureText: true,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Hãy nhập mật khẩu mới';

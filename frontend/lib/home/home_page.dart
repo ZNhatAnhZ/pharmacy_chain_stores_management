@@ -385,7 +385,8 @@ class _HomePage extends State<HomePage> {
           : Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: NetworkImage("https://i.ibb.co/qpNZ52M/pharmacy.jpg"),
+                  image: NetworkImage(
+                      "https://i.ibb.co/HrbG0rq/home-background.jpg"),
                   fit: BoxFit.cover,
                 ),
               ),

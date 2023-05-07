@@ -7,6 +7,8 @@ import 'package:medical_chain_manangement/blocks/auth_block.dart';
 import 'package:provider/provider.dart';
 import 'dart:developer';
 
+import '../home/drawer.dart';
+
 class InventoryPage extends StatefulWidget {
   @override
   _InventoryPage createState() => _InventoryPage();
@@ -24,8 +26,8 @@ class _InventoryPage extends State<InventoryPage> {
   void getAllInventory(AuthBlock auth) {
     if (isCalled == false && auth.isLoggedIn) {
       inventoryService
-          .getAllInventory(auth.employee['access_token'],
-              auth.employee['role'], '')
+          .getAllInventory(
+              auth.employee['access_token'], auth.employee['role'], '')
           .then((result) {
         setState(() {
           inventorys = List.from(result);
@@ -132,6 +134,9 @@ class _InventoryPage extends State<InventoryPage> {
     }
 
     return Scaffold(
+      drawer: Drawer(
+        child: AppDrawer(),
+      ),
       appBar: AppBar(
         actions: <Widget>[
           const Padding(
@@ -235,7 +240,6 @@ class _InventoryPage extends State<InventoryPage> {
         children: <Widget>[
           if (auth.isLoggedIn && auth.employee['role'] != 'customer')
             Column(
-              
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -332,8 +336,10 @@ class _InventoryPage extends State<InventoryPage> {
                 SizedBox(
                   height: 10,
                 ),
-                if (auth.isLoggedIn && (auth.employee['role'] == "manager" ||
-            auth.employee['role'] == "store_owner" || auth.employee['role'] == "employee"))
+                if (auth.isLoggedIn &&
+                    (auth.employee['role'] == "manager" ||
+                        auth.employee['role'] == "store_owner" ||
+                        auth.employee['role'] == "employee"))
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       primary: Colors.green,
@@ -370,7 +376,9 @@ class _InventoryPage extends State<InventoryPage> {
                           child: ConstrainedBox(
                             constraints: BoxConstraints(
                                 minWidth: MediaQuery.of(context).size.width -
-                                    (auth.employee['role'] == 'customer' ? 0 : 190)),
+                                    (auth.employee['role'] == 'customer'
+                                        ? 0
+                                        : 190)),
                             child: DataTable(
                               border: TableBorder(
                                   left: BorderSide(color: Colors.black)),

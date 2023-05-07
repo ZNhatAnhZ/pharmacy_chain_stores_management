@@ -7,6 +7,8 @@ import 'package:medical_chain_manangement/services/branch_service.dart';
 import 'package:medical_chain_manangement/services/import_inventory.dart';
 import 'package:provider/provider.dart';
 
+import '../home/drawer.dart';
+
 class TransactionIn extends StatefulWidget {
   @override
   _TransactionIn createState() => _TransactionIn();
@@ -65,6 +67,9 @@ class _TransactionIn extends State<TransactionIn> {
     getAllBranch(auth);
 
     return Scaffold(
+            drawer: Drawer(
+        child: AppDrawer(),
+      ),
       appBar: AppBar(actions: <Widget>[
         const Padding(
           padding: EdgeInsets.only(
