@@ -372,7 +372,7 @@ class _ImportInventoryDetailState extends State<ImportInventoryDetail> {
                           style: ElevatedButton.styleFrom(
                             primary: Theme.of(context).primaryColor,
                           ),
-                          child: Text('Tạo import inventory mới',
+                          child: Text('Tạo đơn nhập mới',
                               style: TextStyle(color: Colors.white)),
                           onPressed: () {
                             importInventoryService

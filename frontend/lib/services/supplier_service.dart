@@ -63,6 +63,14 @@ class SupplierService {
 
   Future<bool> createSupplier(String token, Map data, String role) async {
     String url;
+    if (data.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "Tạo mới nhà cung cấp thất bại",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",
+          fontSize: 16.0);
+    }
     if (role == 'employee') {
       url = '/api/v1/employ/suppliers';
     } else if (role == 'manager') {
@@ -88,6 +96,12 @@ class SupplierService {
           fontSize: 16.0);
       return true;
     } else {
+      Fluttertoast.showToast(
+          msg: "Tạo mới nhà cung cấp thất bại",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",
+          fontSize: 16.0);
       throw Exception(response.toString());
     }
   }

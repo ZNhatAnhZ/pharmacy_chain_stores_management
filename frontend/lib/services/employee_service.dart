@@ -129,6 +129,14 @@ class EmployeeService {
 
   Future<bool> createEmployee(String token, Map data, String role) async {
     String url;
+    if (data.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "Tạo mới employee thất bại",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",
+          fontSize: 16.0);
+    }
     if (role == 'employee') {
       url = '/api/v1/employ/employees';
     } else if (role == 'manager') {
@@ -210,6 +218,12 @@ class EmployeeService {
           fontSize: 16.0);
       return true;
     } else {
+      Fluttertoast.showToast(
+          msg: "Tạo mới employee thất bại",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",
+          fontSize: 16.0);
       throw Exception(response.toString());
     }
   }

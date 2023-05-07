@@ -45,6 +45,14 @@ class ImportInventoryService {
 
   Future<ImportInventory> createImportInventory(
       String token, Map data, String role) async {
+    if (data.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "Tạo mới đơn nhập thất bại",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",
+          fontSize: 16.0);
+    }
     String url;
     if (role == 'employee') {
       url = '/api/v1/employ/import_inventories';
