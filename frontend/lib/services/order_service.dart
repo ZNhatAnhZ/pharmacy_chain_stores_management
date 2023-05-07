@@ -70,12 +70,18 @@ class OrderService {
     if (response.statusCode == 200) {
       inspect(jsonDecode(response.body));
       Fluttertoast.showToast(
-          msg: "Created a new order",
+          msg: "Tạo mới đơn mua thành công",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           fontSize: 16.0);
       return Order.fromJson(jsonDecode(response.body));
     } else {
+      Fluttertoast.showToast(
+          msg: "Tạo mới đơn mua thất bại",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",
+          fontSize: 16.0);
       throw Exception(response.body);
     }
   }
@@ -116,12 +122,17 @@ class OrderService {
     if (response.statusCode == 200) {
       inspect(jsonDecode(response.body));
       Fluttertoast.showToast(
-          msg: "Completed an order",
+          msg: "Xác nhận đơn hàng thành công",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           fontSize: 16.0);
       return true;
     } else {
+      Fluttertoast.showToast(
+          msg: "Xác nhận đơn hàng thất bại",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          fontSize: 16.0);
       throw Exception(response.body);
     }
   }
@@ -145,12 +156,18 @@ class OrderService {
     if (response.statusCode == 200) {
       inspect(jsonDecode(response.body));
       Fluttertoast.showToast(
-          msg: "Rejected an order",
+          msg: "Từ chối đơn hàng thành công",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           fontSize: 16.0);
       return true;
     } else {
+      inspect(jsonDecode(response.body));
+      Fluttertoast.showToast(
+          msg: "Từ chối đơn hàng thất bại",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          fontSize: 16.0);
       throw Exception(response.body);
     }
   }
@@ -178,7 +195,7 @@ class OrderService {
     if (response.statusCode == 200) {
       inspect(jsonDecode(response.body));
       Fluttertoast.showToast(
-          msg: "Cancelled an order",
+          msg: "Hủy đơn hàng thành công",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           fontSize: 16.0);

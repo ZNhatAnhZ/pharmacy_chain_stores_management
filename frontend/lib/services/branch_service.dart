@@ -56,12 +56,17 @@ class BranchService {
 
     if (response.statusCode == 200) {
       Fluttertoast.showToast(
-          msg: "Created a new branch",
+          msg: "Tạo chi nhánh mới thành công",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           fontSize: 16.0);
       return true;
     } else {
+      Fluttertoast.showToast(
+            msg: "Tạo chi nhánh mới thất bại",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            fontSize: 16.0);
       throw Exception(response.toString());
     }
   }
@@ -92,7 +97,7 @@ class BranchService {
     if (response.statusCode == 200) {
       inspect(response);
       Fluttertoast.showToast(
-          msg: "Updated the branch",
+          msg: "Sửa chi nhánh thành công",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           fontSize: 16.0);
@@ -118,7 +123,7 @@ class BranchService {
 
     if (response.statusCode == 200) {
       Fluttertoast.showToast(
-          msg: "Deleted the branch",
+          msg: "Xóa chi nhánh thành công",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           fontSize: 16.0);

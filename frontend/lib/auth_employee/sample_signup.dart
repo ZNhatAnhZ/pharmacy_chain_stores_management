@@ -29,12 +29,15 @@ class _SignUpOneState extends State<SignUpOne> {
   @override
   Widget build(BuildContext context) {
     final AuthBlock auth = Provider.of<AuthBlock>(context);
+    final Size size = MediaQuery.of(context).size;
 
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         body: Container(
+          width: size.width,
+          height: size.height,
           decoration: BoxDecoration(
             image: DecorationImage(
               image: NetworkImage("https://i.ibb.co/qpNZ52M/pharmacy.jpg"),

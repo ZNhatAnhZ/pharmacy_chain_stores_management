@@ -23,12 +23,15 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   @override
   Widget build(BuildContext context) {
     final String email = ModalRoute.of(context)!.settings.arguments as String;
-
+    final Size size = MediaQuery.of(context).size;
+    
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         body: Container(
+          width: size.width,
+          height: size.height,
           decoration: BoxDecoration(
             image: DecorationImage(
               image: NetworkImage("https://i.ibb.co/qpNZ52M/pharmacy.jpg"),

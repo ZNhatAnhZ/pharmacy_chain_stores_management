@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
-
+import 'package:flutter/material.dart';
 import 'package:medical_chain_manangement/config.dart';
 import 'package:medical_chain_manangement/models/employee.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -32,9 +32,10 @@ class AuthService {
     } else {
       if (response.statusCode == 401) {
         Fluttertoast.showToast(
-            msg: "Invalid Credentials",
+            msg: "Tên tài khoản hoặc mật khẩu không đúng",
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.CENTER,
+            webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",
             fontSize: 16.0);
       }
       throw Exception(response.body);
@@ -54,10 +55,11 @@ class AuthService {
     } else {
       if (response.statusCode == 400) {
         Fluttertoast.showToast(
-            msg: 'Email already exist',
+            msg: 'Email đã tồn tại',
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.CENTER,
             timeInSecForIosWeb: 1,
+            webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",
             fontSize: 16.0);
       }
       throw Exception(response.body);
@@ -84,9 +86,10 @@ class AuthService {
     } else {
       if (response.statusCode == 401) {
         Fluttertoast.showToast(
-            msg: "Invalid Credentials",
+            msg: "Tên tài khoản hoặc mật khẩu không đúng",
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.CENTER,
+            webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",
             fontSize: 16.0);
       }
       throw Exception(response.body);
@@ -111,10 +114,11 @@ class AuthService {
     } else {
       if (response.statusCode == 400) {
         Fluttertoast.showToast(
-            msg: 'Email already exist',
+            msg: 'Email đã tồn tại',
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.CENTER,
             timeInSecForIosWeb: 1,
+            webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",
             fontSize: 16.0);
       }
       throw Exception(response.body);
@@ -141,9 +145,10 @@ class AuthService {
     } else {
       if (response.statusCode == 401) {
         Fluttertoast.showToast(
-            msg: "Invalid Credentials",
+            msg: "Tên tài khoản hoặc mật khẩu không đúng",
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.CENTER,
+            webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",
             fontSize: 16.0);
       }
       throw Exception(response.body);

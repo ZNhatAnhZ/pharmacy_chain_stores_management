@@ -157,7 +157,7 @@ class InventoryService {
     inspect(response);
     if (response.statusCode == 200) {
       Fluttertoast.showToast(
-          msg: "Created a new inventory",
+          msg: "Tạo mới sản phẩm thành công",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           fontSize: 16.0);
@@ -210,13 +210,19 @@ class InventoryService {
     if (response.statusCode == 200) {
       inspect(response);
       Fluttertoast.showToast(
-          msg: "Updated the inventory",
+          msg: "Sửa sản phẩm thành công",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           fontSize: 16.0);
       return Inventory.fromJson(
           jsonDecode(await response.stream.bytesToString()));
     } else {
+        Fluttertoast.showToast(
+          msg: "Sửa sản phẩm thất bại",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",
+          fontSize: 16.0);
       throw Exception(response.toString());
     }
   }
@@ -238,12 +244,18 @@ class InventoryService {
 
     if (response.statusCode == 200) {
       Fluttertoast.showToast(
-          msg: "Deleted the inventory",
+          msg: "Xóa sản phẩm thành công",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           fontSize: 16.0);
       return true;
     } else {
+      Fluttertoast.showToast(
+          msg: "Xóa sản phẩm thất bại",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",
+          fontSize: 16.0);
       throw Exception(response.body);
     }
   }
@@ -346,7 +358,7 @@ class InventoryService {
 
     if (response.statusCode == 200) {
       Fluttertoast.showToast(
-          msg: "Deleted all expired inventory",
+          msg: "Xóa tất cả các sản phẩm hết hạn thành công",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           fontSize: 16.0);
@@ -374,7 +386,7 @@ class InventoryService {
 
     if (response.statusCode == 200) {
       Fluttertoast.showToast(
-          msg: "Sent all expired inventory to suppliers",
+          msg: "Gửi email đến các nhà cung cấp thành công",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           fontSize: 16.0);

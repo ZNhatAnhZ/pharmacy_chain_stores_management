@@ -52,6 +52,7 @@ module Api
 
           if @order.update status: "complete"
             reduce_inventory_quantity
+            OrderMailer.order_complete(@order).deliver_now
             render json: @order.as_json, status: :ok
           else
             render json: { error: @order.errors }, status: :bad_request
@@ -63,6 +64,7 @@ module Api
           return render json: {message: "cannot rejected order has been canceled"}, status: :bad_request if @order.canceled?
 
           if @order.update status: "rejected"
+            OrderMailer.order_rejected(@order).deliver_now
             render json: @order.as_json, status: :ok
           else
             render json: { error: @order.errors }, status: :bad_request

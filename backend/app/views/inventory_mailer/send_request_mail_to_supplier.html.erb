@@ -1,5 +1,12 @@
-<h1>Hello <%= @supplier.name%></h1>
-<h1>We are <%= @branch.name%></h1>
-<h1>Our product name is <%= @inventory.name%> and product code is <%= @inventory.inventory_code %> has been out of stock</h1>
-<h1>So we very need you supply more product to our branch</h1>
-<h1>Thank kiu so much!</h1>
+<h1>Yêu cầu cung cấp sản phẩm cho <%= @branch.name %></h1>
+<p>Kính gửi <%= @supplier.name %>,</p>
+<p>Chúng tôi xin thông báo rằng các mặt hàng sau đây của chi nhánh <%= @branch.name %> hiện đang hết hàng và cần được cập nhật::</p>
+<ul>
+  <% @zero_quantity_inventory.each do |inventory| %>
+    <li>Tên sản phẩm: <%= inventory.name %>, Mã sản phẩm: <%= inventory.inventory_code %></li>
+  <% end %>
+</ul>
+<p>Chúng tôi trân trọng yêu cầu nhà cung cấp cung cấp cho chúng tôi số lượng kho cần thiết trong thời gian sớm nhất.</p>
+<p>Nếu có bất kỳ thắc mắc nào, xin đừng ngần ngại liên hệ với chúng tôi.</p>
+<p>Trân trọng,</p>
+<p><%= @branch.email %></p>

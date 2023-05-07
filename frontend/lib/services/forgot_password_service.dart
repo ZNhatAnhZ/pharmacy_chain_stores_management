@@ -1,5 +1,5 @@
 import 'dart:developer';
-
+import 'package:flutter/material.dart';
 import 'package:medical_chain_manangement/config.dart';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
@@ -18,7 +18,7 @@ class ForgotPasswordService {
     if (response.statusCode == 200) {
       inspect(response);
       Fluttertoast.showToast(
-          msg: "Sent reset password token to this email",
+          msg: "Đã gửi mã xác nhận đến email của bạn, vui lòng kiểm tra mã xác thực trong email",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           fontSize: 16.0);
@@ -49,7 +49,7 @@ class ForgotPasswordService {
     if (response.statusCode == 200) {
       inspect(response);
       Fluttertoast.showToast(
-          msg: "Password reset successfully",
+          msg: "Thay đổi mật khẩu thành công",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           fontSize: 16.0);
@@ -89,16 +89,17 @@ class ForgotPasswordService {
 
     if (response.statusCode == 200) {
       Fluttertoast.showToast(
-          msg: "Updated account info successfully",
+          msg: "Cập nhật thông tin thành công",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           fontSize: 16.0);
       return true;
     } else {
       Fluttertoast.showToast(
-          msg: "Updated account info failed",
+          msg: "Cập nhật thông tin thất bại",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
+          webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",
           fontSize: 16.0);
       inspect(response);
       return false;

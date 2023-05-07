@@ -54,7 +54,7 @@ class BatchInventoryService {
     if (response.statusCode == 200) {
       inspect(jsonDecode(response.body));
       Fluttertoast.showToast(
-          msg: "Created a new batch",
+          msg: "Tạo chi nhánh mới thành công",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           fontSize: 16.0);

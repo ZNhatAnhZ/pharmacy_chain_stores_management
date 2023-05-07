@@ -162,8 +162,10 @@ class _AppDrawerState extends State<AppDrawer> {
                   },
                 ),
               if (auth.isLoggedIn &&
-                  (auth.employee['role'] != 'employee' ||
-                      auth.employee['role'] != 'customer'))
+                  (auth.employee['role'] == 'manager' ||
+                      auth.employee['role'] == 'store_owner' ||
+                      auth.employee['role'] == 'admin')
+                    )
                 ListTile(
                   leading: Icon(Icons.emoji_people,
                       color: Theme.of(context).colorScheme.secondary),
@@ -174,8 +176,7 @@ class _AppDrawerState extends State<AppDrawer> {
                   },
                 ),
               if (auth.isLoggedIn &&
-                  (auth.employee['role'] == 'manager' ||
-                      auth.employee['role'] == 'admin'))
+                  (auth.employee['role'] != 'customer'))
                 ListTile(
                   leading: Icon(Icons.accessibility_new_sharp,
                       color: Theme.of(context).colorScheme.secondary),

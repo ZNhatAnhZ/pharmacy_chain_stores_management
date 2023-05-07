@@ -82,7 +82,7 @@ class SupplierService {
 
     if (response.statusCode == 200) {
       Fluttertoast.showToast(
-          msg: "Created a new supplier",
+          msg: "Tạo mới nhà cung cấp thành công",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           fontSize: 16.0);
@@ -117,7 +117,7 @@ class SupplierService {
     if (response.statusCode == 200) {
       inspect(response);
       Fluttertoast.showToast(
-          msg: "Updated the supplier",
+          msg: "Sửa nhà cung cấp thành công",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           fontSize: 16.0);
@@ -143,7 +143,7 @@ class SupplierService {
 
     if (response.statusCode == 200) {
       Fluttertoast.showToast(
-          msg: "Deleted the supplier",
+          msg: "Xóa nhà cung cấp thành công",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           fontSize: 16.0);
