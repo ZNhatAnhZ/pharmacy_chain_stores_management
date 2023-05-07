@@ -5,6 +5,7 @@ import 'package:medical_chain_manangement/services/inventory_service.dart';
 import 'package:provider/provider.dart';
 
 import '../services/order_service.dart';
+import 'number_input.dart';
 
 class InventoryDetail extends StatefulWidget {
   @override
@@ -14,6 +15,7 @@ class InventoryDetail extends StatefulWidget {
 class _InventoryDetailState extends State<InventoryDetail> {
   InventoryService inventoryService = InventoryService();
   OrderService orderService = OrderService();
+  TextEditingController quantityController = TextEditingController();
   Map newOrder = {};
 
   @override
@@ -183,56 +185,58 @@ class _InventoryDetailState extends State<InventoryDetail> {
                               )),
                         if (auth.employee['role'] == 'customer')
                           Padding(
-                              padding:
-                                  const EdgeInsets.only(bottom: 25, top: 10),
+                              padding: const EdgeInsets.only(bottom: 25),
                               child: Row(
                                 children: [
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      primary: Colors.green,
-                                    ),
-                                    child: Text('Mua thuốc',
-                                        style: TextStyle(color: Colors.white)),
-                                    onPressed: () {
-                                      orderService
-                                          .createOrder(
-                                              auth.employee['access_token'],
-                                              newOrder,
-                                              auth.employee['role'])
-                                          .then((value) => null)
-                                          .catchError((err) => print(err));
-                                    },
-                                  ),
                                   SizedBox(
-                                    width: 10,
-                                  ),
-                                  Expanded(
-                                    child: TextFormField(
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w600,
+                                    height: 50,
+                                    width: 160,
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        primary: Colors.green,
                                       ),
-                                      onChanged: (value) {
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(Icons.shopping_bag_rounded),
+                                          Text('Mua thuốc',
+                                              style: TextStyle(
+                                                  color: Colors.white)),
+                                        ],
+                                      ),
+                                      onPressed: () {
                                         setState(() {
                                           newOrder['inventory_id'] =
                                               inventory.id.toString();
                                           newOrder['customer_id'] = auth
                                               .employee['customer_id']
                                               .toString();
-                                          newOrder['total_quantity'] = value;
-                                          newOrder['total_price'] =
-                                              (int.parse(value) *
-                                                      inventory.price!)
-                                                  .toString();
-
-                                          print(value);
+                                          newOrder['total_quantity'] =
+                                              quantityController.text;
+                                          newOrder['total_price'] = (int.parse(
+                                                      quantityController.text) *
+                                                  inventory.price!)
+                                              .toString();
                                         });
+
+                                        orderService
+                                            .createOrder(
+                                                auth.employee['access_token'],
+                                                newOrder,
+                                                auth.employee['role'])
+                                            .then((value) {
+                                          quantityController.text = '';
+                                        }).catchError((err) => print(err));
                                       },
-                                      decoration: InputDecoration(
-                                        hintText: 'Hãy nhập số lượng',
-                                        labelText: 'Hãy nhập số lượng',
-                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 80,
+                                  ),
+                                  Expanded(
+                                    child: NumberTextField(
+                                      controller: quantityController,
                                     ),
                                   ),
                                 ],
