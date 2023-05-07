@@ -6,6 +6,8 @@ import 'package:medical_chain_manangement/models/branch.dart';
 import 'package:medical_chain_manangement/services/branch_service.dart';
 import 'package:provider/provider.dart';
 
+import '../home/drawer.dart';
+
 class Store extends StatefulWidget {
   @override
   _Store createState() => _Store();
@@ -38,6 +40,9 @@ class _Store extends State<Store> {
     getAllBranches(auth);
 
     return Scaffold(
+            drawer: Drawer(
+        child: AppDrawer(),
+      ),
       appBar: AppBar(
         title: Text("Tất cả các chi nhánh"),
         actions: <Widget>[

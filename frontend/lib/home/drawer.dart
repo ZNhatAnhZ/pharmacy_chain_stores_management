@@ -61,7 +61,9 @@ class _AppDrawerState extends State<AppDrawer> {
           child: ListView(
             shrinkWrap: true,
             children: <Widget>[
-              if (auth.isLoggedIn)
+              if (auth.isLoggedIn &&
+                  (auth.employee['role'] != 'customer' &&
+                      auth.employee['role'] != 'admin'))
                 ListTile(
                   leading: Icon(Icons.home,
                       color: Theme.of(context).colorScheme.secondary),
@@ -165,8 +167,7 @@ class _AppDrawerState extends State<AppDrawer> {
               if (auth.isLoggedIn &&
                   (auth.employee['role'] == 'manager' ||
                       auth.employee['role'] == 'store_owner' ||
-                      auth.employee['role'] == 'admin')
-                    )
+                      auth.employee['role'] == 'admin'))
                 ListTile(
                   leading: Icon(Icons.emoji_people,
                       color: Theme.of(context).colorScheme.secondary),
@@ -176,8 +177,7 @@ class _AppDrawerState extends State<AppDrawer> {
                     Navigator.pushNamed(context, '/employee_page');
                   },
                 ),
-              if (auth.isLoggedIn &&
-                  (auth.employee['role'] != 'customer'))
+              if (auth.isLoggedIn && (auth.employee['role'] != 'customer'))
                 ListTile(
                   leading: Icon(Icons.accessibility_new_sharp,
                       color: Theme.of(context).colorScheme.secondary),

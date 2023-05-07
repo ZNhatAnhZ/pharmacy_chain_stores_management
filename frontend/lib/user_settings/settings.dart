@@ -7,6 +7,8 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:medical_chain_manangement/services/forgot_password_service.dart';
 import 'package:provider/provider.dart';
 
+import '../home/drawer.dart';
+
 class Settings extends StatefulWidget {
   @override
   _SettingsState createState() => _SettingsState();
@@ -39,6 +41,9 @@ class _SettingsState extends State<Settings> {
     intializeName(auth);
 
     return Scaffold(
+      drawer: Drawer(
+        child: AppDrawer(),
+      ),
       appBar: AppBar(
         title: const Text("Sửa thông tin tài khoản"),
       ),

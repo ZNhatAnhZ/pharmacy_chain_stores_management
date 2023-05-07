@@ -9,6 +9,8 @@ import 'package:medical_chain_manangement/services/branch_service.dart';
 import 'package:medical_chain_manangement/services/ledger_service.dart';
 import 'package:provider/provider.dart';
 
+import '../home/drawer.dart';
+
 class LedgerPage extends StatefulWidget {
   @override
   _LedgerPage createState() => _LedgerPage();
@@ -67,6 +69,9 @@ class _LedgerPage extends State<LedgerPage> {
     getAllBranch(auth);
 
     return Scaffold(
+            drawer: Drawer(
+        child: AppDrawer(),
+      ),
       appBar: AppBar(
         actions: [
           const Padding(

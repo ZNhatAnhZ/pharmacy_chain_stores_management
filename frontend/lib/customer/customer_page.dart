@@ -6,6 +6,8 @@ import 'package:medical_chain_manangement/models/customer.dart';
 import 'package:medical_chain_manangement/services/customer_service.dart';
 import 'package:provider/provider.dart';
 
+import '../home/drawer.dart';
+
 class CustomerPage extends StatefulWidget {
   @override
   _CustomerPage createState() => _CustomerPage();
@@ -38,6 +40,9 @@ class _CustomerPage extends State<CustomerPage> {
     getAllCustomers(auth);
 
     return Scaffold(
+            drawer: Drawer(
+        child: AppDrawer(),
+      ),
       appBar: AppBar(
         title: Text("Tất cả các khách hàng"),
       ),

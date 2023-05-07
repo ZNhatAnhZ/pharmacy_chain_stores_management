@@ -7,6 +7,8 @@ import 'package:medical_chain_manangement/services/branch_service.dart';
 import 'package:medical_chain_manangement/services/order_service.dart';
 import 'package:provider/provider.dart';
 
+import '../home/drawer.dart';
+
 class TransactionOut extends StatefulWidget {
   @override
   _TransactionOut createState() => _TransactionOut();
@@ -68,6 +70,9 @@ class _TransactionOut extends State<TransactionOut> {
     }
 
     return Scaffold(
+            drawer: Drawer(
+        child: AppDrawer(),
+      ),
       appBar: AppBar(actions: <Widget>[
         const Padding(
           padding: EdgeInsets.only(

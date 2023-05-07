@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/material.dart';
 import 'package:medical_chain_manangement/blocks/auth_block.dart';
 import 'package:medical_chain_manangement/models/batch_inventory.dart';
@@ -31,6 +32,7 @@ class _AddInventoryPageState extends State<AddInventoryPage> {
   ImportInventoryService importInventoryService = ImportInventoryService();
   CategoryService categoryService = CategoryService();
   BranchService branchService = BranchService();
+    TextEditingController batch_date = TextEditingController();
 
   List<Inventory> inventorys = List.empty();
   List<BatchInventory> batchInventory = List.empty();
@@ -328,11 +330,39 @@ class _AddInventoryPageState extends State<AddInventoryPage> {
                                             left: 12.0,
                                             right: 12.0),
                                         child: TextFormField(
+                                          controller: batch_date,
                                           validator: (value) {
                                             if (value!.isEmpty) {
                                               return 'Hãy nhập ngày hết hạn';
                                             }
                                             return null;
+                                          },
+                                                                                    onTap: () async {
+                                            final values =
+                                                await showCalendarDatePicker2Dialog(
+                                              context: context,
+                                              config:
+                                                  CalendarDatePicker2WithActionButtonsConfig(
+                                                calendarType:
+                                                    CalendarDatePicker2Type
+                                                        .single,
+                                              ),
+                                              dialogSize: const Size(325, 400),
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                              dialogBackgroundColor:
+                                                  Colors.white,
+                                            );
+
+                                            print(values);
+                                            if (values != null) {
+                                              batch_date.text = values
+                                                  .toString()
+                                                  .substring(1, 11);
+                                              newBatchInventory[
+                                                      "expired_date"] =
+                                                  batch_date.text;
+                                            }
                                           },
                                           onChanged: (value) {
                                             setState(() {
