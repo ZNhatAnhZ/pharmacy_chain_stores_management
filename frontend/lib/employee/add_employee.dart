@@ -259,7 +259,7 @@ class _AddEmployeeState extends State<AddEmployee> {
                           style: ElevatedButton.styleFrom(
                             primary: Theme.of(context).primaryColor,
                           ),
-                          child: Text('Submit',
+                          child: Text('Xác nhận',
                               style: TextStyle(color: Colors.white)),
                           onPressed: () {
                             employeeService

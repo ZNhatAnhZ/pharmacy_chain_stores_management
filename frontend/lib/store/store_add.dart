@@ -138,7 +138,7 @@ class _AddStoreState extends State<AddStore> {
                           style: ElevatedButton.styleFrom(
                             primary: Theme.of(context).primaryColor,
                           ),
-                          child: Text('Submit',
+                          child: Text('Thêm chi nhánh',
                               style: TextStyle(color: Colors.white)),
                           onPressed: () {
                             branchService

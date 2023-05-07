@@ -80,7 +80,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                           style: ElevatedButton.styleFrom(
                             primary: Theme.of(context).primaryColor,
                           ),
-                          child: Text('Submit',
+                          child: Text('Xác nhận',
                               style: TextStyle(color: Colors.white)),
                           onPressed: () {
                             forgotPasswordService

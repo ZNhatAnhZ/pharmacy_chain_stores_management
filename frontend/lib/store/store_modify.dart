@@ -162,7 +162,7 @@ class _StoreModifyState extends State<StoreModify> {
                           style: ElevatedButton.styleFrom(
                             primary: Theme.of(context).primaryColor,
                           ),
-                          child: Text('Submit',
+                          child: Text('Sửa chi nhánh',
                               style: TextStyle(color: Colors.white)),
                           onPressed: () {
                             branchService

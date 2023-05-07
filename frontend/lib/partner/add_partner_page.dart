@@ -123,7 +123,7 @@ class _AddPartnerState extends State<AddPartner> {
                           style: ElevatedButton.styleFrom(
                             primary: Theme.of(context).primaryColor,
                           ),
-                          child: Text('Submit',
+                          child: Text('Thêm nhà cung cấp',
                               style: TextStyle(color: Colors.white)),
                           onPressed: () {
                             supplierService

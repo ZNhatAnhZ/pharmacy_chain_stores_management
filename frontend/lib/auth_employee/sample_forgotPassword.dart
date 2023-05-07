@@ -133,7 +133,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                             .then((value) =>
                                                 {Navigator.pop(context)}).catchError((err) => print(err));
                                       },
-                                      buttonText: 'Submit',
+                                      buttonText: 'Xác nhận',
                                     ),
                                   ],
                                 ),

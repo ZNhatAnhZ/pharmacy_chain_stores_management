@@ -1,9 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:medical_chain_manangement/blocks/auth_block.dart';
 import 'package:medical_chain_manangement/models/inventory.dart';
 import 'package:medical_chain_manangement/services/inventory_service.dart';
 import 'package:provider/provider.dart';
-
+import 'package:fluttertoast/fluttertoast.dart';
 import '../services/order_service.dart';
 import 'number_input.dart';
 
@@ -21,6 +23,7 @@ class _InventoryDetailState extends State<InventoryDetail> {
   @override
   Widget build(BuildContext context) {
     AuthBlock auth = Provider.of<AuthBlock>(context);
+    quantityController.text = '1';
     final Inventory inventory =
         ModalRoute.of(context)!.settings.arguments as Inventory;
     return Scaffold(
@@ -226,9 +229,9 @@ class _InventoryDetailState extends State<InventoryDetail> {
                                                 newOrder,
                                                 auth.employee['role'])
                                             .then((value) {
-                                          quantityController.text = '';
+                                          quantityController.text = '1';
                                         }).catchError((err) => print(err));
-                                      },
+                                        }
                                     ),
                                   ),
                                   SizedBox(

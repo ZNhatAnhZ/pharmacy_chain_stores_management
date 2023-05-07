@@ -199,7 +199,7 @@ class _SettingsState extends State<Settings> {
                           style: ElevatedButton.styleFrom(
                             primary: Theme.of(context).primaryColor,
                           ),
-                          child: Text('Submit',
+                          child: Text('Xác nhận',
                               style: TextStyle(color: Colors.white)),
                           onPressed: () {
                             if (data.length < 6) {

@@ -145,7 +145,7 @@ class _PartnerModifyState extends State<PartnerModify> {
                           style: ElevatedButton.styleFrom(
                             primary: Theme.of(context).primaryColor,
                           ),
-                          child: Text('Submit',
+                          child: Text('Sửa nhà cung cấp',
                               style: TextStyle(color: Colors.white)),
                           onPressed: () {
                             supplierService
