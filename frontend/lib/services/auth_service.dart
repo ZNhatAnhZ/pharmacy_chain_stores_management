@@ -112,15 +112,13 @@ class AuthService {
           fontSize: 16.0);
       return jsonDecode(response.body);
     } else {
-      if (response.statusCode == 400) {
-        Fluttertoast.showToast(
-            msg: 'Email đã tồn tại',
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1,
-            webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",
-            fontSize: 16.0);
-      }
+      Fluttertoast.showToast(
+          msg: 'Đăng ký thất bại',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",
+          fontSize: 16.0);
       throw Exception(response.body);
     }
   }

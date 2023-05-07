@@ -81,7 +81,7 @@ module Api
 
           @arr_result = arr_order + arr_import_inventory
 
-          header = ["form_code", "created_date", "type", "value"]
+          header = ["Mã giao dịch", "Ngày tạo", "Loại giao dịch", "Tổng tiền"]
           result = CSV.generate do |csv|
             csv << header
             @arr_result.each do |record|

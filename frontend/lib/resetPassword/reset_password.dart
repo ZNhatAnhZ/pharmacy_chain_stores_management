@@ -85,7 +85,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                             forgotPasswordService
                                 .resetPassword(
                                     email, forgotPasswordToken, password)
-                                .then((value) => {Navigator.pop(context)});
+                                .then((value) => {Navigator.pop(context)}).catchError((err) => print(err));;
                           },
                         )),
                   ),

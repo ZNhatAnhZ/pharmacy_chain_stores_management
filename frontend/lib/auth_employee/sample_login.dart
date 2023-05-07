@@ -266,7 +266,7 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
                                                             emailController
                                                                 .text);
                                                   }
-                                                });
+                                                }).catchError((err) => print(err));
                                               }),
                                         ],
                                       ),

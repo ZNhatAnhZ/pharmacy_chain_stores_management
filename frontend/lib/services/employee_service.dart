@@ -46,11 +46,11 @@ class EmployeeService {
   void exportEmployeeCSV(String token, String role, String branch_id) async {
     String url;
     if (role == 'employee') {
-      url = '/api/v1/employ/export_csv/export_inventory';
+      url = '/api/v1/employ/export_csv/export_employee';
     } else if (role == 'manager') {
-      url = '/api/v1/manager/export_csv/export_inventory';
+      url = '/api/v1/manager/export_csv/export_employee';
     } else {
-      url = '/api/v1/store_owner/export_csv/export_inventory';
+      url = '/api/v1/store_owner/export_csv/export_employee';
     }
     if (branch_id == '-1') {
       branch_id = '';

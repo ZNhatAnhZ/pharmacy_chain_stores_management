@@ -24,7 +24,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   Widget build(BuildContext context) {
     final String email = ModalRoute.of(context)!.settings.arguments as String;
     final Size size = MediaQuery.of(context).size;
-    
+
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -131,7 +131,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                                 codeController.text,
                                                 passwordController.text)
                                             .then((value) =>
-                                                {Navigator.pop(context)});
+                                                {Navigator.pop(context)}).catchError((err) => print(err));
                                       },
                                       buttonText: 'Submit',
                                     ),

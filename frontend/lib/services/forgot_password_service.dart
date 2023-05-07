@@ -25,9 +25,10 @@ class ForgotPasswordService {
       return true;
     } else {
       Fluttertoast.showToast(
-          msg: "Email not exist",
+          msg: "Vui lòng nhập đúng email",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
+          webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",
           fontSize: 16.0);
       throw Exception(response.toString());
     }
