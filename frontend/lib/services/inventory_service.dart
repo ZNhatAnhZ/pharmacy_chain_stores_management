@@ -217,6 +217,12 @@ class InventoryService {
       return Inventory.fromJson(
           jsonDecode(await response.stream.bytesToString()));
     } else {
+        Fluttertoast.showToast(
+          msg: "Sửa sản phẩm thất bại",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",
+          fontSize: 16.0);
       throw Exception(response.toString());
     }
   }
@@ -244,6 +250,12 @@ class InventoryService {
           fontSize: 16.0);
       return true;
     } else {
+      Fluttertoast.showToast(
+          msg: "Xóa sản phẩm thất bại",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",
+          fontSize: 16.0);
       throw Exception(response.body);
     }
   }

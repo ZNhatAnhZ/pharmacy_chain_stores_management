@@ -74,6 +74,12 @@ class ImportInventoryService {
           fontSize: 16.0);
       return ImportInventory.fromJson(jsonDecode(response.body));
     } else {
+      Fluttertoast.showToast(
+          msg: "Tạo mới đơn nhập thất bại",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",
+          fontSize: 16.0);
       throw Exception(response.body);
     }
   }

@@ -345,7 +345,7 @@ class _TransactionOutDetailState extends State<TransactionOutDetail> {
                                     style: ElevatedButton.styleFrom(
                                       primary: Colors.red,
                                     ),
-                                    child: Text('Từ chối đơn hàng',
+                                    child: Text('Hủy đơn hàng',
                                         style: TextStyle(color: Colors.white)),
                                     onPressed: () {
                                       orderService

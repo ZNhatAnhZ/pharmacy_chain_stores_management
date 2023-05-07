@@ -35,7 +35,7 @@ class AuthService {
             msg: "Tên tài khoản hoặc mật khẩu không đúng",
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.CENTER,
-            backgroundColor: Colors.red,
+            webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",
             fontSize: 16.0);
       }
       throw Exception(response.body);
@@ -59,7 +59,7 @@ class AuthService {
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.CENTER,
             timeInSecForIosWeb: 1,
-            backgroundColor: Colors.red,
+            webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",
             fontSize: 16.0);
       }
       throw Exception(response.body);
@@ -89,7 +89,7 @@ class AuthService {
             msg: "Tên tài khoản hoặc mật khẩu không đúng",
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.CENTER,
-            backgroundColor: Colors.red,
+            webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",
             fontSize: 16.0);
       }
       throw Exception(response.body);
@@ -118,7 +118,7 @@ class AuthService {
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.CENTER,
             timeInSecForIosWeb: 1,
-            backgroundColor: Colors.red,
+            webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",
             fontSize: 16.0);
       }
       throw Exception(response.body);
@@ -148,7 +148,7 @@ class AuthService {
             msg: "Tên tài khoản hoặc mật khẩu không đúng",
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.CENTER,
-            backgroundColor: Colors.red,
+            webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",
             fontSize: 16.0);
       }
       throw Exception(response.body);

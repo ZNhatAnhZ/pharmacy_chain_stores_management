@@ -99,7 +99,7 @@ class ForgotPasswordService {
           msg: "Cập nhật thông tin thất bại",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
-          backgroundColor: Colors.red,
+          webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",
           fontSize: 16.0);
       inspect(response);
       return false;
