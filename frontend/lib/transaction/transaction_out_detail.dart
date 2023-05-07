@@ -287,7 +287,8 @@ class _TransactionOutDetailState extends State<TransactionOutDetail> {
                             ),
                           ),
                         ),
-                        if (auth.employee['role'] != 'customer')
+                        if (auth.employee['role'] != 'customer' &&
+                            order.status == 'pending')
                           Padding(
                               padding:
                                   const EdgeInsets.only(bottom: 25, top: 10),

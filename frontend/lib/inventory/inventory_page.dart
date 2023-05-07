@@ -235,6 +235,7 @@ class _InventoryPage extends State<InventoryPage> {
         children: <Widget>[
           if (auth.isLoggedIn && auth.employee['role'] != 'customer')
             Column(
+              
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

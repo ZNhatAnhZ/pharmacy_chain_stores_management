@@ -68,6 +68,7 @@ class _AppDrawerState extends State<AppDrawer> {
                   title: Text('Tổng quan'),
                   onTap: () {
                     Navigator.pop(context);
+                    Navigator.pushNamed(context, '/');
                   },
                 ),
               if (auth.isLoggedIn && (auth.employee['role'] != 'admin'))
@@ -184,6 +185,18 @@ class _AppDrawerState extends State<AppDrawer> {
                   onTap: () {
                     Navigator.pop(context);
                     Navigator.pushNamed(context, '/customer_page');
+                  },
+                ),
+              if (auth.isLoggedIn &&
+                  (auth.employee['role'] == 'manager' ||
+                      auth.employee['role'] == 'store_owner'))
+                ListTile(
+                  leading: Icon(Icons.pie_chart,
+                      color: Theme.of(context).colorScheme.secondary),
+                  title: Text('Biểu đồ'),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.pushNamed(context, '/chart_page');
                   },
                 ),
               Divider(),

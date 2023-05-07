@@ -30,6 +30,7 @@ import 'package:provider/provider.dart';
 import 'auth_employee/sample_forgotPassword.dart';
 import 'auth_employee/sample_login.dart';
 import 'auth_employee/sample_signup.dart';
+import 'charts/charts_page.dart';
 import 'customer/customer_page.dart';
 import 'transaction/transaction_out.dart';
 
@@ -54,7 +55,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: '/',
+      initialRoute: '/login',
       routes: {
         '/': (context) => HomePage(),
         '/login': (context) => LoginBodyScreen(),
@@ -86,6 +87,7 @@ class MyApp extends StatelessWidget {
         '/employee_add': (context) => AddEmployee(),
         '/reset_password': (context) => ResetPassword(),
         '/customer_page': (context) => CustomerPage(),
+        '/chart_page': (context) => ChartPage(),
       },
     );
   }
