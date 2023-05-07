@@ -199,7 +199,10 @@ class _SellingDrugState extends State<SellingDrug> {
                             orderService
                                 .createOrder(auth.employee['access_token'],
                                     newOrder, auth.employee['role'])
-                                .then((value) => null)
+                                .then((value) {
+                                  Navigator.pushReplacementNamed(
+                                    context, '/transaction_out');
+                                })
                                 .catchError((err) => print(err));
                           },
                         )),

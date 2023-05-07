@@ -32,7 +32,7 @@ class _AddInventoryPageState extends State<AddInventoryPage> {
   ImportInventoryService importInventoryService = ImportInventoryService();
   CategoryService categoryService = CategoryService();
   BranchService branchService = BranchService();
-    TextEditingController batch_date = TextEditingController();
+  TextEditingController batch_date = TextEditingController();
 
   List<Inventory> inventorys = List.empty();
   List<BatchInventory> batchInventory = List.empty();
@@ -63,7 +63,7 @@ class _AddInventoryPageState extends State<AddInventoryPage> {
   }
 
   void getAllBatchInventory(AuthBlock auth) {
-    if (isCalled == false && auth.isLoggedIn) {
+    if (isCalled1 == false && auth.isLoggedIn) {
       batchInventoryService
           .getAllBatchInventory(
               auth.employee['access_token'], auth.employee['role'])
@@ -79,7 +79,7 @@ class _AddInventoryPageState extends State<AddInventoryPage> {
   }
 
   void getAllSupplier(AuthBlock auth) {
-    if (isCalled == false && auth.isLoggedIn) {
+    if (isCalled2 == false && auth.isLoggedIn) {
       supplierService
           .getAllSupplier(auth.employee['access_token'], auth.employee['role'])
           .then((result) {
@@ -94,7 +94,7 @@ class _AddInventoryPageState extends State<AddInventoryPage> {
   }
 
   void getAllCategory(AuthBlock auth) {
-    if (isCalled == false && auth.isLoggedIn) {
+    if (isCalled3 == false && auth.isLoggedIn) {
       categoryService
           .getAllCategory(auth.employee['access_token'], auth.employee['role'])
           .then((result) {
@@ -109,7 +109,9 @@ class _AddInventoryPageState extends State<AddInventoryPage> {
   }
 
   void getAllBranch(AuthBlock auth) {
-    if (isCalled4 == false && auth.isLoggedIn && auth.employee['role'] == "manager") {
+    if (isCalled4 == false &&
+        auth.isLoggedIn &&
+        auth.employee['role'] == "manager") {
       branchService
           .getAllBranch(auth.employee['access_token'], auth.employee['role'])
           .then((result) {
@@ -337,7 +339,7 @@ class _AddInventoryPageState extends State<AddInventoryPage> {
                                             }
                                             return null;
                                           },
-                                                                                    onTap: () async {
+                                          onTap: () async {
                                             final values =
                                                 await showCalendarDatePicker2Dialog(
                                               context: context,

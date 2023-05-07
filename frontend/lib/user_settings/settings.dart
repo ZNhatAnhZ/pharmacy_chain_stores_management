@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:medical_chain_manangement/blocks/auth_block.dart';
 import 'package:medical_chain_manangement/models/employee.dart';
 import 'package:dropdown_search/dropdown_search.dart';
@@ -59,6 +60,7 @@ class _SettingsState extends State<Settings> {
                     padding: const EdgeInsets.only(bottom: 12.0),
                     child: TextFormField(
                       // initialValue: employee.email,
+                      obscureText: true,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Hãy nhập mật khẩu cũ';
@@ -101,6 +103,7 @@ class _SettingsState extends State<Settings> {
                     padding: const EdgeInsets.only(bottom: 12.0),
                     child: TextFormField(
                       // initialValue: employee.email,
+                      obscureText: true,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Hãy nhập mật khẩu mới';
@@ -199,40 +202,55 @@ class _SettingsState extends State<Settings> {
                           child: Text('Submit',
                               style: TextStyle(color: Colors.white)),
                           onPressed: () {
-                            EmployeeCredential employeeCredential =
-                                EmployeeCredential(email: '', password: '');
-                            employeeCredential.email =
-                                auth.employee['role'] == 'customer'
-                                    ? auth.employee['customer_email']
-                                    : auth.employee['employee_email'];
-                            employeeCredential.password = data['new_password'];
-                            forgotPasswordService
-                                .updateAccountInfo(
-                                  data,
-                                  auth.employee['role'],
-                                  auth.employee['employee_id'].toString(),
-                                  auth.employee['access_token'],
-                                )
-                                .then((value) => {
-                                      if (value &&
-                                          auth.employee['role'] != 'customer')
-                                        {
-                                          auth
-                                              .employeeLogin(employeeCredential)
-                                              .then((e) {
-                                            Navigator.pop(context);
-                                          })
-                                        }
-                                      else if (value &&
-                                          auth.employee['role'] == 'customer')
-                                        {
-                                          auth
-                                              .customerLogin(employeeCredential)
-                                              .then((e) {
-                                            Navigator.pop(context);
-                                          })
-                                        }
-                                    });
+                            if (data.length < 6) {
+                              Fluttertoast.showToast(
+                                  msg: "Cập nhật thông tin thất bại",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.CENTER,
+                                  webBgColor:
+                                      "linear-gradient(to right, #dc1c13, #dc1c13)",
+                                  fontSize: 16.0);
+                            } else {
+                              EmployeeCredential employeeCredential =
+                                  EmployeeCredential(email: '', password: '');
+                              employeeCredential.email =
+                                  auth.employee['role'] == 'customer'
+                                      ? auth.employee['customer_email']
+                                      : auth.employee['employee_email'];
+                              employeeCredential.password =
+                                  data['new_password'];
+                              forgotPasswordService
+                                  .updateAccountInfo(
+                                    data,
+                                    auth.employee['role'],
+                                    auth.employee['employee_id'].toString(),
+                                    auth.employee['access_token'],
+                                  )
+                                  .then((value) => {
+                                        if (value &&
+                                            auth.employee['role'] != 'customer')
+                                          {
+                                            auth
+                                                .employeeLogin(
+                                                    employeeCredential)
+                                                .then((e) {
+                                              Navigator.pushReplacementNamed(
+                                                  context, '/');
+                                            })
+                                          }
+                                        else if (value &&
+                                            auth.employee['role'] == 'customer')
+                                          {
+                                            auth
+                                                .customerLogin(
+                                                    employeeCredential)
+                                                .then((e) {
+                                              Navigator.pushReplacementNamed(
+                                                  context, '/');
+                                            })
+                                          }
+                                      });
+                            }
                           },
                         )),
                   ),

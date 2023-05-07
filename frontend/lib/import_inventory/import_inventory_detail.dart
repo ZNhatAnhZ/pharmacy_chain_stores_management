@@ -91,7 +91,7 @@ class _ImportInventoryDetailState extends State<ImportInventoryDetail> {
     getAllSupplier(auth);
 
     return Scaffold(
-            drawer: Drawer(
+      drawer: Drawer(
         child: AppDrawer(),
       ),
       appBar: AppBar(
@@ -380,8 +380,10 @@ class _ImportInventoryDetailState extends State<ImportInventoryDetail> {
                                     auth.employee['access_token'],
                                     newImportInventory,
                                     auth.employee['role'])
-                                .then((value) => null)
-                                .catchError((err) => print(err));
+                                .then((value) {
+                              Navigator.pushReplacementNamed(
+                                  context, '/transaction_in');
+                            }).catchError((err) => print(err));
                           },
                         )),
                   )
