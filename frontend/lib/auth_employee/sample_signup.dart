@@ -227,7 +227,7 @@ class _SignUpOneState extends State<SignUpOne> {
                                           auth.customerRegister(customer);
                                         }
                                       },
-                                      buttonText: 'Xác nhận',
+                                      buttonText: 'Đăng ký',
                                     ),
                                     const SizedBox(
                                       height: 12,

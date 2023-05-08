@@ -146,7 +146,7 @@ class _InventoryPage extends State<InventoryPage> {
               bottom: 10,
             ),
             child: Text(
-              "Drug inventory",
+              "Danh sách thuốc",
               style: TextStyle(fontSize: 20),
             ),
           ),
@@ -345,7 +345,7 @@ class _InventoryPage extends State<InventoryPage> {
                       primary: Colors.green,
                     ),
                     child: Text(
-                        "Gửi sản phẩm hết hạn" + '\n' + " cho bên cung cấp",
+                        "Gửi sản phẩm hết hàng" + '\n' + " cho bên cung cấp",
                         style: TextStyle(color: Colors.white)),
                     onPressed: () {
                       inventoryService

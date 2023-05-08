@@ -19,7 +19,7 @@ module Api
 
         def export_inventory
           @inventories = Inventory.search_by_branch(params["branch_id"])
-          header = ["Name", "inventory code", "quantity", "price", "inventory_type", "main_ingredient", "producer", "category", "batch inventory", "supplier", "branch"]
+          header = ["Tên", "Mã thuốc", "Số lượng", "Giá", "Đơn vị", "Thành phần chính", "Nơi sản xuất", "Thể loại", "Lô sản phẩm", "Nhà cung cấp", "Chi nhánh"]
 
           result = CSV.generate do |csv|
             csv << header

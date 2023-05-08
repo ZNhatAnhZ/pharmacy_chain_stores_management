@@ -215,7 +215,7 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
                                           }
                                         }
                                       },
-                                      buttonText: 'Xác nhận',
+                                      buttonText: 'Đăng nhập',
                                     ),
                                     const SizedBox(
                                       height: 12,
