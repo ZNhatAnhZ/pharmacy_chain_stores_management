@@ -43,5 +43,5 @@ COPY --from=build /app/build/web /usr/share/nginx/html
 COPY ./nginx.conf /etc/nginx/nginx.conf
 COPY ./nginx.crt /etc/nginx/certs/nginx.crt
 COPY ./nginx.key /etc/nginx/certs/nginx.key
-EXPOSE 443 81
+EXPOSE 443 80
 CMD ["nginx", "-g", "daemon off;"]
