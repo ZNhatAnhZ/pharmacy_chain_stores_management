@@ -41,13 +41,13 @@ Employee.create!(
 
 Employee.create!(
   name: "Nguyễn Việt Đức",
-  email: "hanoi.storeowner@gmail.com",
+  email: "hanoi.store_owner@gmail.com",
   password: "123456",
   password_confirmation: "123456",
   address: "Hà Nội - Việt Nam",
   contact: Faker::PhoneNumber.unique.phone_number,
   role: "store_owner",
-  branch_id: 0
+  branch_id: 1
 )
 
 Employee.create!(
@@ -58,7 +58,7 @@ Employee.create!(
   address: "Đà Nẵng - Việt Nam",
   contact: Faker::PhoneNumber.unique.phone_number,
   role: "store_owner",
-  branch_id: 1
+  branch_id: 2
 )
 
 Employee.create!(
@@ -69,7 +69,7 @@ Employee.create!(
   address: "Hồ Chí Minh - Việt Nam",
   contact: Faker::PhoneNumber.unique.phone_number,
   role: "store_owner",
-  branch_id: 2
+  branch_id: 3
 )
 
 Employee.create!(
@@ -88,10 +88,10 @@ Employee.create!(
   email: "nguyen.tien.dan@gmail.com",
   password: "123456",
   password_confirmation: "123456",
-  address: "Hồ Chí Minh - Việt Nam",
+  address: "Hà Nội - Việt Nam",
   contact: Faker::PhoneNumber.unique.phone_number,
   role: "employee",
-  branch_id: 2
+  branch_id: 1
 )
 
 20.times do |n|
