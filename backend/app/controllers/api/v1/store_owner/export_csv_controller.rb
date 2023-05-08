@@ -34,7 +34,7 @@ module Api
 
         def export_order
           @orders = Order.search_by_branch(params["branch_id"])
-          header = ["Order Code", "inventory code", "Inventory name", "price", "quantity", "customer name", "employee name", "branch"]
+          header = ["Mã đơn bán", "Mã thuốc", "Tên thuốc", "Đơn giá", "Số lượng", "Tên khách hàng", "Tên nhân viên", "Chi nhánh"]
 
           result = CSV.generate do |csv|
             csv << header
@@ -49,7 +49,7 @@ module Api
 
         def export_import_inventory
           @import_inventories = ImportInventory.search_by_branch(params["branch_id"])
-          header = ["Import Inventory Code", "inventory code", "Inventory name", "price", "quantity", "batch inventory code", "batch inventory expired at", "supplier name", "employee name", "branch"]
+          header = ["Mã đơn nhập", "Mã thuốc", "Tên thuốc", "Đơn giá", "Số lượng", "Mã lô", "Ngày hết hạn lô", "Tên nhà cung cấp", "Tên nhân viên", "Chi nhánh"]
 
           result = CSV.generate do |csv|
             csv << header
@@ -80,7 +80,7 @@ module Api
 
           @arr_result = arr_order + arr_import_inventory
 
-          header = ["form_code", "created_date", "type", "value"]
+          header = ["Mã giao dịch", "Ngày tạo", "Loại giao dịch", "Tổng tiền"]
           result = CSV.generate do |csv|
             csv << header
             @arr_result.each do |record|
