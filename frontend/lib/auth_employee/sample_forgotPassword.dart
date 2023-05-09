@@ -38,114 +38,105 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               fit: BoxFit.cover,
             ),
           ),
-          child: ListView(
-            padding: const EdgeInsets.fromLTRB(0, 40, 0, 120),
-            shrinkWrap: true,
-            reverse: true,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
+              Stack(
                 children: [
-                  Stack(
-                    children: [
-                      Container(
-                        height: 600,
-                        width: 370,
-                        decoration: BoxDecoration(
-                          color: HexColor("#ffffff"),
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(40),
-                            topRight: Radius.circular(40),
-                            bottomRight: Radius.circular(40),
-                            bottomLeft: Radius.circular(40),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(30, 20, 30, 20),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Forgot password",
-                                style: GoogleFonts.poppins(
-                                  fontSize: 40,
-                                  fontWeight: FontWeight.bold,
-                                  color: HexColor("#4f4f4f"),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(15, 0, 0, 20),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Code",
-                                      style: GoogleFonts.poppins(
-                                        fontSize: 18,
-                                        color: HexColor("#8d8d8d"),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    MyTextField(
-                                      controller: codeController,
-                                      hintText: "The code sent to your email",
-                                      obscureText: false,
-                                      prefixIcon:
-                                          const Icon(Icons.mail_outline),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      "New password",
-                                      style: GoogleFonts.poppins(
-                                        fontSize: 18,
-                                        color: HexColor("#8d8d8d"),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    MyTextField(
-                                      controller: passwordController,
-                                      hintText: "**************",
-                                      obscureText: true,
-                                      prefixIcon:
-                                          const Icon(Icons.lock_outline),
-                                    ),
-                                    const SizedBox(
-                                      height: 20,
-                                    ),
-                                    MyButton(
-                                      onPressed: () {
-                                        forgotPasswordService
-                                            .resetPassword(
-                                                email,
-                                                codeController.text,
-                                                passwordController.text)
-                                            .then((value) =>
-                                                {Navigator.pop(context)}).catchError((err) => print(err));
-                                      },
-                                      buttonText: 'Xác nhận',
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                  Container(
+                    height: 600,
+                    width: 370,
+                    decoration: BoxDecoration(
+                      color: HexColor("#ffffff"),
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(40),
+                        topRight: Radius.circular(40),
+                        bottomRight: Radius.circular(40),
+                        bottomLeft: Radius.circular(40),
                       ),
-                    ],
-                  )
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(30, 20, 30, 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Forgot password",
+                            style: GoogleFonts.poppins(
+                              fontSize: 40,
+                              fontWeight: FontWeight.bold,
+                              color: HexColor("#4f4f4f"),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 0, 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Code",
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 18,
+                                    color: HexColor("#8d8d8d"),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                MyTextField(
+                                  controller: codeController,
+                                  hintText: "The code sent to your email",
+                                  obscureText: false,
+                                  prefixIcon: const Icon(Icons.mail_outline),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  "New password",
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 18,
+                                    color: HexColor("#8d8d8d"),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                MyTextField(
+                                  controller: passwordController,
+                                  hintText: "**************",
+                                  obscureText: true,
+                                  prefixIcon: const Icon(Icons.lock_outline),
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                MyButton(
+                                  onPressed: () {
+                                    forgotPasswordService
+                                        .resetPassword(
+                                            email,
+                                            codeController.text,
+                                            passwordController.text)
+                                        .then(
+                                            (value) => {Navigator.pop(context)})
+                                        .catchError((err) => print(err));
+                                  },
+                                  buttonText: 'Xác nhận',
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
-              ),
+              )
             ],
           ),
         ),

@@ -24,6 +24,8 @@ class _ImportInventoryDetailState extends State<ImportInventoryDetail> {
   SupplierService supplierService = SupplierService();
   ImportInventoryService importInventoryService = ImportInventoryService();
   TextEditingController batch_date = TextEditingController();
+  String? selectedSupplier = null;
+  String? selectedBatch = null;
 
   List<Inventory> inventorys = List.empty();
   List<BatchInventory> batchInventory = List.empty();
@@ -126,6 +128,26 @@ class _ImportInventoryDetailState extends State<ImportInventoryDetail> {
                             onChanged: (e) {
                               newImportInventory['inventory_id'] =
                                   e?.split(':').elementAt(0);
+                              inventorys.forEach((element) {
+                                if (element.id ==
+                                    int.parse(
+                                        newImportInventory['inventory_id'])) {
+                                  setState(() {
+                                    selectedSupplier =
+                                        element.supplier!.id.toString() +
+                                            ": " +
+                                            element.supplier!.name!;
+                                    selectedBatch = element.batch_inventory!.id
+                                            .toString() +
+                                        ": " +
+                                        element.batch_inventory!.batch_code!;
+                                    newImportInventory['supplier_id'] =
+                                        element.supplier!.id.toString();
+                                    newImportInventory['batch_inventory_id'] =
+                                        element.batch_inventory!.id.toString();
+                                  });
+                                }
+                              });
                               print(e);
                             },
                             // selectedItem: "Brazil",
@@ -200,7 +222,7 @@ class _ImportInventoryDetailState extends State<ImportInventoryDetail> {
                             e?.split(':').elementAt(0);
                         print(e);
                       },
-                      // selectedItem: "Brazil",
+                      selectedItem: selectedSupplier,
                     ),
                   ),
                   Padding(
@@ -227,6 +249,7 @@ class _ImportInventoryDetailState extends State<ImportInventoryDetail> {
                                   e?.split(':').elementAt(0);
                               print(e);
                             },
+                            selectedItem: selectedBatch,
                           ),
                         ),
                         IconButton(

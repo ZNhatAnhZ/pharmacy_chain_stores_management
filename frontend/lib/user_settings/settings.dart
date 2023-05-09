@@ -246,7 +246,7 @@ class _SettingsState extends State<Settings> {
                                                     employeeCredential)
                                                 .then((e) {
                                               Navigator.pushReplacementNamed(
-                                                  context, '/');
+                                                  context, '/inventory_page');
                                             })
                                           }
                                       });

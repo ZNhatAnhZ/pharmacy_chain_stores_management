@@ -19,6 +19,7 @@ class _SellingDrugState extends State<SellingDrug> {
   InventoryService inventoryService = InventoryService();
   OrderService orderService = OrderService();
   CustomerService customerService = CustomerService();
+  TextEditingController totalPrice = TextEditingController();
 
   List<Inventory> inventorys = List.empty();
   List<Customer> customers = List.empty();
@@ -66,7 +67,7 @@ class _SellingDrugState extends State<SellingDrug> {
     getAllCustomers(auth);
 
     return Scaffold(
-            drawer: Drawer(
+      drawer: Drawer(
         child: AppDrawer(),
       ),
       appBar: AppBar(
@@ -120,6 +121,35 @@ class _SellingDrugState extends State<SellingDrug> {
                     child: TextFormField(
                       validator: (value) {
                         if (value!.isEmpty) {
+                          return 'Hãy nhập số lượng';
+                        }
+                        return null;
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          int price = inventorys
+                              .where((element) =>
+                                  element.id ==
+                                  int.parse(newOrder['inventory_id']))
+                              .elementAt(0)
+                              .price!;
+                          totalPrice.text =
+                              (int.parse(value) * price).toString();
+                          newOrder['total_quantity'] = value;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Nhập số lượng',
+                        labelText: 'Nhập số lượng',
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 12.0),
+                    child: TextFormField(
+                      controller: totalPrice,
+                      validator: (value) {
+                        if (value!.isEmpty) {
                           return 'Hãy nhập giá thuốc';
                         }
                         return null;
@@ -132,26 +162,6 @@ class _SellingDrugState extends State<SellingDrug> {
                       decoration: InputDecoration(
                         hintText: 'Nhập giá thuốc',
                         labelText: 'Nhập giá thuốc',
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 12.0),
-                    child: TextFormField(
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Hãy nhập số lượng';
-                        }
-                        return null;
-                      },
-                      onChanged: (value) {
-                        setState(() {
-                          newOrder['total_quantity'] = value;
-                        });
-                      },
-                      decoration: InputDecoration(
-                        hintText: 'Nhập số lượng',
-                        labelText: 'Nhập số lượng',
                       ),
                     ),
                   ),
@@ -196,14 +206,14 @@ class _SellingDrugState extends State<SellingDrug> {
                           child: Text('Thanh toán',
                               style: TextStyle(color: Colors.white)),
                           onPressed: () {
+                            newOrder['total_price'] = totalPrice.text;
                             orderService
                                 .createOrder(auth.employee['access_token'],
                                     newOrder, auth.employee['role'])
                                 .then((value) {
-                                  Navigator.pushReplacementNamed(
-                                    context, '/transaction_out');
-                                })
-                                .catchError((err) => print(err));
+                              Navigator.pushReplacementNamed(
+                                  context, '/transaction_out');
+                            }).catchError((err) => print(err));
                           },
                         )),
                   ),
