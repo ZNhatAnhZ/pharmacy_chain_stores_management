@@ -195,44 +195,44 @@ class _InventoryDetailState extends State<InventoryDetail> {
                                     height: 50,
                                     width: 160,
                                     child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        primary: Colors.green,
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(Icons.shopping_bag_rounded),
-                                          Text('Mua thuốc',
-                                              style: TextStyle(
-                                                  color: Colors.white)),
-                                        ],
-                                      ),
-                                      onPressed: () {
-                                        setState(() {
-                                          newOrder['inventory_id'] =
-                                              inventory.id.toString();
-                                          newOrder['customer_id'] = auth
-                                              .employee['customer_id']
-                                              .toString();
-                                          newOrder['total_quantity'] =
-                                              quantityController.text;
-                                          newOrder['total_price'] = (int.parse(
-                                                      quantityController.text) *
-                                                  inventory.price!)
-                                              .toString();
-                                        });
+                                        style: ElevatedButton.styleFrom(
+                                          primary: Colors.green,
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Icon(Icons.shopping_bag_rounded),
+                                            Text('Mua thuốc',
+                                                style: TextStyle(
+                                                    color: Colors.white)),
+                                          ],
+                                        ),
+                                        onPressed: () {
+                                          setState(() {
+                                            newOrder['inventory_id'] =
+                                                inventory.id.toString();
+                                            newOrder['customer_id'] = auth
+                                                .employee['customer_id']
+                                                .toString();
+                                            newOrder['total_quantity'] =
+                                                quantityController.text;
+                                            newOrder['total_price'] =
+                                                (int.parse(quantityController
+                                                            .text) *
+                                                        inventory.price!)
+                                                    .toString();
+                                          });
 
-                                        orderService
-                                            .createOrder(
-                                                auth.employee['access_token'],
-                                                newOrder,
-                                                auth.employee['role'])
-                                            .then((value) {
-                                          quantityController.text = '1';
-                                        }).catchError((err) => print(err));
-                                        }
-                                    ),
+                                          orderService
+                                              .createOrder(
+                                                  auth.employee['access_token'],
+                                                  newOrder,
+                                                  auth.employee['role'])
+                                              .then((value) {
+                                            quantityController.text = '1';
+                                          }).catchError((err) => print(err));
+                                        }),
                                   ),
                                   SizedBox(
                                     width: 80,
@@ -257,7 +257,7 @@ class _InventoryDetailState extends State<InventoryDetail> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   SizedBox(
-                    width: 400,
+                    width: 500,
                     height: 700,
                     child: Column(
                       children: [
@@ -282,7 +282,7 @@ class _InventoryDetailState extends State<InventoryDetail> {
                           child: TextFormField(
                             readOnly: true,
                             initialValue:
-                                "Nhà sản xuất: " + inventory.producer!,
+                                "Nơi sản xuất: " + inventory.producer!,
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 20,
@@ -294,7 +294,7 @@ class _InventoryDetailState extends State<InventoryDetail> {
                           padding: const EdgeInsets.only(bottom: 25),
                           child: TextFormField(
                             readOnly: true,
-                            initialValue: "Branch: " +
+                            initialValue: "Chi nhánh: " +
                                 inventory.branch!.id.toString() +
                                 ". " +
                                 inventory.branch!.name!,
@@ -324,7 +324,7 @@ class _InventoryDetailState extends State<InventoryDetail> {
                           padding: const EdgeInsets.only(bottom: 25),
                           child: TextFormField(
                             readOnly: true,
-                            initialValue: "Batch inventory: " +
+                            initialValue: "Lô sản phẩm: " +
                                 inventory.batch_inventory!.id.toString() +
                                 ". " +
                                 inventory.batch_inventory!.batch_code!,

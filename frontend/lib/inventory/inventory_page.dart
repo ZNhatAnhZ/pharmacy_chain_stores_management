@@ -162,7 +162,7 @@ class _InventoryPage extends State<InventoryPage> {
                     style: const TextStyle(color: Colors.white),
                     cursorColor: Colors.white,
                     decoration: const InputDecoration(
-                      hintText: "Search products",
+                      hintText: "Tìm kiếm sản phẩm",
                       hintStyle: TextStyle(color: Colors.white24),
                     ),
                     onChanged: (value) {
@@ -385,7 +385,7 @@ class _InventoryPage extends State<InventoryPage> {
                               showCheckboxColumn: false,
                               columns: [
                                 DataColumn(
-                                  label: Text("Id"),
+                                  label: Text("ID"),
                                   numeric: false,
                                 ),
                                 DataColumn(
@@ -401,11 +401,11 @@ class _InventoryPage extends State<InventoryPage> {
                                   numeric: false,
                                 ),
                                 DataColumn(
-                                  label: Text("Batch code"),
+                                  label: Text("Mã lô"),
                                   numeric: false,
                                 ),
                                 DataColumn(
-                                  label: Text("Tên nhà sản xuất"),
+                                  label: Text("Nơi sản xuất"),
                                   numeric: false,
                                 ),
                                 DataColumn(

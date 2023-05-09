@@ -88,7 +88,7 @@ class EmployeeService {
     if (response.statusCode == 200) {
       inspect(response);
       Fluttertoast.showToast(
-          msg: "Cập nhật employee thành công",
+          msg: "Cập nhật nhân viên thành công",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           fontSize: 16.0);
@@ -117,7 +117,7 @@ class EmployeeService {
 
     if (response.statusCode == 200) {
       Fluttertoast.showToast(
-          msg: "Xóa employee thành công",
+          msg: "Xóa nhân viên thành công",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           fontSize: 16.0);
@@ -131,7 +131,7 @@ class EmployeeService {
     String url;
     if (data.isEmpty) {
       Fluttertoast.showToast(
-          msg: "Tạo mới employee thất bại",
+          msg: "Tạo mới nhân viên thất bại",
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.CENTER,
           webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",
@@ -212,14 +212,14 @@ class EmployeeService {
 
     if (response.statusCode == 200) {
       Fluttertoast.showToast(
-          msg: "Tạo employee thành công",
+          msg: "Tạo nhân viên thành công",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           fontSize: 16.0);
       return true;
     } else {
       Fluttertoast.showToast(
-          msg: "Tạo mới employee thất bại",
+          msg: "Tạo mới nhân viên thất bại",
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.CENTER,
           webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",

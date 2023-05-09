@@ -67,7 +67,7 @@ class _EmployeePage extends State<EmployeePage> {
     getAllBranch(auth);
 
     return Scaffold(
-            drawer: Drawer(
+      drawer: Drawer(
         child: AppDrawer(),
       ),
       appBar: AppBar(title: const Text("Quản lý nhân viên"), actions: <Widget>[
@@ -151,7 +151,7 @@ class _EmployeePage extends State<EmployeePage> {
                           numeric: false,
                         ),
                         DataColumn(
-                          label: Text("Branch ID"),
+                          label: Text("ID chi nhánh"),
                           numeric: false,
                         ),
                         if (auth.employee['role'] == "admin")

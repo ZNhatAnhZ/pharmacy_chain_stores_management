@@ -541,9 +541,9 @@ class _AddInventoryPageState extends State<AddInventoryPage> {
                             readOnly: true,
                             decoration: InputDecoration(
                               enabled: false,
-                              hintText: 'Upload ảnh sản phẩm',
+                              hintText: 'Tải lên ảnh sản phẩm',
                               labelText:
-                                  'Bấm nút bên phải để upload ảnh sản phẩm',
+                                  'Bấm nút bên phải để tải lên ảnh sản phẩm',
                             ),
                           ),
                         ),
@@ -576,7 +576,7 @@ class _AddInventoryPageState extends State<AddInventoryPage> {
                           style: ElevatedButton.styleFrom(
                             primary: Theme.of(context).primaryColor,
                           ),
-                          child: Text('Tạo inventory mới',
+                          child: Text('Tạo sản phẩm mới',
                               style: TextStyle(color: Colors.white)),
                           onPressed: () {
                             inventoryService

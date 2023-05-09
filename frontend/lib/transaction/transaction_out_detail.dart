@@ -86,7 +86,8 @@ class _TransactionOutDetailState extends State<TransactionOutDetail> {
                           padding: const EdgeInsets.only(bottom: 25),
                           child: TextFormField(
                             readOnly: true,
-                            initialValue: "Status: " + order.status.toString(),
+                            initialValue:
+                                "Trạng thái: " + order.status.toString(),
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 20,
@@ -98,7 +99,7 @@ class _TransactionOutDetailState extends State<TransactionOutDetail> {
                           padding: const EdgeInsets.only(bottom: 25),
                           child: TextFormField(
                             readOnly: true,
-                            initialValue: "Mã order: " + order.order_code!,
+                            initialValue: "Mã đơn mua: " + order.order_code!,
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 20,
@@ -142,8 +143,8 @@ class _TransactionOutDetailState extends State<TransactionOutDetail> {
                           padding: const EdgeInsets.only(bottom: 25),
                           child: TextFormField(
                             readOnly: true,
-                            initialValue: "ID inventory: " +
-                                order.inventory!.id.toString(),
+                            initialValue:
+                                "ID thuốc: " + order.inventory!.id.toString(),
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 20,
@@ -208,7 +209,7 @@ class _TransactionOutDetailState extends State<TransactionOutDetail> {
                           child: TextFormField(
                             readOnly: true,
                             initialValue:
-                                "Nhà sản xuất: " + order.inventory!.producer!,
+                                "Nơi sản xuất: " + order.inventory!.producer!,
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 20,
@@ -240,7 +241,8 @@ class _TransactionOutDetailState extends State<TransactionOutDetail> {
                           padding: const EdgeInsets.only(bottom: 25),
                           child: TextFormField(
                             readOnly: true,
-                            initialValue: "Tên branch: " + order.branch!.name!,
+                            initialValue:
+                                "Tên chi nhánh: " + order.branch!.name!,
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 20,
@@ -253,7 +255,7 @@ class _TransactionOutDetailState extends State<TransactionOutDetail> {
                           child: TextFormField(
                             readOnly: true,
                             initialValue:
-                                "Mã branch: " + order.branch!.branch_code!,
+                                "Mã chi nhánh: " + order.branch!.branch_code!,
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 20,

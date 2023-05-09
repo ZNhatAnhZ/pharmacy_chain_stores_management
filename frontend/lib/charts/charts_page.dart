@@ -216,7 +216,7 @@ class _ChartPage extends State<ChartPage> {
                                 measureFn: (BarChartCustomer pieModel, _) =>
                                     pieModel.order_number,
                                 labelAccessorFn: (BarChartCustomer row, _) =>
-                                    '${row.name}: ${row.order_number}',
+                                    '${row.name}: ${row.order_number} đơn',
                               )
                             ],
                             animate: true,
@@ -252,7 +252,8 @@ class _ChartPage extends State<ChartPage> {
                             id: 'sales',
                             colorFn: (_, __) =>
                                 charts.MaterialPalette.purple.shadeDefault,
-                            domainFn: (BarModel barModel, _) => barModel.date,
+                            domainFn: (BarModel barModel, _) =>
+                                "Tháng " + barModel.date,
                             measureFn: (BarModel barModel, _) =>
                                 barModel.revenue,
                           )
@@ -283,7 +284,8 @@ class _ChartPage extends State<ChartPage> {
                             id: 'sales',
                             colorFn: (_, __) =>
                                 charts.MaterialPalette.yellow.shadeDefault,
-                            domainFn: (BarModel barModel, _) => barModel.date,
+                            domainFn: (BarModel barModel, _) =>
+                                "Tháng " + barModel.date,
                             measureFn: (BarModel barModel, _) =>
                                 barModel.revenue,
                           )
@@ -314,7 +316,8 @@ class _ChartPage extends State<ChartPage> {
                             id: 'sales',
                             colorFn: (_, __) =>
                                 charts.MaterialPalette.indigo.shadeDefault,
-                            domainFn: (BarModel barModel, _) => barModel.date,
+                            domainFn: (BarModel barModel, _) =>
+                                "Tháng " + barModel.date,
                             measureFn: (BarModel barModel, _) =>
                                 barModel.revenue,
                           )
@@ -345,7 +348,8 @@ class _ChartPage extends State<ChartPage> {
                             id: 'sales',
                             colorFn: (_, __) =>
                                 charts.MaterialPalette.teal.shadeDefault,
-                            domainFn: (BarModel barModel, _) => barModel.date,
+                            domainFn: (BarModel barModel, _) =>
+                                "Tháng " + barModel.date,
                             measureFn: (BarModel barModel, _) =>
                                 barModel.revenue,
                           )

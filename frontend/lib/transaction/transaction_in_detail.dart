@@ -60,7 +60,7 @@ class _TransactionInDetailState extends State<TransactionInDetail> {
                           child: TextFormField(
                             readOnly: true,
                             initialValue:
-                                "Giá: " + importInventory.price.toString(),
+                                "Tổng giá: " + importInventory.price.toString(),
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 20,
@@ -85,8 +85,8 @@ class _TransactionInDetailState extends State<TransactionInDetail> {
                           padding: const EdgeInsets.only(bottom: 25),
                           child: TextFormField(
                             readOnly: true,
-                            initialValue:
-                                "Status: " + importInventory.status.toString(),
+                            initialValue: "Trạng thái: " +
+                                importInventory.status.toString(),
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 20,
@@ -144,7 +144,7 @@ class _TransactionInDetailState extends State<TransactionInDetail> {
                           padding: const EdgeInsets.only(bottom: 25),
                           child: TextFormField(
                             readOnly: true,
-                            initialValue: "ID inventory: " +
+                            initialValue: "ID thuốc: " +
                                 importInventory.inventory!.id.toString(),
                             style: TextStyle(
                               color: Colors.black,
@@ -209,7 +209,7 @@ class _TransactionInDetailState extends State<TransactionInDetail> {
                           padding: const EdgeInsets.only(bottom: 25),
                           child: TextFormField(
                             readOnly: true,
-                            initialValue: "Nhà sản xuất: " +
+                            initialValue: "Nơi sản xuất: " +
                                 importInventory.inventory!.producer!,
                             style: TextStyle(
                               color: Colors.black,
@@ -255,7 +255,7 @@ class _TransactionInDetailState extends State<TransactionInDetail> {
                           padding: const EdgeInsets.only(bottom: 25),
                           child: TextFormField(
                             readOnly: true,
-                            initialValue: "Mã batch: " +
+                            initialValue: "Mã lô: " +
                                 importInventory.batch_inventory!.batch_code!,
                             style: TextStyle(
                               color: Colors.black,
@@ -281,8 +281,8 @@ class _TransactionInDetailState extends State<TransactionInDetail> {
                           padding: const EdgeInsets.only(bottom: 25),
                           child: TextFormField(
                             readOnly: true,
-                            initialValue:
-                                "Tên branch: " + importInventory.branch!.name!,
+                            initialValue: "Tên chi nhánh: " +
+                                importInventory.branch!.name!,
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 20,
@@ -294,7 +294,7 @@ class _TransactionInDetailState extends State<TransactionInDetail> {
                           padding: const EdgeInsets.only(bottom: 25),
                           child: TextFormField(
                             readOnly: true,
-                            initialValue: "Mã branch: " +
+                            initialValue: "Mã chi nhánh: " +
                                 importInventory.branch!.branch_code!,
                             style: TextStyle(
                               color: Colors.black,

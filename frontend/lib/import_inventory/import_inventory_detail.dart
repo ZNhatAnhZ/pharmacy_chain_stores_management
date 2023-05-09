@@ -213,8 +213,8 @@ class _ImportInventoryDetailState extends State<ImportInventoryDetail> {
                           .map((e) => e.id!.toString() + ": " + e.name!)),
                       dropdownDecoratorProps: DropDownDecoratorProps(
                         dropdownSearchDecoration: InputDecoration(
-                          labelText: "Chọn nhà sản xuất",
-                          hintText: "country in menu mode",
+                          labelText: "Chọn nơi cung cấp",
+                          hintText: "Chọn nơi cung cấp",
                         ),
                       ),
                       onChanged: (e) {
