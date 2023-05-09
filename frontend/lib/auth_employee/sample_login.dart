@@ -25,8 +25,8 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
       EmployeeCredential(email: '', password: '');
   final ForgotPasswordService forgotPasswordService = ForgotPasswordService();
 
-  List<String> list = <String>['Employee', 'Customer', 'Admin'];
-  String dropdownValue = 'Employee';
+  List<String> list = <String>['Nhân viên', 'Khách hàng', 'Quản trị viên'];
+  String dropdownValue = 'Nhân viên';
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +70,7 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Log In",
+                            "Đăng nhập",
                             style: GoogleFonts.poppins(
                               fontSize: 40,
                               fontWeight: FontWeight.bold,
@@ -86,7 +86,7 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "User Type",
+                                  "Loại tài khoản",
                                   style: GoogleFonts.poppins(
                                     fontSize: 18,
                                     color: HexColor("#8d8d8d"),
@@ -151,7 +151,7 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
                                   height: 10,
                                 ),
                                 Text(
-                                  "Password",
+                                  "Mật khẩu",
                                   style: GoogleFonts.poppins(
                                     fontSize: 18,
                                     color: HexColor("#8d8d8d"),
@@ -190,15 +190,15 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
                                       }
                                     } else {
                                       switch (dropdownValue) {
-                                        case 'Employee':
+                                        case 'Nhân viên':
                                           auth.employeeLogin(
                                               employeeCredential);
                                           break;
-                                        case 'Customer':
+                                        case 'Khách hàng':
                                           auth.customerLogin(
                                               employeeCredential);
                                           break;
-                                        case 'Admin':
+                                        case 'Quản trị viên':
                                           auth.adminLogin(employeeCredential);
                                           break;
                                       }
@@ -214,14 +214,14 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
                                       const EdgeInsets.fromLTRB(20, 0, 0, 0),
                                   child: Row(
                                     children: [
-                                      Text("Don't have an account?",
+                                      Text("Không có tài khoản?",
                                           style: GoogleFonts.poppins(
                                             fontSize: 15,
                                             color: HexColor("#8d8d8d"),
                                           )),
                                       TextButton(
                                           child: Text(
-                                            "Sign Up",
+                                            "Đăng ký",
                                             style: GoogleFonts.poppins(
                                               fontSize: 15,
                                               color: HexColor("#44564a"),
@@ -240,14 +240,14 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
                                       const EdgeInsets.fromLTRB(20, 0, 0, 0),
                                   child: Row(
                                     children: [
-                                      Text("Forgot password?",
+                                      Text("Quên mật khẩu?",
                                           style: GoogleFonts.poppins(
                                             fontSize: 15,
                                             color: HexColor("#8d8d8d"),
                                           )),
                                       TextButton(
                                           child: Text(
-                                            "Click here",
+                                            "Bấm đây",
                                             style: GoogleFonts.poppins(
                                               fontSize: 15,
                                               color: HexColor("#44564a"),

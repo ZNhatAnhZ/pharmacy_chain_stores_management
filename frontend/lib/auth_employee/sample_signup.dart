@@ -23,8 +23,8 @@ class _SignUpOneState extends State<SignUpOne> {
   final passwordController = TextEditingController();
   final passwordConfirmationController = TextEditingController();
 
-  List<String> list = <String>['Customer'];
-  String dropdownValue = 'Customer';
+  List<String> list = <String>['Khách hàng'];
+  String dropdownValue = 'Khách hàng';
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +68,7 @@ class _SignUpOneState extends State<SignUpOne> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Sign up",
+                            "Đăng ký",
                             style: GoogleFonts.poppins(
                               fontSize: 40,
                               fontWeight: FontWeight.bold,
@@ -84,7 +84,7 @@ class _SignUpOneState extends State<SignUpOne> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "User Type",
+                                  "Loại tài khoản",
                                   style: GoogleFonts.poppins(
                                     fontSize: 18,
                                     color: HexColor("#8d8d8d"),
@@ -128,7 +128,7 @@ class _SignUpOneState extends State<SignUpOne> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Name",
+                                  "Tên tài khoản",
                                   style: GoogleFonts.poppins(
                                     fontSize: 18,
                                     color: HexColor("#8d8d8d"),
@@ -140,7 +140,7 @@ class _SignUpOneState extends State<SignUpOne> {
                                 MyTextField(
                                   onChanged: (() {}),
                                   controller: nameController,
-                                  hintText: "username",
+                                  hintText: "Tên tài khoản",
                                   obscureText: false,
                                   prefixIcon: const Icon(Icons.mail_outline),
                                 ),
@@ -168,7 +168,7 @@ class _SignUpOneState extends State<SignUpOne> {
                                   height: 10,
                                 ),
                                 Text(
-                                  "Password",
+                                  "Mật khẩu",
                                   style: GoogleFonts.poppins(
                                     fontSize: 18,
                                     color: HexColor("#8d8d8d"),
@@ -184,7 +184,7 @@ class _SignUpOneState extends State<SignUpOne> {
                                   prefixIcon: const Icon(Icons.lock_outline),
                                 ),
                                 Text(
-                                  "Password confirmation",
+                                  "Nhập lại mật khẩu",
                                   style: GoogleFonts.poppins(
                                     fontSize: 18,
                                     color: HexColor("#8d8d8d"),
@@ -210,6 +210,8 @@ class _SignUpOneState extends State<SignUpOne> {
                                     customer.password = passwordController.text;
                                     if (auth.isLoggedIn) {
                                       Navigator.pop(context);
+                                      Navigator.pushNamed(
+                                          context, '/inventory_page');
                                     } else {
                                       auth.customerRegister(customer);
                                     }
@@ -219,6 +221,32 @@ class _SignUpOneState extends State<SignUpOne> {
                                 const SizedBox(
                                   height: 12,
                                 ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                                  child: Row(
+                                    children: [
+                                      Text("Đã có tài khoản?",
+                                          style: GoogleFonts.poppins(
+                                            fontSize: 15,
+                                            color: HexColor("#8d8d8d"),
+                                          )),
+                                      TextButton(
+                                          child: Text(
+                                            "Đăng nhập",
+                                            style: GoogleFonts.poppins(
+                                              fontSize: 15,
+                                              color: HexColor("#44564a"),
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                            Navigator.pushNamed(
+                                                context, '/login');
+                                          }),
+                                    ],
+                                  ),
+                                ),
                               ],
                             ),
                           ),
@@ -226,14 +254,6 @@ class _SignUpOneState extends State<SignUpOne> {
                       ),
                     ),
                   ),
-                  // Transform.translate(
-                  //   offset: const Offset(0, -253),
-                  //   child: Image.asset(
-                  //     'assets/Images/plants2.png',
-                  //     scale: 1.5,
-                  //     width: double.infinity,
-                  //   ),
-                  // ),
                 ],
               )
             ],
