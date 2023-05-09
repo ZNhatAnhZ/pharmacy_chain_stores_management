@@ -133,8 +133,7 @@ class _SellingDrugState extends State<SellingDrug> {
                                   int.parse(newOrder['inventory_id']))
                               .elementAt(0)
                               .price!;
-                          totalPrice.text =
-                              (int.parse(value) * price).toString();
+                          totalPrice.text = price.toString();
                           newOrder['total_quantity'] = value;
                         });
                       },

@@ -140,7 +140,7 @@ class _PartnerDetail extends State<PartnerDetail> {
                                 numeric: false,
                               ),
                               DataColumn(
-                                label: Text("Nhà sản xuất"),
+                                label: Text("Nơi sản xuất"),
                                 numeric: false,
                               ),
                             ],

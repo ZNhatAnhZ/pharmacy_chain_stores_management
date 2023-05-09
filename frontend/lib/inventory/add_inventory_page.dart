@@ -435,7 +435,7 @@ class _AddInventoryPageState extends State<AddInventoryPage> {
                           .map((e) => e.id!.toString() + ": " + e.name!)),
                       dropdownDecoratorProps: DropDownDecoratorProps(
                         dropdownSearchDecoration: InputDecoration(
-                          labelText: "Chọn nhà sản xuất",
+                          labelText: "Chọn nhà cung cấp",
                           hintText: "country in menu mode",
                         ),
                       ),
